@@ -46,17 +46,39 @@ function OnRequestStart(sender, args) {
 function OnResponseEnd(sender, args) {
 
     try {
+        //clear all log messages.
         $(".log").remove();
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventTarget):  " + args.EventTarget + ".</li>");
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventArgument):  " + args.EventArgument + ".</li>");
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventTargetElement):  " + args.EventTargetElement + ".</li>");
-        var detailsTable = $(document).find(args.EventTarget);
+
+        var str = args.EventTarget.toString();
+        var detailsTable = $(args.EventTarget)// $('#RadGrid1_ctl00_ctl09_Detail20_ctl06_Detail10_ctl04_GECBtnExpandColumn')
+            .closest('table'); //$("#RadGrid1_ctl00_ctl09_Detail20");
+
+        if (detailsTable != null && detailsTable.length == 1) {
+            //var match = /s(amp)le/str.exec("Sample text");
+            var re = new RegExp(window.prompt("Please input a regex.", "/^RadGrid1(\$(\w)+)+/gi"), "g");
+            var result = re.exec(str);
+
+            var target = $(".log").parents("#msg");
+            var cloned = detailsTable.clone(true);
+            cloned.insertAfter(target);
+        }
+        
+
     } catch (e) {
-        $(".log").remove();
-        $("#msg").append("<li class= 'log'>ERROR:  " + e + ".</li>");
+        if (e!=null) {
+
+            $("#msg").append("<li class= 'log'>ERROR:  " + e.description + ".</li>");
+        }
+        else {
+            $("#msg").append("<li class= 'log'>ERROR:  " + e + ".</li>");
+        }
+        
     }
     finally {
-
+       
     }
     
 }
