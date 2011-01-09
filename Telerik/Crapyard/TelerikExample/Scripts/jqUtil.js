@@ -27,30 +27,39 @@ $(document).ready(function () {
         $(this).append("<li>Error requesting page " + settings.url + "</li>");
     });
 
-    $("#msg").append("<li>Doc is Ready.</li>");
+   
 
-
+    $("#msg").ajaxComplete(function (request, settings) {
+        $(this).append("<li>Request Complete.</li>");
+        alert('request completed');
+    });
 
 });
 function OnRequestStart(sender, args) {
     //$("#msg").append("<li class= 'log'>OnRequestStart: " + args.get_eventTarget() + "</li>");
-    $("#msg").append("<li class= 'btnExpandColumn'>" + args.get_eventTarget() + "</li>");
+    //$("#msg").append("<li class= 'btnExpandColumn'>" + args.get_eventTarget() + "</li>");
     //$(".btnExpandColumn").hide();
     //$(".log").hide();
 
 }
 
 function OnResponseEnd(sender, args) {
-    $(".btnExpandColumn:contains('ExpandColumn')").filter(".btnExpandColumn:contains('Detail')").each(function (index) {
-                        
-            //var parent = $(document).find("'#" + $(this).text() + "'").closest('rgDetailTable');
 
-            //var cloned = parent.clone(true);
-
-            $('#msg').append("<li  class= 'log'>cloning element: " + $(this).text() + ".</li>");
-
-        });
+    try {
+        $(".log").remove();
+        $("#msg").append("<li class= 'log'>OnResponseEnd (EventTarget):  " + args.EventTarget + ".</li>");
+        $("#msg").append("<li class= 'log'>OnResponseEnd (EventArgument):  " + args.EventArgument + ".</li>");
+        $("#msg").append("<li class= 'log'>OnResponseEnd (EventTargetElement):  " + args.EventTargetElement + ".</li>");
+        var detailsTable = $(document).find(args.EventTarget);
+    } catch (e) {
+        $(".log").remove();
+        $("#msg").append("<li class= 'log'>ERROR:  " + e + ".</li>");
     }
+    finally {
+
+    }
+    
+}
 
 function RowSelecting(sender, eventArgs) {
     //$("#msg").append("<li>RowSelecting:  " + eventArgs.get_itemIndexHierarchical() + ".</li>");
