@@ -9,7 +9,7 @@ namespace Repository
         private static BusinessObjectCategoryCollection _categories;
         private static BusinessObjectCollection _data;
         private const int DEFAULT_ITEM_COUNT = 30;
-        private const int DEFAULT_CATEGORY_COUNT = 7;
+        private const int DEFAULT_CATEGORY_COUNT = 10;
 
         public static void Create()
         {
