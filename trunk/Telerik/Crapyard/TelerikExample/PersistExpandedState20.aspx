@@ -13,6 +13,10 @@
     <form id="form1" runat="server">
     <div id="msg"></div>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <Scripts>
+            
+            <asp:ScriptReference Path="~/Scripts/jquery-1.4.4.min.js" />
+        </Scripts>
     </asp:ScriptManager>
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
         <ClientEvents OnRequestStart="OnRequestStart" OnResponseEnd="OnResponseEnd"/>
