@@ -50,20 +50,24 @@ function OnResponseEnd(sender, args) {
         $(".log").remove();
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventTarget):  " + args.EventTarget + ".</li>");
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventArgument):  " + args.EventArgument + ".</li>");
-        $("#msg").append("<li class= 'log'>OnResponseEnd (EventTargetElement):  " + args.EventTargetElement + ".</li>");
-
+        
         
         var detailsTable = $(args.EventTargetElement)// $('#RadGrid1_ctl00_ctl09_Detail20_ctl06_Detail10_ctl04_GECBtnExpandColumn')
-            .closest('table'); //$("#RadGrid1_ctl00_ctl09_Detail20");
+            .closest('.rgDetailTable'); //$("#RadGrid1_ctl00_ctl09_Detail20");
 
         if (detailsTable != null && detailsTable.length == 1) {
             var str = args.EventTargetElement.id.toString();
-            var re = new RegExp(window.prompt("Please input a regex.", "^RadGrid1(\_(\w)+)+(\_(Detail)+)"), "gi");
+            $("#msg").append("<li class= 'log'>OnResponseEnd (EventTargetElement):  " + str + ".</li>");
+
+            var re = new RegExp(window.prompt("Please input a regex.", 
+                "^RadGrid1(([_][A-Za-z_0-9]*)*([_]Detail)+([_][A-Za-z_0-9]*)*)+"), "gi");
             var result = re.exec(str);
 
-            var target = $(".log").parents("#msg");
-            var cloned = detailsTable.clone(true);
-            cloned.insertAfter(target);
+            if (result != null) {
+                var target = $(".log").parents("#msg");
+                var cloned = detailsTable.clone(true);
+                cloned.insertAfter(target);
+            }
         }
         
 
