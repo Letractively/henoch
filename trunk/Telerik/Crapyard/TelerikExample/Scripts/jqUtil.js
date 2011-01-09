@@ -48,6 +48,9 @@ function OnResponseEnd(sender, args) {
     try {
         //clear all log messages.
         $(".log").remove();
+        var children = $("#msg").children('.rgDetailTable');
+        children.remove();
+
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventTarget):  " + args.EventTarget + ".</li>");
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventArgument):  " + args.EventArgument + ".</li>");
         
@@ -64,8 +67,8 @@ function OnResponseEnd(sender, args) {
             var result = re.exec(str);
 
             if (result != null) {
-                var target = $(".log").parents("#msg");
-                var cloned = detailsTable.clone(true);
+                var target = $(".log:last-child");
+                var cloned = detailsTable.clone(true);              
                 cloned.insertAfter(target);
             }
         }
