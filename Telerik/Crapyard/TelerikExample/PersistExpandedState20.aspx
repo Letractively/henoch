@@ -39,7 +39,7 @@
     <div>
         <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" EnableAJAX="false">
             <telerik:RadGrid ID="RadGrid1" runat="server" Width="800px"
-                OnNeedDataSource="RadGrid1_NeedDataSource"
+                OnNeedDataSource="RadGrid1_NeedDataSource" 
                 OnDetailTableDataBind="RadGrid1_DetailTableDataBind"
                 OnItemCreated="RadGrid1_ItemCreated">
                 
@@ -48,13 +48,16 @@
                 <MasterTableView DataKeyNames="ID" CommandItemDisplay="Top" >
                     <DetailTables>
                         <telerik:GridTableView DataKeyNames="ID"
-                            CommandItemDisplay="Top">
+                            CommandItemDisplay="Top" >
                             <DetailTables>
+                                
                                 <telerik:GridTableView DataKeyNames="ID, CategoryID"
                                     CommandItemDisplay="Top" Name="RelatedItems" >
                                     <DetailTables>
+                                        
                                         <telerik:GridTableView DataKeyNames="ID" Name="InnerMost"
                                             CommandItemDisplay="Top" >
+                                           
                                         </telerik:GridTableView>
                                     </DetailTables>
                                 </telerik:GridTableView>
