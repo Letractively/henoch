@@ -52,13 +52,13 @@ function OnResponseEnd(sender, args) {
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventArgument):  " + args.EventArgument + ".</li>");
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventTargetElement):  " + args.EventTargetElement + ".</li>");
 
-        var str = args.EventTarget.toString();
-        var detailsTable = $(args.EventTarget)// $('#RadGrid1_ctl00_ctl09_Detail20_ctl06_Detail10_ctl04_GECBtnExpandColumn')
+        
+        var detailsTable = $(args.EventTargetElement)// $('#RadGrid1_ctl00_ctl09_Detail20_ctl06_Detail10_ctl04_GECBtnExpandColumn')
             .closest('table'); //$("#RadGrid1_ctl00_ctl09_Detail20");
 
         if (detailsTable != null && detailsTable.length == 1) {
-            //var match = /s(amp)le/str.exec("Sample text");
-            var re = new RegExp(window.prompt("Please input a regex.", "/^RadGrid1(\$(\w)+)+/gi"), "g");
+            var str = args.EventTargetElement.id.toString();
+            var re = new RegExp(window.prompt("Please input a regex.", "^RadGrid1(\_(\w)+)+(\_(Detail)+)"), "gi");
             var result = re.exec(str);
 
             var target = $(".log").parents("#msg");
