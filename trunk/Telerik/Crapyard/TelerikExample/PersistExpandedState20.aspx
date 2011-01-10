@@ -8,6 +8,7 @@
 <head runat="server">
     <title></title>    
     <script src="Scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
+    <link href="Styles/Site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -38,33 +39,35 @@
 
     <div>
         <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" EnableAJAX="false">
-            <telerik:RadGrid ID="RadGrid1" runat="server" Width="800px"
-                OnNeedDataSource="RadGrid1_NeedDataSource" 
-                OnDetailTableDataBind="RadGrid1_DetailTableDataBind"
-                OnItemCreated="RadGrid1_ItemCreated">
-                
-                   
-                
-                <MasterTableView DataKeyNames="ID" CommandItemDisplay="Top" >
-                    <DetailTables>
-                        <telerik:GridTableView DataKeyNames="ID"
-                            CommandItemDisplay="Top" >
-                            <DetailTables>
-                                
-                                <telerik:GridTableView DataKeyNames="ID, CategoryID"
-                                    CommandItemDisplay="Top" Name="RelatedItems" >
-                                    <DetailTables>
-                                        
-                                        <telerik:GridTableView DataKeyNames="ID" Name="InnerMost"
-                                            CommandItemDisplay="Top" >
-                                           
+            <telerik:RadButton ID="RadButton1" runat="server" CssClass="search" 
+                Skin="Windows7" Text="Search" AutoPostBack="False">
+            </telerik:RadButton>
+            <telerik:RadButton ID="RadButton2" runat="server" Text="Hello" 
+                CssClass="subroutine" AutoPostBack="False" Skin="Windows7">
+            </telerik:RadButton>
+            <telerik:RadButton ID="RadButton3" runat="server" AutoPostBack="False" 
+                BackColor="Red" CssClass="error" ForeColor="Red" Skin="Telerik" Text="Error">
+            </telerik:RadButton>
+            <telerik:RadGrid ID="RadGrid1" runat="server" 
+                OnDetailTableDataBind="RadGrid1_DetailTableDataBind" 
+                OnItemCreated="RadGrid1_ItemCreated" OnNeedDataSource="RadGrid1_NeedDataSource" 
+                Width="800px">
+                <mastertableview commanditemdisplay="Top" datakeynames="ID">
+                    <detailtables>
+                        <telerik:GridTableView CommandItemDisplay="Top" DataKeyNames="ID">
+                            <detailtables>
+                                <telerik:GridTableView CommandItemDisplay="Top" DataKeyNames="ID, CategoryID" 
+                                    Name="RelatedItems">
+                                    <detailtables>
+                                        <telerik:GridTableView CommandItemDisplay="Top" DataKeyNames="ID" 
+                                            Name="InnerMost">
                                         </telerik:GridTableView>
-                                    </DetailTables>
+                                    </detailtables>
                                 </telerik:GridTableView>
-                            </DetailTables>
+                            </detailtables>
                         </telerik:GridTableView>
-                    </DetailTables>
-                </MasterTableView>
+                    </detailtables>
+                </mastertableview>
             </telerik:RadGrid>
         </telerik:RadAjaxPanel>
         <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">

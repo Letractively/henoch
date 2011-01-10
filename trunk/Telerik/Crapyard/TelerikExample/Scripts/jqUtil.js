@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-1.4.4.min.js" /> 
+﻿/// <reference path="jquery-1.4.4.min.js" />
 $(document).ready(function () {
     $.ajaxSetup({
         error: function (x, e) {
@@ -22,18 +22,72 @@ $(document).ready(function () {
             }
         }
     });
-    
+
     $("#msg").ajaxError(function (event, request, settings) {
-        $(this).append("<li>Error requesting page " + settings.url + "</li>");
+        $(this).append("<li class= 'log'>Error requesting page " + settings.url + "</li>");
+        $(this).append("<li class= 'log'>" + request.responseText + "</li>");
+        //alert('Ajax error!');
     });
 
-   
+    $("#msg").ajaxStart(function () {
+        $(this).append("<li class= 'log'>Ajax request beginning.</li>");
+    });
 
     $("#msg").ajaxComplete(function (request, settings) {
-        $(this).append("<li>Request Complete.</li>");
-        alert('request completed');
+        $(this).append("<li class= 'log'>Ajax request completed.</li>");
     });
 
+    $(".search").click(function () {
+        var empId = 1;
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            url: "MyService.asmx/GetEmployee",
+            data: "{'employeeId': '" + empId + "'}",
+            success: function (data) {
+                alert("Employee name: " + data.d);
+            },
+            error: function () {
+                alert("Error calling the web service.");
+            }
+        });
+    });
+    $(".subroutine").click(function () {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            url: "MyService.asmx/HelloWorld",
+            data: "",
+            success: function (data) {
+                alert("Message: " + data.d);
+            },
+            error: function () {
+                alert("Error calling the web service.");
+            }
+        });
+    });
+
+    $(".error").click(function () {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            url: "MyService.asmx/ErrorFunction",
+            data: "",
+            success: function (data) {
+                alert("Message: " + data.d);
+            },
+            error: function () {
+                alert("Error calling the web service.");
+            }
+        });
+    });
+
+    $("#msg").dblclick(function () {
+        $("#msg").children('.log').remove(); 
+    });
 });
 function OnRequestStart(sender, args) {
     //$("#msg").append("<li class= 'log'>OnRequestStart: " + args.get_eventTarget() + "</li>");
@@ -47,9 +101,9 @@ function OnResponseEnd(sender, args) {
 
     try {
         //clear all log messages.
-        $(".log").remove();
+        //$(".log").remove();
         var children = $("#msg").children('.rgDetailTable');
-        children.remove();
+        //children.remove();
 
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventTarget):  " + args.EventTarget + ".</li>");
         $("#msg").append("<li class= 'log'>OnResponseEnd (EventArgument):  " + args.EventArgument + ".</li>");
@@ -69,7 +123,7 @@ function OnResponseEnd(sender, args) {
             if (result != null) {
                 var target = $(".log:last-child");
                 var cloned = detailsTable.clone(true);              
-                cloned.insertAfter(target);
+                //cloned.insertAfter(target);
             }
         }
         

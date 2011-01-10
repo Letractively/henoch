@@ -64,6 +64,7 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="MyService.asmx" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Scripts\jqUtil.js" />
@@ -127,6 +128,10 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MyService.asmx.cs">
+      <DependentUpon>MyService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="PersistExpandedState20.aspx.designer.cs">
       <DependentUpon>PersistExpandedState20.aspx</DependentUpon>
