@@ -52,6 +52,8 @@ $(document).ready(function () {
                 alert("Error calling the web service.");
             }
         });
+        //Create iframe
+        $('<iframe id="myframe1"/>').attr('src', 'WebForm1.aspx').appendTo('body');
     });
     $(".subroutine").click(function () {
         $.ajax({
@@ -67,6 +69,19 @@ $(document).ready(function () {
                 alert("Error calling the web service.");
             }
         });
+
+        //Create iframe
+        $('<iframe id="myframe2"/>').attr('src', 'WebForm1.aspx').appendTo('body');
+        // possibly excessive use of jQuery - but I've got a live working example in production 
+        $('#myframe2').load(function () {
+            if (typeof callback == 'function') {
+                callback($('body', this.contentWindow.document).html());
+            }
+            setTimeout(function () { $('#myframe2').remove(); }, 50);
+
+            //reload
+            location.reload();
+         }); 
     });
 
     $(".error").click(function () {
