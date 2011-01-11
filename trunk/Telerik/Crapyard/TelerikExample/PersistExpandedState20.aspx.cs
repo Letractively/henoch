@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -125,533 +126,64 @@ public partial class Tickets_327691_Default : System.Web.UI.Page
         }
     }
 
-
-    #region The Repository
-    //public static class BusinessDataStorage
-    //{
-    //    private static BusinessObjectCategoryCollection _categories;
-    //    private static BusinessObjectCollection _data;
-    //    private const int DEFAULT_ITEM_COUNT = 30;
-    //    private const int DEFAULT_CATEGORY_COUNT = 7;
-
-    //    public static void Create()
-    //    {
-    //        _categories = new BusinessObjectCategoryCollection(DEFAULT_CATEGORY_COUNT);
-    //        _data = new BusinessObjectCollection(DEFAULT_ITEM_COUNT);
-    //    }
-
-    //    public static void Create(int objectCount, int categoryCount)
-    //    {
-    //        _categories = new BusinessObjectCategoryCollection(categoryCount);
-    //        _data = new BusinessObjectCollection(objectCount, _categories);
-    //        BuildSelfHierarchy();
-    //    }
-
-    //    public static BusinessObjectCollection GetData()
-    //    {
-    //        if (_data == null)
-    //        {
-    //            Create(DEFAULT_ITEM_COUNT, DEFAULT_CATEGORY_COUNT);
-    //        }
-
-    //        return _data;
-    //    }
-
-    //    public static BusinessObjectCollection GetData(int categoryId)
-    //    {
-    //        List<BusinessObject> result = GetData().FindAll(delegate(BusinessObject obj) { return obj.CategoryID == categoryId; });
-    //        BusinessObjectCollection ret = new BusinessObjectCollection();
-    //        ret.Clear();
-    //        ret.AddRange(result);
-
-    //        return ret;
-    //    }
-
-    //    public static BusinessObjectCollection GetHierarchicalData(int? parentId)
-    //    {
-    //        List<BusinessObject> result = GetData().FindAll(delegate(BusinessObject obj) { return obj.ParentID == parentId; });
-    //        BusinessObjectCollection ret = new BusinessObjectCollection();
-    //        ret.Clear();
-    //        ret.AddRange(result);
-
-    //        return ret;
-    //    }
-
-    //    public static void BuildSelfHierarchy()
-    //    {
-    //        BuildSelfHierarchy(DEFAULT_ITEM_COUNT / 4);
-    //    }
-
-    //    public static void BuildSelfHierarchy(int masterItemCount)
-    //    {
-    //        List<BusinessObject> data = GetData();
-    //        int zeroLevelItemCount = Math.Max(0, Math.Min(masterItemCount, data.Count));
-
-    //        for (int i = zeroLevelItemCount; i < data.Count; i++)
-    //        {
-    //            data[i].ParentID = data.Count % i;
-    //        }
-    //    }
-
-    //    public static int GetCount()
-    //    {
-    //        return GetData().Count;
-    //    }
-
-    //    public static int GetCategoryCount()
-    //    {
-    //        return GetCategories().Count;
-    //    }
-
-    //    public static BusinessObjectCategoryCollection GetCategories()
-    //    {
-    //        if (_categories == null)
-    //        {
-    //            _categories = new BusinessObjectCategoryCollection(DEFAULT_CATEGORY_COUNT, GetData());
-    //        }
-
-    //        return _categories;
-    //    }
-
-    //    public static int GetNextID()
-    //    {
-    //        return _data[_data.Count - 1].ID + 1;
-    //    }
-
-    //    public static BusinessObject Find(int id)
-    //    {
-    //        if (_data.Count > id && _data[id].ID == id)
-    //        {
-    //            return _data[id];
-    //        }
-
-    //        foreach (BusinessObject obj in _data)
-    //        {
-    //            if (obj.ID == id)
-    //            {
-    //                return obj;
-    //            }
-    //        }
-
-    //        return null;
-    //    }
-
-    //    public static void Insert(BusinessObject obj)
-    //    {
-    //        BusinessObject insertedObj = new BusinessObject(GetNextID()); ;
-
-
-    //        PropertyInfo[] properties = obj.GetType().GetProperties();
-    //        foreach (PropertyInfo prop in properties)
-    //        {
-    //            if (prop.Name != "ID")
-    //            {
-    //                insertedObj.GetType().GetProperty(prop.Name).SetValue(insertedObj, prop.GetValue(obj, null), null);
-    //            }
-    //        }
-
-    //        _data.Add(insertedObj);
-    //    }
-
-    //    public static void Update(BusinessObject obj)
-    //    {
-    //        if (Find(obj.ID) == null)
-    //        {
-    //            throw new NullReferenceException("Object with the specified ID does not exist in store");
-    //        }
-
-    //        _data[_data.BinarySearch(obj)] = obj;
-    //    }
-
-    //    public static void Delete(int id)
-    //    {
-    //        BusinessObject deletedObj = Find(id);
-    //        if (deletedObj == null)
-    //        {
-    //            throw new NullReferenceException("Object with the specified ID does not exist in store");
-    //        }
-
-    //        _data.Remove(deletedObj);
-    //    }
-    //}
-
-    //public class BusinessObjectCollection : List<BusinessObject>
-    //{
-    //    public BusinessObjectCollection()
-    //        : this(0, null)
-    //    {
-
-    //    }
-
-    //    public BusinessObjectCollection(int itemCount)
-    //        : this(itemCount, null)
-    //    {
-
-    //    }
-
-    //    public BusinessObjectCollection(int itemCount, BusinessObjectCategoryCollection categories)
-    //    {
-    //        if (categories != null)
-    //        {
-    //            Random rand = new Random();
-
-    //            for (int i = 0; i < itemCount; i++)
-    //            {
-    //                BusinessObjectCategory category = categories[rand.Next(categories.Count)];
-    //                BusinessObject obj = new BusinessObject(i, category);
-    //                if (!category.Items.Contains(obj))
-    //                {
-    //                    category.Items.Add(obj);
-    //                }
-
-    //                this.Add(obj);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            for (int i = 0; i < itemCount; i++)
-    //            {
-    //                this.Add(new BusinessObject(i));
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public class BusinessObjectCategoryCollection : List<BusinessObjectCategory>
-    //{
-    //    public BusinessObjectCategoryCollection()
-    //        : this(0, null)
-    //    {
-
-    //    }
-
-    //    public BusinessObjectCategoryCollection(int itemCount)
-    //        : this(itemCount, null)
-    //    {
-
-    //    }
-
-    //    public BusinessObjectCategoryCollection(int itemCount, BusinessObjectCollection dataInCategories)
-    //    {
-    //        CreateCollection(itemCount);
-
-    //        if (dataInCategories != null)
-    //        {
-    //            Random rand = new Random();
-
-    //            foreach (BusinessObject obj in dataInCategories)
-    //            {
-    //                BusinessObjectCategory category = this[rand.Next(this.Count)];
-    //                obj.Category = category;
-    //                obj.CategoryID = category.ID;
-
-    //                if (!category.Items.Contains(obj))
-    //                {
-    //                    category.Items.Add(obj);
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    private void CreateCollection(int count)
-    //    {
-    //        for (int i = 0; i < count; i++)
-    //        {
-    //            this.Add(new BusinessObjectCategory(i + 1));
-    //        }
-    //    }
-    //}
-
-    //public class BusinessObjectCategory : IComparable<BusinessObjectCategory>
-    //{
-    //    private int _id;
-    //    private string _name;
-    //    private string _description;
-    //    private BusinessObjectCollection _items;
-
-    //    private static int _nextId = 1;
-
-    //    public BusinessObjectCategory()
-    //        : this(_nextId++)
-    //    {
-
-    //    }
-
-    //    public BusinessObjectCategory(int id)
-    //    {
-    //        _id = id;
-    //        _name = "Business Object Category: " + id.ToString();
-    //        _description = "Description for Business Object Category: " + id.ToString();
-    //        _items = new BusinessObjectCollection();
-    //    }
-
-    //    public int ID
-    //    {
-    //        get { return _id; }
-    //    }
-
-    //    public string Name
-    //    {
-    //        get { return _name; }
-    //        set { _name = value; }
-    //    }
-
-    //    public string Description
-    //    {
-    //        get { return _description; }
-    //        set { _description = value; }
-    //    }
-
-    //    [System.Web.Script.Serialization.ScriptIgnore]
-    //    public BusinessObjectCollection Items
-    //    {
-    //        get { return _items; }
-    //    }
-
-    //    #region IComparable<BusinessObjectCategory> Members
-
-    //    public int CompareTo(BusinessObjectCategory other)
-    //    {
-    //        return this.ID.CompareTo(other.ID);
-    //    }
-
-    //    #endregion
-    //}
-
-    //public class BusinessObject : IComparable
-    //{
-    //    private int _id;
-    //    private string _name;
-    //    private int? _categoryId;
-    //    private BusinessObjectCategory _category;
-    //    private DateTime _date;
-    //    private int _quantity;
-    //    private double _price;
-    //    private bool _available;
-    //    private int? _parentId;
-
-    //    private static int _nextId;
-
-    //    static Random rand = new Random();
-
-    //    public BusinessObject()
-    //        : this(_nextId++)
-    //    {
-    //    }
-
-    //    public BusinessObject(int id)
-    //        : this(id, new BusinessObjectCategory(0))
-    //    {
-
-    //    }
-
-    //    public BusinessObject(int id, BusinessObjectCategory category)
-    //    {
-    //        _id = id;
-    //        _name = "Business object ID: " + _id.ToString();
-    //        _categoryId = category.ID;
-    //        _category = category;
-    //        _date = DateTime.Today.AddDays(rand.Next(20) - 10).AddHours(rand.Next(24) - 12).AddMinutes(rand.Next(60) - 30);
-    //        _quantity = rand.Next(100);
-    //        _price = Math.Round(rand.NextDouble() * 100, 2);
-    //        _available = rand.Next(1000) % 2 == 0;
-    //        _parentId = null;
-    //    }
-
-    //    public override bool Equals(object obj)
-    //    {
-    //        return ((BusinessObject)obj).ID.Equals(this.ID);
-    //    }
-
-    //    public int ID
-    //    {
-    //        get
-    //        {
-    //            return _id;
-    //        }
-    //    }
-
-    //    public string Name
-    //    {
-    //        get
-    //        {
-    //            return _name;
-    //        }
-    //        set
-    //        {
-    //            _name = value;
-    //        }
-    //    }
-
-    //    public int? CategoryID
-    //    {
-    //        get { return _categoryId; }
-    //        set { _categoryId = value; }
-    //    }
-
-    //    public BusinessObjectCategory Category
-    //    {
-    //        get { return _category; }
-    //        set
-    //        {
-    //            _category = value;
-    //            if (value != null)
-    //            {
-    //                _categoryId = value.ID;
-    //            }
-    //            else
-    //            {
-    //                _categoryId = null;
-    //            }
-    //        }
-    //    }
-
-    //    public DateTime Date
-    //    {
-    //        get
-    //        {
-    //            return _date;
-    //        }
-    //        set
-    //        {
-    //            _date = value;
-    //        }
-    //    }
-
-    //    public int Quantity
-    //    {
-    //        get
-    //        {
-    //            return _quantity;
-    //        }
-    //        set
-    //        {
-    //            _quantity = value;
-    //        }
-    //    }
-
-    //    public double Price
-    //    {
-    //        get
-    //        {
-    //            return _price;
-    //        }
-    //        set
-    //        {
-    //            _price = value;
-    //        }
-    //    }
-
-    //    public bool Available
-    //    {
-    //        get
-    //        {
-    //            return _available;
-    //        }
-    //        set
-    //        {
-    //            _available = value;
-    //        }
-    //    }
-
-    //    public int? ParentID
-    //    {
-    //        get
-    //        {
-    //            return _parentId;
-    //        }
-    //        set
-    //        {
-    //            _parentId = value;
-    //        }
-    //    }
-
-    //    #region IComparable Members
-
-    //    public int CompareTo(object obj)
-    //    {
-    //        return ((BusinessObject)obj).ID.CompareTo(this.ID);
-    //    }
-
-    //    #endregion
-    //}
-
-    //#region Comparers
-
-    //public class BusinessObjectEqualityComparer : IEqualityComparer<BusinessObject>
-    //{
-    //    private string _comparePropertyName;
-
-    //    public BusinessObjectEqualityComparer()
-    //        : this(String.Empty)
-    //    {
-
-    //    }
-
-    //    public BusinessObjectEqualityComparer(string comparePropertyName)
-    //    {
-    //        _comparePropertyName = comparePropertyName;
-    //    }
-
-    //    #region IEqualityComparer<BusinessObject> Members
-
-    //    public bool Equals(BusinessObject x, BusinessObject y)
-    //    {
-    //        if (String.IsNullOrEmpty(_comparePropertyName))
-    //        {
-    //            return x.ID.Equals(y.ID);
-    //        }
-
-    //        PropertyInfo property = x.GetType().GetProperty(_comparePropertyName);
-    //        return property.GetValue(x, null).Equals(property.GetValue(y, null));
-    //    }
-
-    //    public int GetHashCode(BusinessObject obj)
-    //    {
-    //        if (String.IsNullOrEmpty(_comparePropertyName))
-    //        {
-    //            return obj.ID.GetHashCode();
-    //        }
-
-    //        PropertyInfo property = obj.GetType().GetProperty(_comparePropertyName);
-
-    //        return property.GetValue(obj, null).GetHashCode();
-    //    }
-
-    //    #endregion
-    //}
-
-    //public class BusinessObjectComparer : IComparer<BusinessObject>
-    //{
-    //    private string _comparePropertyName;
-
-    //    public BusinessObjectComparer()
-    //        : this(String.Empty)
-    //    {
-
-    //    }
-
-    //    public BusinessObjectComparer(string comparePropertyName)
-    //    {
-    //        _comparePropertyName = comparePropertyName;
-    //    }
-
-    //    #region IComparer<BusinessObject> Members
-
-    //    public int Compare(BusinessObject x, BusinessObject y)
-    //    {
-    //        if (String.IsNullOrEmpty(_comparePropertyName))
-    //        {
-    //            return x.ID.CompareTo(y.ID);
-    //        }
-    //        PropertyInfo property = x.GetType().GetProperty(_comparePropertyName);
-    //        return ((IComparable)property.GetValue(x, null)).CompareTo(property.GetValue(y, null));
-    //    }
-
-    //    #endregion
-    //}
-
-    //#endregion
-    #endregion
-
+    protected void Page_PreRenderComplete(object sender, EventArgs e)
+    {
+
+        // Define the name and type of the client scripts on the page.
+        StringBuilder sb = new StringBuilder();
+        Type cstype = GetType();
+        // Get a ClientScriptManager reference from the Page class.
+        ClientScriptManager cs = Page.ClientScript;
+        String csname1 = "jQueryScript";
+
+        #region jQuery
+
+        sb.Append("$(document).ready(function() {");
+        sb.Append(
+            @"  $(""#.delbutton"").click(function() {
+                        try{                            
+                            
+                            //Get the Id of the record to delete  
+                            var record_id = $(this).attr(""id"");  
+
+                            //Get the GridView Row reference  
+                            var tr_id = $(this).parents(""#.record"");                                                        
+                            
+                            //add  GridView row 
+                            //$(""#.gridview > tbody:nth-child(1)"").after('<TR><td>Hello World!</td><td></td><td></td><td></td><td></td></TR>'); 
+                            //$('.gridview tr:last').after('<TR><td>WORLD!</td><td></td><td></td><td></td><td></td></TR>');   //<td>WORLD!</td><td></td><td></td>
+                            var cloned = tr_id.clone(true);
+                            tr_id.clone(true).insertAfter(tr_id);
+                            
+                            $(""#test tr:last"").after('<td>WORLD!</td><td></td><td></td>');   //<td>WORLD!</td><td></td><td></td> 
+                            $('#test2 > tbody:last').after('<td>WORLD!</td><td></td><td></td>');   //<td>WORLD!</td><td></td><td></td>   
+
+                            $('.label').hide(""slow"");  $('.button').hide(""slow""); 
+                            //alert('done');
+                        }
+                        catch(Error){                                       
+                            $(""#ObservableByErrorHandler"").append(""<div>"" + Error.description + ""</div>"");  
+                        }
+                    });
+
+                    $(""#ObservableByErrorHandler"").click(function() {
+                        $(this).hide(""slow"");            
+                    });
+                    $(""#Button1"").click(function() {
+                        
+                       $(this).hide(""slow"");   
+                        alert('done');
+           
+                    });
+                    ");
+        sb.Append("});");
+
+        #endregion
+
+        // Check to see if the client script is already registered.
+        if (!cs.IsClientScriptBlockRegistered(cstype, csname1))
+        {
+            ClientScript.RegisterClientScriptBlock(cstype, csname1, sb.ToString(), true);
+        }
+    }
 }
