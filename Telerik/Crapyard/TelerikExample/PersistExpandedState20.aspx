@@ -18,7 +18,11 @@
             
             <asp:ScriptReference Path="~/Scripts/jquery-1.4.4.min.js" />
         </Scripts>
+        <Services>
+            <asp:ServiceReference Path="~/MyService.asmx"/>
+        </Services>
     </asp:ScriptManager>
+
     <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
         <ClientEvents OnRequestStart="OnRequestStart" OnResponseEnd="OnResponseEnd"/>
         <AjaxSettings>

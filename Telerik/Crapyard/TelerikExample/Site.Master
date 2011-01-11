@@ -12,6 +12,15 @@
 </head>
 <body>
     <form runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+        <Scripts>
+            
+            <asp:ScriptReference Path="~/Scripts/jquery-1.4.4.min.js" />
+        </Scripts>
+        <Services>
+            <asp:ServiceReference Path="~/MyService.asmx"/>
+        </Services>
+    </asp:ScriptManager>
 
     <div class="page">
         <div class="header">
@@ -33,14 +42,24 @@
             </div>
             <div class="clear hideSkiplink">
                 <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" 
-                    EnableViewState="false" IncludeStyleBlock="false" Orientation="Horizontal" 
-                    ForeColor="White">
+                    EnableViewState="False" IncludeStyleBlock="false" Orientation="Horizontal" 
+                    ForeColor="#284E98" BackColor="#B5C7DE" DynamicHorizontalOffset="2" 
+                    Font-Names="Verdana" Font-Size="0.8em" StaticSubMenuIndent="10px">
+                    <DynamicHoverStyle BackColor="#284E98" ForeColor="White" />
+                    <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+                    <DynamicMenuStyle BackColor="#B5C7DE" />
+                    <DynamicSelectedStyle BackColor="#507CD1" />
                     <Items>
                         <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home"/>
                         <asp:MenuItem NavigateUrl="~/PersistExpandedState20.aspx" 
                             Text="Persisting Expanding" Value="Persisting Expanding"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/WebForm1.aspx" Text="Test" Value="Test">
+                        </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
                     </Items>
+                    <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
+                    <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+                    <StaticSelectedStyle BackColor="#507CD1" />
                 </asp:Menu>
             </div>
         </div>
