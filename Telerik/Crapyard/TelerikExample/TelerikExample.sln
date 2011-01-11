@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelerikExample", "TelerikExample.csproj", "{75E237CA-FE79-4688-9AA0-42E0058738B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\Repository\Repository\Repository.csproj", "{2E4FA88B-134E-4918-9A83-29582396D902}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\Repository\Repository.csproj", "{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -19,12 +15,16 @@ Global
 		{75E237CA-FE79-4688-9AA0-42E0058738B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75E237CA-FE79-4688-9AA0-42E0058738B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75E237CA-FE79-4688-9AA0-42E0058738B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E4FA88B-134E-4918-9A83-29582396D902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E4FA88B-134E-4918-9A83-29582396D902}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E4FA88B-134E-4918-9A83-29582396D902}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E4FA88B-134E-4918-9A83-29582396D902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

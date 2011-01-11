@@ -55,7 +55,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Telerik.Web.UI">
-      <HintPath>..\_SharedAssemblies\Telerik.Web.UI.dll</HintPath>
+      <HintPath>..\..\Workingfolder\_SharedAssemblies\Telerik.Web.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -159,8 +159,8 @@
     <Content Include="Site.Master" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Repository\Repository\Repository.csproj">
-      <Project>{2E4FA88B-134E-4918-9A83-29582396D902}</Project>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}</Project>
       <Name>Repository</Name>
     </ProjectReference>
   </ItemGroup>
