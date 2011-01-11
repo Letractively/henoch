@@ -16,7 +16,8 @@ namespace TelerikExample
 
         protected void RadButton1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/PersistExpandedState20.aspx");
+            
+            Response.Redirect("~/WebForm1.aspx");
             //Server.Transfer("~/PersistExpandedState20.aspx");
         }
     }

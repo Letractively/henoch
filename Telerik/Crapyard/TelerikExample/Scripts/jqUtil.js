@@ -1,5 +1,6 @@
 ﻿/// <reference path="jquery-1.4.4.min.js" />
 $(document).ready(function () {
+    var loaded = 0;
     $.ajaxSetup({
         error: function (x, e) {
             if (x.status == 0) {
@@ -53,7 +54,7 @@ $(document).ready(function () {
             }
         });
         //Create iframe
-        $('<iframe id="myframe1"/>').attr('src', 'WebForm1.aspx').appendTo('body');
+        $('<iframe />').attr('src', 'WebForm1.aspx').appendTo('body');
     });
     $(".subroutine").click(function () {
         $.ajax({
@@ -70,18 +71,23 @@ $(document).ready(function () {
             }
         });
 
-        //Create iframe
-        $('<iframe id="myframe2"/>').attr('src', 'WebForm1.aspx').appendTo('body');
+        //Create iframe with inner frame
+        $('<iframe id="myframe" src="WebForm1.aspx"><iframe id="myframe2" src="WebForm1.aspx"> <input id="Button1" type="button" value="button" /></iframe></iframe>').appendTo('body');
         // possibly excessive use of jQuery - but I've got a live working example in production 
         $('#myframe2').load(function () {
             if (typeof callback == 'function') {
                 callback($('body', this.contentWindow.document).html());
             }
-            setTimeout(function () { $('#myframe2').remove(); }, 50);
-
+            setTimeout(function () {
+                //$('#myframe2').remove(); 
+                alert('setTimeout...');
+            }, 50);
+            alert('loading...');
+            loaded++;
             //reload
-            location.reload();
-         }); 
+            //i.e. use counter 
+            if(loaded>1) location.reload();
+        });
     });
 
     $(".error").click(function () {
@@ -101,7 +107,7 @@ $(document).ready(function () {
     });
 
     $("#msg").dblclick(function () {
-        $("#msg").children('.log').remove(); 
+        $("#msg").children('.log').remove();
     });
 });
 function OnRequestStart(sender, args) {
