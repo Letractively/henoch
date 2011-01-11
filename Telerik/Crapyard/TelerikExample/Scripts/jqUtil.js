@@ -72,9 +72,9 @@ $(document).ready(function () {
         });
 
         //Create iframe with inner frame
-        $('<iframe id="myframe" src="WebForm1.aspx"><iframe id="myframe2" src="WebForm1.aspx"> <input id="Button1" type="button" value="button" /></iframe></iframe>').appendTo('body');
+        $('<iframe id="myframe" src="WebForm1.aspx"/>').appendTo('body');
         // possibly excessive use of jQuery - but I've got a live working example in production 
-        $('#myframe2').load(function () {
+        $('#myframe').load(function () {
             if (typeof callback == 'function') {
                 callback($('body', this.contentWindow.document).html());
             }
