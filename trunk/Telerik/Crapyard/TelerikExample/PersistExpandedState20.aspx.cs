@@ -125,6 +125,17 @@ public partial class Tickets_327691_Default : System.Web.UI.Page
             return (List<string>)Session["ExpandedItemKeys"];
         }
     }
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            Label1.Text = "Not postback";
+        }
+        else
+        {
+            Label1.Text = "postback";
+        }
+    }
 
     protected void Page_PreRenderComplete(object sender, EventArgs e)
     {

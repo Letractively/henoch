@@ -12,6 +12,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
+    <asp:Label ID="Label1" runat="server" CssClass="log"></asp:Label>
     <div id="msg"></div>
     <asp:ScriptManager ID="ScriptManager1" runat="server">
         <Scripts>
@@ -43,6 +44,8 @@
 
     <div>
         <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" EnableAJAX="false">
+            
+            <br />
             <telerik:RadButton ID="RadButton1" runat="server" CssClass="search" 
                 Skin="Windows7" Text="Search" AutoPostBack="False">
             </telerik:RadButton>
@@ -51,6 +54,9 @@
             </telerik:RadButton>
             <telerik:RadButton ID="RadButton3" runat="server" AutoPostBack="False" 
                 BackColor="Red" CssClass="error" ForeColor="Red" Skin="Telerik" Text="Error">
+            </telerik:RadButton>
+            
+            <telerik:RadButton ID="RadButton4" runat="server" Text="Postback">
             </telerik:RadButton>
             <telerik:RadGrid ID="RadGrid1" runat="server" 
                 OnDetailTableDataBind="RadGrid1_DetailTableDataBind" 

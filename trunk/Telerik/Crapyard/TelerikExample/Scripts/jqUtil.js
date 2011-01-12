@@ -75,18 +75,11 @@ $(document).ready(function () {
         $('<iframe id="myframe" src="WebForm1.aspx"/>').appendTo('body');
         // possibly excessive use of jQuery - but I've got a live working example in production 
         $('#myframe').load(function () {
-            if (typeof callback == 'function') {
-                callback($('body', this.contentWindow.document).html());
-            }
-            setTimeout(function () {
-                //$('#myframe2').remove(); 
-                alert('setTimeout...');
-            }, 50);
             alert('loading...');
             loaded++;
             //reload
             //i.e. use counter 
-            if(loaded>1) location.reload();
+            if (loaded > 1) window.location.href = "PersistExpandedState20.aspx";
         });
     });
 
@@ -105,10 +98,14 @@ $(document).ready(function () {
             }
         });
     });
-
+    $('.log').dblclick(function () {
+        $(this).remove();
+    });
     $("#msg").dblclick(function () {
         $("#msg").children('.log').remove();
     });
+
+//    $("#msg").append("<li class= 'log'>Doc is loaded.</li>");
 });
 function OnRequestStart(sender, args) {
     //$("#msg").append("<li class= 'log'>OnRequestStart: " + args.get_eventTarget() + "</li>");
