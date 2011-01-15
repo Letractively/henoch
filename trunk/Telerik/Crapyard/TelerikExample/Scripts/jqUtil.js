@@ -105,7 +105,35 @@ $(document).ready(function () {
         $("#msg").children('.log').remove();
     });
 
-//    $("#msg").append("<li class= 'log'>Doc is loaded.</li>");
+    var oldValue;
+    var isNumeriek;
+    $(".numericCssClass").keypress(function (event) {
+        //$("#msg").append("<li class= 'log'>EventTarget:  " + event.target.value + ".</li>");
+        oldValue = $(this).valueOf().get(0).value;
+        var key = String.fromCharCode(event.keyCode);
+        isNumeriek = true;
+        
+        if (isNaN(key) && key != '.') {
+            event.preventDefault();
+            isNumeriek = false;
+        }
+    });
+    $(".numericCssClass").keyup(function (event) {
+        //$("#msg").append("<li class= 'log'>EventTarget:  " + event.target.value + ".</li>");
+        regex = /\d*(\.?)(\d{0,2})/g;
+        result = regex.exec(event.target.value);
+
+        if (isNumeriek) {
+
+            if (result != null && $(this).valueOf().get(0).value != result[0]) {
+                event.preventDefault();
+                $(this).valueOf().get(0).value = result[0];
+            }
+        }
+
+    });
+
+    //    $("#msg").append("<li class= 'log'>Doc is loaded.</li>");
 });
 function OnRequestStart(sender, args) {
     //$("#msg").append("<li class= 'log'>OnRequestStart: " + args.get_eventTarget() + "</li>");
