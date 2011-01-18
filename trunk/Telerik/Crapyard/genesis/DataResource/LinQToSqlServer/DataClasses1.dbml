@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="RetPok" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=MXS119;Initial Catalog=RetPok;Persist Security Info=True;User ID=sa" SettingsObjectName="DataResource.Properties.Settings" SettingsPropertyName="RetPokConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BronBestand" Member="BronBestands">
+    <Type Name="BronBestand">
+      <Column Name="GegevensSetId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BestandsNaam" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AanleverDatum" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="GegevensSet_BronBestand" Member="GegevensSet" ThisKey="GegevensSetId" OtherKey="GegevensSetId" Type="GegevensSet" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Project" Member="Projects">
+    <Type Name="Project">
+      <Column Name="ProjectId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProjectNaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ProjectOmschrijving" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Experimenteel" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BerekenDatum" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ImplicGegevensSetId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FaalkansGegevensSetId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TNOGegevensSetId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ToetspeilGegevensSetId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="GegevensSet_Project" Member="GegevensSet" ThisKey="ImplicGegevensSetId" OtherKey="GegevensSetId" Type="GegevensSet" IsForeignKey="true" />
+      <Association Name="GegevensSet_Project1" Member="GegevensSet1" ThisKey="FaalkansGegevensSetId" OtherKey="GegevensSetId" Type="GegevensSet" IsForeignKey="true" />
+      <Association Name="GegevensSet_Project2" Member="GegevensSet2" ThisKey="TNOGegevensSetId" OtherKey="GegevensSetId" Type="GegevensSet" IsForeignKey="true" />
+      <Association Name="GegevensSet_Project3" Member="GegevensSet3" ThisKey="ToetspeilGegevensSetId" OtherKey="GegevensSetId" Type="GegevensSet" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GegevensSoort" Member="GegevensSoorts">
+    <Type Name="GegevensSoort">
+      <Column Name="GegevensSoortId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="GegevensSoortNaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="GegevensSoort_GegevensSet" Member="GegevensSets" ThisKey="GegevensSoortId" OtherKey="GegevensSoortId" Type="GegevensSet" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ImplicLocatie" Member="ImplicLocaties">
+    <Type Name="ImplicLocatie">
+      <Column Name="ImplicLocatieId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GegevensSetId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LocatieNaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Volgnummer" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Association Name="GegevensSet_ImplicLocatie" Member="GegevensSet" ThisKey="GegevensSetId" OtherKey="GegevensSetId" Type="GegevensSet" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GegevensSet" Member="GegevensSets">
+    <Type Name="GegevensSet">
+      <Column Name="GegevensSetId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="GegevensSoortId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GegevensSetNaam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SafAanwezig" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SofAanwezig" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Beschikbaar" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="GegevensSet_BronBestand" Member="BronBestands" ThisKey="GegevensSetId" OtherKey="GegevensSetId" Type="BronBestand" />
+      <Association Name="GegevensSet_Project" Member="Projects" ThisKey="GegevensSetId" OtherKey="ImplicGegevensSetId" Type="Project" />
+      <Association Name="GegevensSet_Project1" Member="Projects1" ThisKey="GegevensSetId" OtherKey="FaalkansGegevensSetId" Type="Project" />
+      <Association Name="GegevensSet_Project2" Member="Projects2" ThisKey="GegevensSetId" OtherKey="TNOGegevensSetId" Type="Project" />
+      <Association Name="GegevensSet_Project3" Member="Projects3" ThisKey="GegevensSetId" OtherKey="ToetspeilGegevensSetId" Type="Project" />
+      <Association Name="GegevensSet_ImplicLocatie" Member="ImplicLocaties" ThisKey="GegevensSetId" OtherKey="GegevensSetId" Type="ImplicLocatie" />
+      <Association Name="GegevensSoort_GegevensSet" Member="GegevensSoort" ThisKey="GegevensSoortId" OtherKey="GegevensSoortId" Type="GegevensSoort" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
