@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="NUnit2Report" default="rebuild">
+
+  <property name="dependencies.dir" value="./Bin" />
+  <property name="output.dir" value="./Bin/Release" />
+  
+    <target name="clean" >
+        <delete>
+            <fileset>
+                <include name="./Bin/Release/**" />
+            </fileset>
+        </delete>
+    </target>
+    <target name="build">
+        <loadtasks assembly="./Bin/NAnt.Contrib.Tasks.dll" />
+
+        <!-- By default the report is in english and format is NoFrames-->
+        <nunit2report todir="Daily-Build-Report">
+            <fileset>
+                <include name="${output.dir}/Results/TestObservlet.AsyncDemoTest-results.xml" />
+            </fileset>
+            <!--<summaries>
+                <include name="Compagny.Argos.Test.xml" />
+            </summaries> -->
+        </nunit2report>
+
+ 
+    </target>
+    <target name="rebuild" depends="clean, build" />
+</project>

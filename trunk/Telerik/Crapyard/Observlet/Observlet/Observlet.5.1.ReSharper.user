@@ -1,0 +1,50 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx" caret="0" fromTop="0" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:APL.aspx" caret="0" fromTop="0" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:APL.aspx.cs" caret="163" fromTop="6" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:Workers/f:Worker.cs" caret="180" fromTop="7" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="10497" fromTop="0" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/f:Global.asax.cs" caret="1946" fromTop="12" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="19377" fromTop="8" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="19825" fromTop="14" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="19420" fromTop="6" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="20507" fromTop="13" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="20198" fromTop="3" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="19377" fromTop="13" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="18267" fromTop="12" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="19377" fromTop="16" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="22062" fromTop="4" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="25629" fromTop="24" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="9820" fromTop="8" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:Workers/f:Worker.cs" caret="180" fromTop="7" />
+      <File id="16311B68-97CA-419E-B22F-89DD126188EB/d:WebForms/f:AsyncTracer.aspx.cs" caret="13490" fromTop="8" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="Cancel" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+</Configuration>

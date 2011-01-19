@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<project name="TestObservlet" default="NAnt.xsd" >
+
+  <property name="revision" value="HEAD" />
+	<property name="root" value="." />
+	<property name="dependencies.dir" value="./Bin" />
+	<property name="output.dir" value="./Bin/Release" />
+	<property name="output.dll" value="${output.dir}/TestObservlet.dll" />
+	<property name="output.tlb" value="${output.dir}/TestObservlet.tlb" />
+	<property name="dll" value="TestObservlet.dll" />
+	<!--property name="USEREXT" value="${path::combine(environment::get-variable('USEREXT'), '')}" />
+	<property name="USEREXT.dll" value="${USEREXT}/TestObservlet.dll" />
+	<property name="USEREXT.tlb" value="${USEREXT}/TestObservlet.tlb" /-->
+	<property name="NANTCONTRIB_HOME" value="${path::combine(environment::get-variable('NANTCONTRIB_HOME'), '')}" />
+	<property name="VS2008IDE.dir" value="c:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\PublicAssemblies"/>
+	<property name="SYSTEMROOT" value="${path::combine(environment::get-variable('SYSTEMROOT'), '')}" />
+  <property name="NUNITHOME" value="${path::combine(environment::get-variable('NUNIT_HOME'), '')}" />
+	<property name="DOTNet2BIN" value="${path::combine(environment::get-variable('SystemRoot'), '')}\Microsoft.NET\Framework\v2.0.50727" />
+	<property name="DOTNet3.0BIN" value="${path::combine(environment::get-variable('SystemRoot'), '')}\Microsoft.NET\Framework\v3.0" />
+	<property name="DOTNet3.5BIN" value="${path::combine(environment::get-variable('SystemRoot'), '')}\Microsoft.NET\Framework\v3.5" />
+
+	<property name="URI.NUnit" value ="http://hellow0rld.googlecode.com/svn/trunk/OpenSourceTools/Source/NUnit.2.4.8/" />
+  <property name="TEMP" value="${SYSTEMROOT}\temp" />
+	<property name="nant.settings.currentframework" value="net-3.5" />
+	
+	<target name="clean">
+		<delete file="${output.dll}" />
+		<delete file="${output.tlb}" />
+		<!--delete file="${USEREXT.dll}" />
+		<delete file="${USEREXT.tlb}" /-->    
+	</target>
+
+  <target name="build" >
+		<!--<mkdir dir="${output.dir}" unless="${directory::exists(output.dir)}" /-->
+
+		
+		<csc target="library" output="${output.dll}"  debug = "true" >
+			<sources>
+					<include name="**/*.cs"/>
+					<exclude name="EntityFramework/*.cs" />
+					<exclude name="${project::get-buildfile-path()}" />
+      </sources>
+			<nowarn>
+				<warning number="618"/>
+				<warning number="672"/>
+        <warning number="649"/>
+				<warning number="436"/>
+				<warning number="3024"/>
+				<warning number="3001"/>
+				<warning number="3003"/>
+				<warning number="3024"/>
+				<warning number="3001"/>
+				<warning number="3001"/>
+			</nowarn>
+			<references basedir="${root}">
+				<include name="${dependencies.dir}\nunit.framework.dll"/>
+				<!--<include name="${dependencies.dir}\MathNet.Iridium.dll"/>
+				<include name="${dependencies.dir}\Microsoft.Practices.EnterpriseLibrary.Data.dll"/>-->
+				<!--<include name="${dependencies.dir}\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Data.dll"/>-->
+				<include name="${dependencies.dir}\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll"/>
+				<include name="${dependencies.dir}\ApplicationTypes.dll"/>
+				<include name="${dependencies.dir}\ApplicationTypes_Accessor.dll"/>
+				<include name="${VS2008IDE.dir}\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll"/>
+				
+				<include name="c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.dll"/>
+				<include name="c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.configuration.dll"/>
+				<include name="${DOTNet3.5BIN}\System.Core.dll"/>
+				<include name="${DOTNet3.5BIN}\System.Data.dll"/>
+				<include name="${DOTNet3.5BIN}\Microsoft.VisualStudio.QualityTools.UnitTestFramework"/>
+				<include name="c:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Data.DataSetExtensions.dll"/>
+				<include name="${DOTNet3.5BIN}\System.Data.Entity.dll"/>
+				<include name="${DOTNet3.5BIN}\System.Data.Linq.dll"/>
+				<include name="c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.Drawing.dll"/>
+				<include name="${DOTNet3.0BIN}\System.Runtime.Serialization.dll"/>
+				<include name="c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.Security.dll"/>
+				<include name="c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll"/>
+				<include name="c:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll"/>
+			</references>
+		</csc>
+
+		<copy file="${dependencies.dir}\nunit.framework.dll" todir="${output.dir}"/>
+		<copy file="${dependencies.dir}\ApplicationTypes.dll" todir="${output.dir}"/>
+		<copy file="${dependencies.dir}\ApplicationTypes_Accessor.dll" todir="${output.dir}"/>
+		<exec program="${DOTNet2BIN}/regasm">
+		  <arg value="${output.dir}\TestObservlet.dll" />
+		  <arg value="/tlb:TestObservlet.tlb" />
+		</exec>
+
+    <exec program="${DOTNet2BIN}/regasm">
+      <arg value="${output.dir}\nunit.framework.dll" />
+      <arg value="/codebase" />
+    </exec>
+	
+	</target>
+
+  <target name="rebuild" depends="clean,build" failonerror="false"  />
+
+  <target name="CopyAndRegister" >
+    <!--copy todir="${USEREXT}" overwrite="true">
+      <fileset basedir="./Bin/Release">
+        <include name="TestObservlet.*" />
+      </fileset>
+    </copy-->
+		
+    <exec program="${DOTNet2BIN}/regasm" >
+      <!--arg value="${USEREXT}\TestObservlet.dll " /-->
+      <arg value="/codebase" />
+    </exec>
+
+    <!--regasm codebase="true" assembly="${USEREXT}/TestObservlet.dll" typelib="${USEREXT}/TestObservlet.tlb"></regasm> /-->
+  </target>
+
+  <target name="copy.to.bin" >
+    <copy todir="../bin/" >
+      <fileset basedir="./Bin/Release" >
+        <include name="TestObservlet.*" />
+      </fileset>
+    </copy>
+
+  </target>
+
+  <target name ="runtest">
+    <nunit2>
+      <formatter type="Xml" usefile="true" extension=".xml" outputdir="${output.dir}/results" />
+      <test assemblyname="${output.dll}" testname="TestObservlet.AsyncDemoTest"/>
+    </nunit2>
+  </target>
+
+
+  <target name ="report.daily.build">
+    <loadtasks assembly="./Bin/NAnt.Contrib.Tasks.dll" />
+    <!--<loadtasks assembly="./Bin/NCover.dll" />-->
+    
+    <!-- By default the report is in english and format is NoFrames-->
+    <nunit2report todir="Daily-Build-Report">
+      <fileset>
+        <include name="${output.dir}/Results/TestObservlet.AsyncDemoTest-results.xml" />
+      </fileset>
+      <!--<summaries>
+                <include name="Compagny.Argos.Test.xml" />
+            </summaries> -->
+    </nunit2report>
+  </target> 
+  
+  <target name="NAnt.xsd" >
+    <nantschema output="NAnt.xsd" />
+	</target> 
+</project>
