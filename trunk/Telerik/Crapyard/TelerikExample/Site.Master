@@ -53,6 +53,9 @@
                         <asp:MenuItem NavigateUrl="~/Default.aspx" Text="Home"/>
                         <asp:MenuItem NavigateUrl="~/PersistExpandedState20.aspx" 
                             Text="Persisting Expanding" Value="Persisting Expanding"></asp:MenuItem>
+                        <asp:MenuItem NavigateUrl="~/AsyncViewer.aspx" Text="AsyncPattern" 
+                            ToolTip="Consuming other thread then the current AppDomain thread of ASP.NET" 
+                            Value="AsyncPattern"></asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/WebForm1.aspx" Text="Test" Value="Test">
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
