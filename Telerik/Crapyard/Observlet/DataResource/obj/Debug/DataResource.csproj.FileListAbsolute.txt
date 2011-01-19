@@ -1,0 +1,9 @@
+C:\__Code\Crapyard\Observlet\DataResource\obj\Debug\ResolveAssemblyReference.cache
+C:\__Code\Crapyard\Observlet\DataResource\bin\Debug\Lib\Rhino.Mocks.dll
+C:\__Code\Crapyard\Observlet\DataResource\bin\Debug\Lib\Rhino.Mocks.xml
+C:\__Code\Crapyard\Observlet\DataResource\bin\Debug\DataResource.dll
+C:\__Code\Crapyard\Observlet\DataResource\bin\Debug\DataResource.pdb
+C:\__Code\Crapyard\Observlet\DataResource\bin\Debug\Rhino.Mocks.dll
+C:\__Code\Crapyard\Observlet\DataResource\bin\Debug\Rhino.Mocks.xml
+C:\__Code\Crapyard\Observlet\DataResource\obj\Debug\DataResource.dll
+C:\__Code\Crapyard\Observlet\DataResource\obj\Debug\DataResource.pdb
