@@ -41,14 +41,18 @@ namespace Observlet
         void Session_Start(object sender, EventArgs e)
         {
             Application.Lock();
+            
             // Code that runs when a new session is started
             IDictionary<string, MySession> applicationSessions = new Dictionary<string, MySession>();
-            HttpSessionState session = HttpContext.Current.Session; ;
+            HttpSessionState session = HttpContext.Current.Session; 
+            applicationSessions = Application["MTA-Sessions"] as Dictionary<string, MySession>;
 
-            if (session != null)
+            if (session != null && applicationSessions!=null)
                 applicationSessions.Add(
                     new KeyValuePair<string, MySession>(session.SessionID, 
                     new MySession(){SessionId = session.SessionID, TaskQIsEmtpty = true}));
+
+            //update applicationSessions
             Application["MTA-Sessions"] = applicationSessions;
             Session["m_Locker"] = new object();
             Application.UnLock();            
