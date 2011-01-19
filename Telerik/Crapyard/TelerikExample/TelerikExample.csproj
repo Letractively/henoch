@@ -67,6 +67,7 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="AsyncViewer.aspx" />
     <Content Include="MyService.asmx" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.4.4.min.js" />
@@ -122,6 +123,14 @@
     </Compile>
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AsynchOperationPattern.aspx.cs" />
+    <Compile Include="AsyncViewer.aspx.cs">
+      <DependentUpon>AsyncViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AsyncViewer.aspx.designer.cs">
+      <DependentUpon>AsyncViewer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
