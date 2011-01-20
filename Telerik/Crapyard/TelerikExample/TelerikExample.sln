@@ -5,7 +5,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelerikExample", "TelerikEx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\Repository\Repository.csproj", "{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}"
 EndProject
+Project("{00000000-0000-0000-0000-000000000000}") = "Snable", "..\Snable\Snable.csproj", "{8EC06FA1-91F7-462E-B35F-38DF4130E744}"
+EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -19,12 +25,12 @@ Global
 		{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BCDF974-69C0-4FD4-BE78-A4B64B708C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EC06FA1-91F7-462E-B35F-38DF4130E744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EC06FA1-91F7-462E-B35F-38DF4130E744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EC06FA1-91F7-462E-B35F-38DF4130E744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EC06FA1-91F7-462E-B35F-38DF4130E744}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
