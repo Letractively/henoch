@@ -10,12 +10,12 @@ namespace TelerikExample
         private bool _completed;
         private object _state;
         private AsyncCallback _callback;
-        private HttpContext _context;
+        private HttpContext _httpContext;
 
-        public AsynchOperationPattern(AsyncCallback callback, HttpContext context, object state)
+        public AsynchOperationPattern(AsyncCallback callback, HttpContext httpContext, object state)
         {
             _callback = callback;
-            _context = context;
+            _httpContext = httpContext;
             _state = state;
             _completed = false;
         }
@@ -36,6 +36,7 @@ namespace TelerikExample
         {
             get { return _state; }
         }
+
         public bool CompletedSynchronously
         {
             get { return false; }
@@ -47,25 +48,25 @@ namespace TelerikExample
         {
             ThreadPool.QueueUserWorkItem(new WaitCallback(StartAsyncOperation), null);
         }
-        public void StartAsyncOperation(object workItemState)
-        {            
-            HttpResponse Response = _context.Response;
 
-            Label label = _context.Session["label3"] as Label;
+        public void StartAsyncOperation(object workItemState)
+        {
+            HttpResponse Response = _httpContext.Response;
+
+            Label label = _httpContext.Session["label3"] as Label;
             if (label != null)
             {
                 for (int i = 0; i < 20; i++)
                 {
                     Thread.Sleep(100);
-                    _context.Session["label3"] = i.ToString();
+                    _httpContext.Session["label3"] = i.ToString();
                 }
-                
             }
             else
             {
-                Response.Write("<p>Asynch operation completed.</p>");    
+                Response.Write("<p>Asynch operation completed.</p>");
             }
-            _context.Session["label3"] = "Asynch operation completed";
+            _httpContext.Session["label3"] = "Asynch operation completed";
             _completed = true;
             _callback(this);
         }
