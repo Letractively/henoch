@@ -11,7 +11,7 @@ namespace ParallelResourcer
         static void Main(string[] args)
         {
             Tree<string> taken = CreateTasks();
-            var treeHandler = new Tree<string>.TreeHandler(OnTreeEvent);
+            Tree<string>.TreeHandler treeHandler = OnTreeEvent;
             taken.RegisterWithTree(treeHandler);
             var myTask = new Tree<string>.TreeHandler(MyTask);
             taken.RegisterWithTree(myTask);
@@ -19,10 +19,8 @@ namespace ParallelResourcer
             var t1 = Task.Factory.StartNew(() =>
             {
                 for (int i = 0; i < 1; i++)
-                {
-                   
-                    Tree<string>.WalkParallel(taken,
-                                            MyTask,true);
+                {                   
+                    Tree<string>.WalkParallel(taken,MyTask,true);
                 }
             });
 
