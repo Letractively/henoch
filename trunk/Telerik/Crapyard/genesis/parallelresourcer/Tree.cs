@@ -8,6 +8,21 @@ namespace ParallelResourcer
 {
     public class Tree<T> : IEnumerable
     {
+
+        // 1) Define a delegate type.
+        public delegate void TreeHandler(string msgForCaller);
+        // 2) Define a member variable of this delegate.
+        private static TreeHandler _listOfHandlers;
+        // 3) Add registration function for the caller.
+        public void RegisterWithTree(TreeHandler methodToCall)
+        {
+            //multicasting support
+            _listOfHandlers += methodToCall;
+        }
+        public void UnRegisterWithTree(TreeHandler methodToCall)
+        {
+            _listOfHandlers -= methodToCall;
+        }
         public static ConcurrentQueue<T> Queue;
         public Tree<T> Left , Right;
         public T Data;
@@ -42,7 +57,10 @@ namespace ParallelResourcer
         }
         public static void WalkParallel<T>(Tree<T> root, Action<T> action, bool waitAll=false)
         {
-            if (root == null) return;    
+            
+            if (root == null) return;
+            if (_listOfHandlers!=null) _listOfHandlers(string.Format("Handling node {0}", root.Data));
+
             //LRW wandeling in parallel!
             var t2 = Task.Factory.StartNew(() => WalkParallel(root.Left, action)
                 , TaskCreationOptions.AttachedToParent);
