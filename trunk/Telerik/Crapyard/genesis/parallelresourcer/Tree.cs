@@ -57,10 +57,7 @@ namespace ParallelResourcer
         }
         public static void WalkParallel<T>(Tree<T> root, Action<T> action, bool waitAll=false)
         {
-            
             if (root == null) return;
-            if (_listOfHandlers!=null) _listOfHandlers(string.Format("Handling node {0}", root.Data));
-
             //LRW wandeling in parallel!
             var t2 = Task.Factory.StartNew(() => WalkParallel(root.Left, action)
                 , TaskCreationOptions.AttachedToParent);
@@ -77,10 +74,35 @@ namespace ParallelResourcer
             //LRW wandeling!
              WalkClassic(root.Left, action);
              WalkClassic(root.Right, action);
-             action(root.Data);
+            action(root.Data);
         }
+        public static void WalkClassic<T>(Tree<T> root)
+        {
+            if (root == null) return;
+            //LRW wandeling!
+            WalkClassic(root.Left);
+            WalkClassic(root.Right);
+            _listOfHandlers(root.Data.ToString());            
+        }
+        /// <summary>
+        /// Ambiguous
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="treeHandler"></param>
+        /// <param name="waitAll"></param>
+        //public static void WalkParallel(Tree<T> root, TreeHandler treeHandler, bool waitAll = false)
+        //{
+        //    if (root == null) return;
 
-        
+        //    //LRW wandeling in parallel!
+        //    var t2 = Task.Factory.StartNew(() => WalkParallel(root.Left, treeHandler)
+        //        , TaskCreationOptions.AttachedToParent);
+        //    var t3 = Task.Factory.StartNew(() => WalkParallel(root.Right, treeHandler)
+        //        , TaskCreationOptions.AttachedToParent);
+        //    var t1 = Task.Factory.StartNew(() => _listOfHandlers(string.Format("Handling node {0}", root.Data))
+        //        , TaskCreationOptions.AttachedToParent);
+        //    if (waitAll) Task.WaitAll(t1, t2, t3);
+        //}
     }
     /// <summary>
     /// Taskduration uses DateTime.
