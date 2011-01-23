@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ParallelResourcer
@@ -13,40 +10,35 @@ namespace ParallelResourcer
             Tree<string> taken = CreateTasks();
             Tree<string>.TreeHandler treeHandler = OnTreeEvent;
             taken.RegisterWithTree(treeHandler);
-            var myTask = new Tree<string>.TreeHandler(MyTask);
-            taken.RegisterWithTree(myTask);
 
             var t1 = Task.Factory.StartNew(() =>
             {
-                for (int i = 0; i < 1; i++)
-                {                   
-                    Tree<string>.WalkParallel(taken,MyTask,true);
+                for (int i = 0; i < 10; i++)
+                {
+                    Tree<string>.WalkClassic(taken, MyTask);
                 }
             });
 
             Task.WaitAll(t1);
 
-            taken.UnRegisterWithTree(treeHandler);
-            taken.UnRegisterWithTree(myTask);
+            taken.UnRegisterWithTree(treeHandler);            
             Console.ReadKey();
         }
         private static Tree<string> CreateTasks()
         {
-            Tree<string> taken = new Tree<string>();
+            var taken = new Tree<string>
+                                     {
+                                         Left = new Tree<string>(),
+                                         Right = new Tree<string>(),
+                                         Data = "root"
+                                     };
 
 
-            taken.Left = new Tree<string>();
-            taken.Right = new Tree<string>();
-            taken.Data = "root";
             taken.Left.Data = "A";
+            taken.Left.Left = new Tree<string> { Data = string.Format("{0}-C", taken.Left.Data) };
+            taken.Left.Right = new Tree<string> { Data = string.Format("{0}-D", taken.Left.Data) };
+
             taken.Right.Data = "B";
-
-            taken.Left.Left = new Tree<string>();
-            taken.Left.Left.Data = "C-" + taken.Left.Data;
-            taken.Left.Right = new Tree<string>();
-            taken.Left.Right.Data = "D-" + taken.Left.Data;
-
-
             return taken;
         }
         private static void MyTask(string woord)
@@ -56,9 +48,9 @@ namespace ParallelResourcer
         // This is the target for incoming events.
         public static void OnTreeEvent(string msg)
         {
-            Console.WriteLine("\n***** Message From Tree root *****");
-            Console.WriteLine("=> {0}", msg);
-            Console.WriteLine("***********************************\n");
+            Console.WriteLine("\n***** Message From Tree node ***** {0}", msg);
+            Console.WriteLine("=> {0}",msg);
+            Console.WriteLine("*********************************** {0}\r\n", msg);
         }
     }
 }

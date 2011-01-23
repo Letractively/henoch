@@ -189,20 +189,32 @@ namespace TestParallelPatterns
                 Tree<string>.WalkClassic(taken, MyAction);
             }
         }
+        [TestMethod]
+        public void TestWalkClassicUsingDelegates()
+        {
+            Tree<string>.TreeHandler treeHandler = MyTask2;
+            taken.RegisterWithTree(treeHandler);
+
+            for (int i = 0; i < loop; i++)
+            {
+                Tree<string>.WalkClassic(taken);
+            }
+            taken.UnRegisterWithTree(treeHandler);  
+        }
 
         private static Tree<string> CreateTasks()
         {
-            Tree<string> taken = new Tree<string>();
-            taken.Left = new Tree<string>();
-            taken.Right = new Tree<string>();
-            taken.Data = "root";
+            var taken = new Tree<string>
+                                     {
+                                         Left = new Tree<string>(),
+                                         Right = new Tree<string>(),
+                                         Data = "root"
+                                     };
             taken.Left.Data = "A";
+            taken.Left.Left = new Tree<string> { Data = string.Format("{0}-C", taken.Left.Data) };
+            taken.Left.Right = new Tree<string> { Data = string.Format("{0}-D", taken.Left.Data) };
+ 
             taken.Right.Data = "B";
-
-            taken.Left.Left = new Tree<string>();
-            taken.Left.Left.Data = "C-" + taken.Left.Data;
-            taken.Left.Right = new Tree<string>();
-            taken.Left.Right.Data = "D-" + taken.Left.Data;
             return taken;
         }
     }
