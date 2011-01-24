@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorks", "AdventureWorks\AdventureWorks.csproj", "{A8D6241C-680E-42BA-884B-501CC08D3FA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksSL", "AdventureWorksSL\AdventureWorksSL.csproj", "{2F614DA3-BAF9-4C6E-A8C3-079A1EF20927}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A8D6241C-680E-42BA-884B-501CC08D3FA9} = {A8D6241C-680E-42BA-884B-501CC08D3FA9}
+		{A8D6241C-680E-42BA-884B-501CC08D3FA9} = {A8D6241C-680E-42BA-884B-501CC08D3FA9}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8D6241C-680E-42BA-884B-501CC08D3FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D6241C-680E-42BA-884B-501CC08D3FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D6241C-680E-42BA-884B-501CC08D3FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D6241C-680E-42BA-884B-501CC08D3FA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F614DA3-BAF9-4C6E-A8C3-079A1EF20927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F614DA3-BAF9-4C6E-A8C3-079A1EF20927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F614DA3-BAF9-4C6E-A8C3-079A1EF20927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F614DA3-BAF9-4C6E-A8C3-079A1EF20927}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

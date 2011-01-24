@@ -1,0 +1,24 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <customBinding>
+                <binding name="CustomBinding_ProductServiceSL">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+                <binding name="CustomBinding_ProductServiceSL1">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
+            </customBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://localhost:4378/ProductServiceSL.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_ProductServiceSL"
+                contract="AdventureWorks.ProductServiceSL" name="CustomBinding_ProductServiceSL" />
+            <endpoint address="http://localhost:6367/ProductServiceSL.svc"
+                binding="customBinding" bindingConfiguration="CustomBinding_ProductServiceSL1"
+                contract="ServiceReference1.ProductServiceSL" name="CustomBinding_ProductServiceSL1" />
+        </client>
+    </system.serviceModel>
+</configuration>

@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="AdventureWorksSL.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" Height="400" Width="600">
+
+    <Grid x:Name="LayoutRoot" Background="White" Width="600" Height="400">
+        <sdk:DataGrid AutoGenerateColumns="False" Height="156" HorizontalAlignment="Left" Name="CategoriesDataGrid" VerticalAlignment="Top" Width="100" Margin="5,30,0,0" SelectionChanged="CategoriesDataGrid_SelectionChanged">
+            <sdk:DataGrid.Columns>
+                <sdk:DataGridTextColumn Binding="{Binding ProductCategoryID}" Header="ID" Visibility="Collapsed" />
+                <sdk:DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+            </sdk:DataGrid.Columns>
+        </sdk:DataGrid>
+        <sdk:DataGrid AutoGenerateColumns="False" Height="300" HorizontalAlignment="Left" Margin="106,30,0,0" Name="ProductsDataGrid" VerticalAlignment="Top" Width="370">
+            <sdk:DataGrid.Columns>
+                <sdk:DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                <sdk:DataGridTextColumn Binding="{Binding ProductNumber}" Header="Product Number" />
+                <sdk:DataGridTextColumn Binding="{Binding Color}" Header="Color" />
+                <sdk:DataGridTextColumn Binding="{Binding Size}" Header="Size" />
+            </sdk:DataGrid.Columns>
+        </sdk:DataGrid>
+        <sdk:Label Height="14" HorizontalAlignment="Left" Name="CategoryLabel" VerticalAlignment="Top" Width="100" Margin="6,1,0,0" Content="Categories" />
+        <sdk:Label Height="14" HorizontalAlignment="Left" Margin="106,1,0,0" Name="ProductLabel" VerticalAlignment="Top" Width="100" Content="Products" />
+    </Grid>
+</UserControl>
