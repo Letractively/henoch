@@ -5,8 +5,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Button ID="Button1" runat="server" Text="Start Async" 
-        onclick="Button1_Click" />
+    <asp:Button ID="Button1" runat="server" Text="Start Async" onclick="Button1_Click" 
+         />
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
                 <table style="width: 100%;">
@@ -52,7 +52,7 @@
             <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
-    <asp:Timer ID="Timer1" runat="server" Interval="50" ontick="Timer1_Tick" 
+    <asp:Timer ID="Timer1" runat="server" Interval="200" ontick="Timer1_Tick" 
         Enabled="False">
     </asp:Timer>
 </asp:Content>

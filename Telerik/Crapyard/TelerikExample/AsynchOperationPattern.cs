@@ -68,10 +68,11 @@ namespace TelerikExample
                 Label label = _httpContext.Session["label3"] as Label;
                 if (label != null)
                 {
-                    for (int i = 0; i < 20; i++)
+                    for (int i = 0; i < 2000; i++)
                     {
-                        Thread.Sleep(500);
+                        Thread.Sleep(10);
                         _state = i.ToString();
+                        _callback(this);
                     }
                 }
                 else
