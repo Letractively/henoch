@@ -1,4 +1,5 @@
 /// <reference path="../jquery-1.4.4.min.js" />
+/// <reference path="jquery-1.4.1-vsdoc.js" />
 
  $(function() {
  $("#orderedlist").find("li").each(function(i) {
@@ -11,7 +12,6 @@
      });
 
    });
-
 });
 
 $(document).ready(function() {
