@@ -61,7 +61,7 @@ namespace ApplicationTypes.Maintenance
 			
             string applicationPath;
             //dllName = Assembly.GetExecutingAssembly().Location;
-            applicationPath = Path.GetDirectoryName(dllName);
+            applicationPath = @"D:\WWWRoot\Async\";// Path.GetDirectoryName(dllName);
             if (applicationPath.ToUpperInvariant().Contains(@"C:\WINDOWS\MICROSOFT.NET"))
             {
                 applicationPath = applicationPath.ToUpperInvariant().Contains(@"ASP.NET") ? @"\\mxs116\Log" : Utility.HomePath;
@@ -69,7 +69,6 @@ namespace ApplicationTypes.Maintenance
             Debug.WriteLine(applicationPath);
 
             // Create Directory if it doesn't exists
-            Directory.CreateDirectory(applicationPath);
             Directory.CreateDirectory(Path.Combine(applicationPath, "log"));
             // define the logging destination
             string shortName = Assembly.GetExecutingAssembly().Location;
