@@ -146,6 +146,7 @@
       <DependentUpon>MyService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Observer.cs" />
     <Compile Include="PersistExpandedState20.aspx.designer.cs">
       <DependentUpon>PersistExpandedState20.aspx</DependentUpon>
     </Compile>

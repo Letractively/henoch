@@ -15,7 +15,7 @@ namespace TelerikExample
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Timer1.Enabled = true;
+            Timer1.Enabled = false;
             Label1.Text = "BeginProcessRequest starting ...";
 
             AddOnPreRenderCompleteAsync(
