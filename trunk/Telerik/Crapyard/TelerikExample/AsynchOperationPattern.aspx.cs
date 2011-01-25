@@ -11,6 +11,7 @@ namespace TelerikExample
         private object _state;
         private AsyncCallback _callback;
         private HttpContext _httpContext;
+        private Thread myThread;
 
         public AsynchOperationPattern(AsyncCallback callback, HttpContext httpContext, object state)
         {
@@ -42,33 +43,50 @@ namespace TelerikExample
             get { return false; }
         }
 
+        public Thread MyThread
+        {
+            get { return myThread; }
+        }
+
         #endregion
 
         public void StartAsync()
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(StartAsyncOperation), null);
+            ThreadStart myThreadDelegate = StartAsyncOperation;
+            myThread = new Thread(myThreadDelegate);
+            MyThread.Start();
+
+            //ThreadPool.QueueUserWorkItem(StartAsyncOperation, null);
         }
 
-        public void StartAsyncOperation(object workItemState)
+        public void StartAsyncOperation()
         {
-            HttpResponse Response = _httpContext.Response;
+            try
+            {
+                HttpResponse Response = _httpContext.Response;
 
-            Label label = _httpContext.Session["label3"] as Label;
-            if (label != null)
-            {
-                for (int i = 0; i < 20; i++)
+                Label label = _httpContext.Session["label3"] as Label;
+                if (label != null)
                 {
-                    Thread.Sleep(100);
-                    _httpContext.Session["label3"] = i.ToString();
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Thread.Sleep(500);
+                        _state = i.ToString();
+                    }
                 }
+                else
+                {
+                    Response.Write("<p>Asynch operation completed.</p>");
+                }
+                //_httpContext.Session["label3"] 
+                _state = "Asynch operation completed";
+                _completed = true;
+                _callback(this);
             }
-            else
+            catch (Exception ex)
             {
-                Response.Write("<p>Asynch operation completed.</p>");
+                Console.WriteLine(ex);
             }
-            _httpContext.Session["label3"] = "Asynch operation completed";
-            _completed = true;
-            _callback(this);
         }
     }
 }

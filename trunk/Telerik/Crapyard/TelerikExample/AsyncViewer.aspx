@@ -52,7 +52,7 @@
             <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
-    <asp:Timer ID="Timer1" runat="server" Interval="100" ontick="Timer1_Tick" 
+    <asp:Timer ID="Timer1" runat="server" Interval="50" ontick="Timer1_Tick" 
         Enabled="False">
     </asp:Timer>
 </asp:Content>
