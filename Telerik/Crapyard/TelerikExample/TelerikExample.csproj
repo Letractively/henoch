@@ -31,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -124,7 +125,7 @@
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AsynchOperationPattern.aspx.cs" />
+    <Compile Include="AsynchOperationPattern.cs" />
     <Compile Include="AsyncViewer.aspx.cs">
       <DependentUpon>AsyncViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
