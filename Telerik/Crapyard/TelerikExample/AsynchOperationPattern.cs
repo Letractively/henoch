@@ -64,21 +64,13 @@ namespace TelerikExample
             {
                 HttpResponse Response = _httpContext.Response;
 
-                Label label = _httpContext.Session["label3"] as Label;
-                if (label != null)
+                for (int i = 0; i < 1000; i++)
                 {
-                    for (int i = 0; i < 1000; i++)
-                    {
-                        Thread.Sleep(10);
-                        _state = i.ToString();
-                        _callback(this);
-                        NotifyObserverLog(new NotifyObserverEventargs(i.ToString()));
-                        if (_Stop) break;
-                    }
-                }
-                else
-                {
-                    Response.Write("<p>Asynch operation completed.</p>");
+                    Thread.Sleep(10);
+                    _state = i.ToString();
+                    _callback(this);
+                    NotifyObserverLog(new NotifyObserverEventargs(i.ToString()));
+                    if (_Stop) break;
                 }
                 //_httpContext.Session["label3"] 
                 _state = "Asynch operation completed";
