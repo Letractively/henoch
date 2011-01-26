@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Web;
 using System.Web.UI;
 using System.Windows.Forms;
 using ApplicationTypes.DesignPatterns;
@@ -17,10 +11,9 @@ using Observlet.Workers;
 using TextBox=System.Web.UI.WebControls.TextBox;
 using Timer=System.Threading.Timer;
 
-
 namespace Observlet.WebForms
 {
-    public partial class Tracer : Page, ISubject
+    public partial class Tracer : Page, ApplicationTypes.DesignPatterns.ISubject
     {
         private static BackgroundWorker m_BackgroundWorker = new BackgroundWorker();
         private SubjectImpl m_Subject = new SubjectImpl();

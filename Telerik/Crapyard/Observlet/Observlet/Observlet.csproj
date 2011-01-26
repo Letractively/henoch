@@ -59,6 +59,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="WebForms\APL.aspx" />
+    <Content Include="WebForms\AsyncViewer.aspx" />
     <Content Include="WebForms\Tracer.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -124,6 +125,7 @@
     <Compile Include="WebForms\APL.aspx.designer.cs">
       <DependentUpon>APL.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebForms\AsyncOperationPattern.cs" />
     <Compile Include="WebForms\AsyncTracer.aspx.cs">
       <DependentUpon>AsyncTracer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -131,6 +133,14 @@
     <Compile Include="WebForms\AsyncTracer.aspx.designer.cs">
       <DependentUpon>AsyncTracer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WebForms\AsyncViewer.aspx.cs">
+      <DependentUpon>AsyncViewer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\AsyncViewer.aspx.designer.cs">
+      <DependentUpon>AsyncViewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\Observer.cs" />
     <Compile Include="WebForms\Tracer.aspx.cs">
       <DependentUpon>Tracer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
