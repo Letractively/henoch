@@ -54,6 +54,7 @@ namespace TelerikExample
             Session["operationPattern"] = operationPattern;
             Session["label3"] = Label3;
             
+
             Label2.Text = "BeginProcessRequest queued ...";
             //Response.Write("<p>BeginProcessRequest queued ...</p>");
             return m_MyRequest.BeginGetResponse(cb, Session["label3"]); 
@@ -65,7 +66,7 @@ namespace TelerikExample
             Label2.Text = "EndGetAsyncData: thread #" + threadId;              
             Trace.Write("EndGetAsyncData", Label3.Text);                
             //System.Net.WebResponse myResponse = myRequest.EndGetResponse(ar);               
-
+            result.AsyncWaitHandle.WaitOne();
         }
 
         #endregion
@@ -100,8 +101,7 @@ namespace TelerikExample
 
             //If ac is a delegate: AsynchOperationPattern ac = (AsynchOperationPattern)((AsyncResult)result).AsyncDelegate;
             var res = result;
-            
-            //result.AsyncWaitHandle.Close();     
+
             if (operationPattern.IsCompleted)
             {
                 Timer1.Enabled = false;

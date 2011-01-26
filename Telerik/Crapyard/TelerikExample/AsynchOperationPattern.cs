@@ -12,6 +12,7 @@ namespace TelerikExample
         private AsyncCallback _callback;
         private HttpContext _httpContext;
         private Thread myThread;
+        private ManualResetEvent _waitHandle = new ManualResetEvent(false);
 
         public AsynchOperationPattern(AsyncCallback callback, HttpContext httpContext, object state)
         {
@@ -19,6 +20,7 @@ namespace TelerikExample
             _httpContext = httpContext;
             _state = state;
             _completed = false;
+            //_waitHandle = new WaitHandle(new ManualResetEvent(false));
         }
 
         #region Implementation of IAsyncResult
@@ -30,7 +32,7 @@ namespace TelerikExample
 
         public WaitHandle AsyncWaitHandle
         {
-            get { return null; }
+            get { return _waitHandle; }
         }
 
         public object AsyncState
@@ -64,7 +66,7 @@ namespace TelerikExample
             {
                 HttpResponse Response = _httpContext.Response;
 
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 500; i++)
                 {
                     Thread.Sleep(10);
                     _state = i.ToString();
@@ -72,7 +74,7 @@ namespace TelerikExample
                     NotifyObserverLog(new NotifyObserverEventargs(i.ToString()));
                     if (_Stop) break;
                 }
-                //_httpContext.Session["label3"] 
+                _waitHandle.Set();
                 _state = "Asynch operation completed";
                 _completed = true;
                 _callback(this);
