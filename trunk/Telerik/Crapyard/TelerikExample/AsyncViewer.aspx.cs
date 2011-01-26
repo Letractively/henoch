@@ -9,14 +9,15 @@ using System.Web.UI;
 
 namespace TelerikExample
 {
-    public partial class AsyncViewer : System.Web.UI.Page,ISubscriber
-    {
-        private AsynchOperationPattern operationPattern;
+    public partial class AsyncViewer : System.Web.UI.Page, ISubscriber
+    {        
+        private AsyncOperationPattern operationPattern;
         private WebRequest m_MyRequest;
-        private Observer<AsynchOperationPattern, AsyncViewer> _Observer;
+        private Observer<AsyncOperationPattern, AsyncViewer> _Observer;
+        private bool _Halted;
 
         protected void Page_Load(object sender, EventArgs e)
-        {                      
+        {
             if (IsPostBack && IsAsync && Button1.Enabled)
             {
                 Label1.Text = "BeginProcessRequest starting ...";
@@ -39,6 +40,21 @@ namespace TelerikExample
         {
             get { return false; }
         }
+
+        public AsyncOperationPattern AsyncOperation
+        {
+            get
+            {
+                operationPattern = Session["AsynchOperationPattern"] as AsyncOperationPattern;
+                return operationPattern;
+            }
+            set
+            {
+                Session["AsynchOperationPattern"] = value;
+                operationPattern = value;
+            }
+        }
+
         #region Implementation of IHttpAsyncHandler
 
         public IAsyncResult BeginProcessRequest(object sender, EventArgs eventArgs, AsyncCallback cb, object extraData)
@@ -48,10 +64,10 @@ namespace TelerikExample
             Trace.Write("BeginGetAsyncData", Label2.Text); 
             //Response.Write("<p>BeginProcessRequest starting ...</p>");
             
-            operationPattern = new AsynchOperationPattern(CallBackResult, this.Context, extraData);
-            operationPattern.StartAsync();
-            _Observer = new Observer<AsynchOperationPattern, AsyncViewer>(operationPattern, this);
-            Session["operationPattern"] = operationPattern;
+            AsyncOperation = new AsyncOperationPattern(CallBackResult, this.Context, extraData);
+            AsyncOperation.StartAsync();
+            _Observer = new Observer<AsyncOperationPattern, AsyncViewer>(AsyncOperation, this);
+
             Session["label3"] = Label3;
             
 
@@ -87,10 +103,11 @@ namespace TelerikExample
                 Console.WriteLine(ex);
             }
 
-            if (Session["AsyncIsCompleted"]!=null)
+            if (AsyncOperation != null && AsyncOperation.IsCompleted)
             {
                 Timer1.Enabled = false;
                 Button1.Enabled = true;
+                AsyncOperation = null;
             }
         }
 
@@ -102,14 +119,12 @@ namespace TelerikExample
             //If ac is a delegate: AsynchOperationPattern ac = (AsynchOperationPattern)((AsyncResult)result).AsyncDelegate;
             var res = result;
 
-            if (operationPattern.IsCompleted)
+            if (AsyncOperation.IsCompleted || _Halted)
             {
-                Timer1.Enabled = false;
-
-                Session["AsyncIsCompleted"] = "AsyncIsCompleted";
-               
+                Button1.Enabled = true;
+                NotifyHalt(new NotifyObserverEventargs("stop"));                
             }
-            Session["label3"] = operationPattern.AsyncState;
+            Session["label3"] = AsyncOperation.AsyncState;
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -121,8 +136,10 @@ namespace TelerikExample
         {
             try
             {
-                operationPattern = Session["operationPattern"] as AsynchOperationPattern;
-                if (operationPattern != null) operationPattern.Stop();
+                _Halted = true;
+                AsyncOperation = null;
+                Button1.Enabled = true;
+                //if (operationPattern != null) operationPattern.Stop();
             }
             catch (Exception ex)
             {
@@ -136,9 +153,9 @@ namespace TelerikExample
 
         public event EventHandler<NotifyObserverEventargs> NotifyHaltHandler;
 
-        void ISubscriber.NotifyHalt(NotifyObserverEventargs args)
+        public void NotifyHalt(NotifyObserverEventargs args)
         {
-            ;
+            NotifyHaltHandler.Invoke(this, args);
         }
 
         public void Log(string message)

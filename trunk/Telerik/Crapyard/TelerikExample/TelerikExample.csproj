@@ -125,7 +125,7 @@
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AsynchOperationPattern.cs" />
+    <Compile Include="AsyncOperationPattern.cs" />
     <Compile Include="AsyncViewer.aspx.cs">
       <DependentUpon>AsyncViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
