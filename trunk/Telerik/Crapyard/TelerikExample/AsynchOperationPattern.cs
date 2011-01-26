@@ -5,7 +5,7 @@ using System.Web.UI.WebControls;
 
 namespace TelerikExample
 {
-    public class AsynchOperationPattern : IAsyncResult
+    public class AsynchOperationPattern : SubjectBase, IAsyncResult 
     {
         private bool _completed;
         private object _state;
@@ -52,11 +52,10 @@ namespace TelerikExample
 
         public void StartAsync()
         {
-            ThreadStart myThreadDelegate = StartAsyncOperation;
-            myThread = new Thread(myThreadDelegate);
-            MyThread.Start();
-
-            //ThreadPool.QueueUserWorkItem(StartAsyncOperation, null);
+            //ThreadPool.QueueUserWorkItem(StartAsyncOperation,null);
+            //ThreadStart myThreadDelegate = StartAsyncOperation;
+            myThread = new Thread(StartAsyncOperation);
+            myThread.Start();            
         }
 
         public void StartAsyncOperation()
@@ -68,11 +67,13 @@ namespace TelerikExample
                 Label label = _httpContext.Session["label3"] as Label;
                 if (label != null)
                 {
-                    for (int i = 0; i < 2000; i++)
+                    for (int i = 0; i < 1000; i++)
                     {
                         Thread.Sleep(10);
                         _state = i.ToString();
                         _callback(this);
+                        NotifyObserverLog(new NotifyObserverEventargs(i.ToString()));
+                        if (_Stop) break;
                     }
                 }
                 else
@@ -89,5 +90,6 @@ namespace TelerikExample
                 Console.WriteLine(ex);
             }
         }
+
     }
 }
