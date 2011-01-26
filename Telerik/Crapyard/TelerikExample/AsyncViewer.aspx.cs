@@ -9,14 +9,15 @@ using System.Web.UI;
 
 namespace TelerikExample
 {
-    public partial class AsyncViewer : System.Web.UI.Page
+    public partial class AsyncViewer : System.Web.UI.Page,ISubscriber
     {
         private AsynchOperationPattern operationPattern;
         private WebRequest m_MyRequest;
+        private Observer<AsynchOperationPattern, AsyncViewer> _Observer;
 
         protected void Page_Load(object sender, EventArgs e)
         {                      
-            if (!IsPostBack && IsAsync)
+            if (IsPostBack && IsAsync && Button1.Enabled)
             {
                 Label1.Text = "BeginProcessRequest starting ...";
                 Timer1.Enabled = true;
@@ -46,11 +47,13 @@ namespace TelerikExample
             Label1.Text = "BeginGetAsyncData: thread #" + Thread.CurrentThread.ManagedThreadId;
             Trace.Write("BeginGetAsyncData", Label2.Text); 
             //Response.Write("<p>BeginProcessRequest starting ...</p>");
+            
             operationPattern = new AsynchOperationPattern(CallBackResult, this.Context, extraData);
             operationPattern.StartAsync();
-            
+            _Observer = new Observer<AsynchOperationPattern, AsyncViewer>(operationPattern, this);
+            Session["operationPattern"] = operationPattern;
             Session["label3"] = Label3;
-            //operationPattern.StartAsync();
+            
             Label2.Text = "BeginProcessRequest queued ...";
             //Response.Write("<p>BeginProcessRequest queued ...</p>");
             return m_MyRequest.BeginGetResponse(cb, Session["label3"]); 
@@ -84,7 +87,10 @@ namespace TelerikExample
             }
 
             if (Session["AsyncIsCompleted"]!=null)
+            {
                 Timer1.Enabled = false;
+                Button1.Enabled = true;
+            }
         }
 
         private void CallBackResult(IAsyncResult result)
@@ -108,7 +114,38 @@ namespace TelerikExample
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
+            Button1.Enabled = false;
         }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                operationPattern = Session["operationPattern"] as AsynchOperationPattern;
+                if (operationPattern != null) operationPattern.Stop();
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+            Timer1.Enabled = false;
+            Button1.Enabled = true;
+        }
+
+        #region Implementation of ISubscriber
+
+        public event EventHandler<NotifyObserverEventargs> NotifyHaltHandler;
+
+        void ISubscriber.NotifyHalt(NotifyObserverEventargs args)
+        {
+            ;
+        }
+
+        public void Log(string message)
+        {
+            ;
+        }
+
+        #endregion
     }
 }

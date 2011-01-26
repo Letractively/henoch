@@ -5,8 +5,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Button ID="Button1" runat="server" Text="Start Async" onclick="Button1_Click" 
-         />
+    <asp:Button ID="Button1" runat="server" Text="Start Async" onclick="Button1_Click" /> &nbsp;&nbsp;
+    <asp:Button ID="Button2" runat="server" Text="Stop Async" 
+        onclick="Button2_Click" />
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
                 <table style="width: 100%;">
