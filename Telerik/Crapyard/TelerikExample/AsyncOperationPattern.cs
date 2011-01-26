@@ -5,7 +5,7 @@ using System.Web.UI.WebControls;
 
 namespace TelerikExample
 {
-    public class AsynchOperationPattern : SubjectBase, IAsyncResult 
+    public class AsyncOperationPattern : SubjectBase, IAsyncResult 
     {
         private bool _completed;
         private object _state;
@@ -14,7 +14,7 @@ namespace TelerikExample
         private Thread myThread;
         private ManualResetEvent _waitHandle = new ManualResetEvent(false);
 
-        public AsynchOperationPattern(AsyncCallback callback, HttpContext httpContext, object state)
+        public AsyncOperationPattern(AsyncCallback callback, HttpContext httpContext, object state)
         {
             _callback = callback;
             _httpContext = httpContext;
@@ -57,8 +57,11 @@ namespace TelerikExample
             //ThreadPool.QueueUserWorkItem(StartAsyncOperation,null);
             //ThreadStart myThreadDelegate = StartAsyncOperation;
             myThread = new Thread(StartAsyncOperation);
-            myThread.Start();            
+            myThread.Start();
+            IsBusy = true;
         }
+
+        public bool IsBusy { private set; get; }
 
         public void StartAsyncOperation()
         {
@@ -70,12 +73,15 @@ namespace TelerikExample
                 {
                     Thread.Sleep(10);
                     _state = i.ToString();
-                    _callback(this);
+                    _callback(this);                    
                     NotifyObserverLog(new NotifyObserverEventargs(i.ToString()));
                     if (_Stop) break;
                 }
-                _waitHandle.Set();
-                _state = "Asynch operation completed";
+                //_waitHandle.Set();
+                if (_Stop)
+                    _state = "Halted";
+                else
+                    _state = "Asynch operation completed";
                 _completed = true;
                 _callback(this);
             }

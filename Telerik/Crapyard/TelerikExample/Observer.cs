@@ -102,13 +102,15 @@ namespace TelerikExample
     {
         protected bool _Stop;
 
+        public delegate void NotificationEventHandler(object sender, NotifyObserverEventargs e);
+
         #region Implementation of ISubject
 
         public event EventHandler<NotifyObserverEventargs> NotifyLogHandler;
 
         public void NotifyObserverLog(NotifyObserverEventargs args)
         {
-            ;
+            NotifyLogHandler.Invoke(this,args);
         }
         public void Stop()
         {
