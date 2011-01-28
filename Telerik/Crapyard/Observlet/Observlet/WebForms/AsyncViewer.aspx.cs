@@ -63,7 +63,7 @@ namespace Observlet.WebForms
         }
         public void DoMyWork()
         {
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 250; i++)
             {
                 Thread.Sleep(10);
                 Session["label3"] = i.ToString();
