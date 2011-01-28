@@ -1,29 +1,9 @@
-﻿<%@ Page EnableSessionState="True" Language="C#" Trace="true" Async="true" AutoEventWireup="true" CodeBehind="AsyncTracer.aspx.cs" Inherits="Observlet.WebForms.AsyncTracer" %>
+﻿<%@ Page EnableSessionState="True" Language="C#" Trace="true" Async="true" AutoEventWireup="true"  MasterPageFile="~/Site.Master" 
+    CodeBehind="AsyncTracer.aspx.cs" Inherits="Observlet.WebForms.AsyncTracer" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" >
-<head runat="server">
-    <title>Page.AddOnPreRenderCompleteAsync Example</title>
-    <script type="text/javascript">
-    
-      function pageLoad() {
-      }
-    
-    </script>
-    <style type="text/css">
-      .style1
-      {
-        width: 646px;
-      }
-      .style2
-      {
-        width: 220px;
-      }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
+<asp:content id="Content1" contentplaceholderid="HeadContent" runat="server">
+</asp:content>
+<asp:content id="Content2" contentplaceholderid="MainContent" runat="server">
     <div>
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
     </div>
@@ -44,7 +24,7 @@
             <tr>
               <td class="style1" valign="bottom">
                 <asp:TextBox ID="result" runat="server" columns="80" ReadOnly="true" rows="25" 
-                  textMode="multiLine" Width="872px" Wrap="False" />
+                  textMode="multiLine" Width="642px" Wrap="False" />
               </td>
               <td class="style2" valign="bottom">
                 <asp:TextBox ID="Interlocks" runat="server" Enabled="False" Font-Bold="True" 
@@ -106,6 +86,4 @@
           </p>
 
 
-    </form>
-</body>
-</html>
+</asp:content>
