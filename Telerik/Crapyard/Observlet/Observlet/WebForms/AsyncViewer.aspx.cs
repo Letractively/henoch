@@ -115,7 +115,7 @@ namespace Observlet.WebForms
             {
                 Button1.Enabled = true;                
                 NotifyHalt(new NotifyObserverEventargs("stop"));
-                _Observer.Dispose();
+                if (_Observer != null) _Observer.Dispose();
             }
             Session["label3"] = AsyncOperation.AsyncState;
         }
