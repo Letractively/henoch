@@ -51,8 +51,8 @@ namespace Observlet.WebForms
             //Response.Write("<p>BeginProcessRequest starting ...</p>");
             
             AsyncOperation = new AsyncOperationPattern(CallBackResult, this.Context, extraData);
-            AsyncOperation.StartAsync();
             _Observer = new Observer<AsyncOperationPattern, AsyncViewer>(AsyncOperation, this);
+            AsyncOperation.StartAsync(DoMyWork);           
 
             Session["label3"] = Label3;
             
@@ -61,7 +61,20 @@ namespace Observlet.WebForms
             //Response.Write("<p>BeginProcessRequest queued ...</p>");
             return m_MyRequest.BeginGetResponse(cb, Session["label3"]); 
         }
-
+        public void DoMyWork()
+        {
+            for (int i = 0; i < 500; i++)
+            {
+                Thread.Sleep(10);
+                Session["label3"] = i.ToString();
+            }
+            Session["label3"] = "Worker ready.";
+            Button1.Enabled = true;
+            NotifyHalt(new NotifyObserverEventargs("stop"));
+            AsyncOperation = null;
+            if (_Observer != null) _Observer.Dispose();
+            //redirect            
+        }
         public void EndProcessRequest(IAsyncResult result)
         {                        
             int threadId = Thread.CurrentThread.ManagedThreadId;
@@ -98,6 +111,7 @@ namespace Observlet.WebForms
             else
                 if (AsyncOperation==null)
                 {
+                    Button1.Enabled = true;
                     Timer1.Enabled = false;
                     if (_Observer != null) _Observer.Dispose();
                 }
