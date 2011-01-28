@@ -1,10 +1,26 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" Async="true"
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" Async="true"
     CodeBehind="AsyncViewer.aspx.cs" Inherits="Observlet.WebForms.AsyncViewer" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Button ID="Button1" runat="server" Text="Start Async" onclick="Button1_Click" /> &nbsp;&nbsp;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head runat="server">
+    <title></title>
+      
+</head>
+
+<body>
+     <form  runat="server">
+     <asp:ScriptManager ID="ScriptManager1" runat="server">
+         <Scripts>
+            <asp:ScriptReference Path="~/Scripts/jquery-1.3.2.js"/>
+            <asp:ScriptReference Path="~/Scripts/jqUtil.js"/>
+         </Scripts>
+     </asp:ScriptManager>
+
+
+    <asp:Button ID="Button1" CssClass="async" runat="server" Text="Start Async" onclick="Button1_Click" 
+         /> &nbsp;&nbsp;
     <asp:Button ID="Button2" runat="server" Text="Stop Async" 
         onclick="Button2_Click" />
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -53,7 +69,11 @@
             <asp:AsyncPostBackTrigger ControlID="Button2" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
-    <asp:Timer ID="Timer1" runat="server" Interval="200" ontick="Timer1_Tick" 
+    <asp:Timer ID="Timer1" runat="server" Interval="1000" ontick="Timer1_Tick" 
         Enabled="False">
     </asp:Timer>
-</asp:Content>
+
+    </form>
+
+</body> 
+

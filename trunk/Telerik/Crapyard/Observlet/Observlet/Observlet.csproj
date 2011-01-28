@@ -81,8 +81,10 @@
     <Content Include="About.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\jqUtil.js" />
     <Content Include="WebForms\APL.aspx" />
     <Content Include="WebForms\AsyncViewer.aspx" />
+    <Content Include="WebForms\FireAndForget.aspx" />
     <Content Include="WebForms\Tracer.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -162,6 +164,13 @@
     </Compile>
     <Compile Include="WebForms\AsyncViewer.aspx.designer.cs">
       <DependentUpon>AsyncViewer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\FireAndForget.aspx.cs">
+      <DependentUpon>FireAndForget.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\FireAndForget.aspx.designer.cs">
+      <DependentUpon>FireAndForget.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForms\Observer.cs" />
     <Compile Include="WebForms\Tracer.aspx.cs">

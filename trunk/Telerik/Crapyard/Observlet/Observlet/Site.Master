@@ -10,8 +10,6 @@
 </head>
 <body>
     <form runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
-    </asp:ScriptManager>
     <div class="page">
         <div class="header">
             <div class="title">
@@ -46,7 +44,7 @@
                                 Value="RequestResponse"></asp:MenuItem>
                             <asp:MenuItem Text="Duplex" Value="Duplex" NavigateUrl="~/WebForms/APL.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="Fire&amp;Forget" Value="Fire&amp;Forget" 
-                                NavigateUrl="~/WebForms/AsyncViewer.aspx"></asp:MenuItem>
+                                NavigateUrl="~/WebForms/FireAndForget.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="ReliableSession" Value="ReliableSession"></asp:MenuItem>
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
