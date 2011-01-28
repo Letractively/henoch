@@ -54,21 +54,22 @@ namespace Observlet.WebForms
             _Observer = new Observer<AsyncOperationPattern, AsyncViewer>(AsyncOperation, this);
             AsyncOperation.StartAsync(DoMyWork);           
 
-            Session["label3"] = Label3;
-            
-
             Label2.Text = "BeginProcessRequest queued ...";
             //Response.Write("<p>BeginProcessRequest queued ...</p>");
             return m_MyRequest.BeginGetResponse(cb, Session["label3"]); 
         }
+
+        /// <summary>
+        /// Do some work like caching.
+        /// </summary>
         public void DoMyWork()
         {
             for (int i = 0; i < 250; i++)
             {
                 Thread.Sleep(10);
-                Session["label3"] = i.ToString();
+                Session["label3"] = "Cache updated " + i.ToString();
             }
-            Session["label3"] = "Worker ready.";
+            Session["label3"] = "Cache ready.";
             Button1.Enabled = true;
             NotifyHalt(new NotifyObserverEventargs("stop"));
             AsyncOperation = null;
