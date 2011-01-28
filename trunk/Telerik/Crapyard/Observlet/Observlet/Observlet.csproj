@@ -81,6 +81,10 @@
     <Content Include="About.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.1.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Scripts\jqUtil.js" />
     <Content Include="WebForms\APL.aspx" />
     <Content Include="WebForms\AsyncViewer.aspx" />

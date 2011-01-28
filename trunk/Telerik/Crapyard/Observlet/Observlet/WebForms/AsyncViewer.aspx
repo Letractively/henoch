@@ -13,7 +13,8 @@
      <form  runat="server">
      <asp:ScriptManager ID="ScriptManager1" runat="server">
          <Scripts>
-            <asp:ScriptReference Path="~/Scripts/jquery-1.3.2.js"/>
+            <asp:ScriptReference Path="~/Scripts/jquery-1.4.4.min.js"/>
+             
             <asp:ScriptReference Path="~/Scripts/jqUtil.js"/>
          </Scripts>
      </asp:ScriptManager>

@@ -59,11 +59,11 @@ namespace Observlet.WebForms
             myThread.Start();
             IsBusy = true;
         }
-        public void StartAsync(Action pSub)            
+        public void StartAsync(Action action)            
         {
             //ThreadPool.QueueUserWorkItem(StartAsyncOperation,null);
             //ThreadStart myThreadDelegate = StartAsyncOperation;
-            if (pSub != null) myThread = new Thread(pSub.Invoke);
+            if (action != null) myThread = new Thread(action.Invoke);
             myThread.Start();
             IsBusy = true;            
         }

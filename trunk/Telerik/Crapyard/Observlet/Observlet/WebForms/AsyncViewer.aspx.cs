@@ -10,17 +10,26 @@ namespace Observlet.WebForms
         private AsyncOperationPattern operationPattern;
         private WebRequest m_MyRequest;
         private Observer<AsyncOperationPattern, AsyncViewer> _Observer;
-        private bool _Halted;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["halted"]!=null)
+            Label3.Text = "";
+            if (Halted)
             {
                 Label3.Text = "Halted";
-                Session["halted"] = null;
+                Halted = false;
+                Completed = false;
                 Button2.Enabled = true;
             }
-
+            if (Completed)
+            {
+                Completed = false;
+                Halted = false;
+                Button1.Enabled = true;
+                Button2.Enabled = true;
+                Label3.Text = Session["label3"] as string;
+                Session["label3"] = null;
+            }
         }
         public bool IsReusable
         {
@@ -41,6 +50,33 @@ namespace Observlet.WebForms
             }
         }
 
+        public bool Halted
+        {
+            get
+            {
+                bool res = (bool) (Session["halted"] ?? false );
+                return res;
+            }
+            set
+            {
+
+                Session["halted"] = value;
+            }
+        }
+
+        private bool Completed
+        {
+            get
+            {
+                bool res = (bool)(Session["Completed"] ?? false);
+                return res;
+            }
+            set
+            {
+                Session["Completed"] = value;
+            }
+        }
+
         #region Implementation of IHttpAsyncHandler
 
         public IAsyncResult BeginProcessRequest(object sender, EventArgs eventArgs, AsyncCallback cb, object extraData)
@@ -52,35 +88,42 @@ namespace Observlet.WebForms
             
             AsyncOperation = new AsyncOperationPattern(CallBackResult, this.Context, extraData);
             _Observer = new Observer<AsyncOperationPattern, AsyncViewer>(AsyncOperation, this);
-            AsyncOperation.StartAsync(DoMyWork);           
+            if (Request != null) AsyncOperation.StartAsync(DoMyWork);
 
             Label2.Text = "BeginProcessRequest queued ...";
             //Response.Write("<p>BeginProcessRequest queued ...</p>");
             return m_MyRequest.BeginGetResponse(cb, Session["label3"]); 
         }
 
+
         /// <summary>
         /// Do some work like caching.
-        /// </summary>
+        /// </summary>        
         public void DoMyWork()
-        {
+        {            
             for (int i = 0; i < 250; i++)
             {
                 Thread.Sleep(10);
                 Session["label3"] = "Cache updated " + i.ToString();
+                if (!Halted)
+                {
+                    Session["label3"] = "Halted!";
+                    break;
+                }
             }
-            Session["label3"] = "Cache ready.";
+            if (!Halted) Session["label3"] = "Cache ready.";
+            Completed = true;
             Button1.Enabled = true;
             NotifyHalt(new NotifyObserverEventargs("stop"));
             AsyncOperation = null;
             if (_Observer != null) _Observer.Dispose();
-            //redirect            
+            //pContext.Response.Redirect(pContext.Request.UrlReferrer.ToString());
         }
         public void EndProcessRequest(IAsyncResult result)
         {                        
             int threadId = Thread.CurrentThread.ManagedThreadId;
-            Label2.Text = "EndGetAsyncData: thread #" + threadId;              
-            Trace.Write("EndGetAsyncData", Label3.Text);                
+            Label2.Text = "Busy...";// +threadId;              
+                       
             //System.Net.WebResponse myResponse = myRequest.EndGetResponse(ar);               
             result.AsyncWaitHandle.WaitOne();
         }
@@ -142,7 +185,8 @@ namespace Observlet.WebForms
             if (IsPostBack && IsAsync)
             {
                 Label1.Text = "BeginProcessRequest starting ...";
-                Timer1.Enabled = true;
+                //timer1 can be removed.
+                Timer1.Enabled = false;
                 AddOnPreRenderCompleteAsync(
                     new BeginEventHandler(BeginProcessRequest),
                     new EndEventHandler(EndProcessRequest));
@@ -159,11 +203,10 @@ namespace Observlet.WebForms
         {
             try
             {
-                _Halted = true;
                 AsyncOperation = null;
                 Button1.Enabled = true;
                 Label3.Text = Session["label3"] as string;
-                Session["halted"] = "yes";
+                Halted = true;
                 if (Request.UrlReferrer != null) Response.Redirect(Request.UrlReferrer.ToString());
                 //if (operationPattern != null) operationPattern.Stop();
             }
