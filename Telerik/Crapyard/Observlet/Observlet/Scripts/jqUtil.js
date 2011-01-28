@@ -4,7 +4,13 @@
 
 $(document).ready(function () {
     $('.async').click(function () {
+        $(this).attr('disabled', true); 
+        $('.interactasync').attr('disabled', false);               
+        __doPostBack('Button1', '');
+    });
+    $('.interactasync').click(function () {
         $(this).attr('disabled', true);
-        __doPostBack('Button1', ''); 
+        $('.async').attr('disabled', false);        
+        __doPostBack('Button2', '');
     });
 });
