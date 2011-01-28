@@ -97,7 +97,10 @@ namespace Observlet.WebForms
             }
             else
                 if (AsyncOperation==null)
+                {
                     Timer1.Enabled = false;
+                    if (_Observer != null) _Observer.Dispose();
+                }
         }
 
         private void CallBackResult(IAsyncResult result)
@@ -111,7 +114,8 @@ namespace Observlet.WebForms
             if (AsyncOperation.IsCompleted)
             {
                 Button1.Enabled = true;                
-                NotifyHalt(new NotifyObserverEventargs("stop"));                
+                NotifyHalt(new NotifyObserverEventargs("stop"));
+                _Observer.Dispose();
             }
             Session["label3"] = AsyncOperation.AsyncState;
         }
