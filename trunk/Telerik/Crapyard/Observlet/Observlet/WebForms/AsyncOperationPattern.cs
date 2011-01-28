@@ -76,6 +76,14 @@ namespace Observlet.WebForms
                     NotifyObserverLog(new NotifyObserverEventargs(i.ToString()));
                     if (_Stop) break;
                 }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
                 //_waitHandle.Set();
                 if (_Stop)
                     _state = "Halted";
@@ -83,10 +91,6 @@ namespace Observlet.WebForms
                     _state = "Asynch operation completed";
                 _completed = true;
                 _callback(this);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
             }
         }
 
