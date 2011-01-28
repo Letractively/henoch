@@ -21,7 +21,7 @@
 
     <asp:Button ID="Button1" CssClass="async" runat="server" Text="Start Async" onclick="Button1_Click" 
          /> &nbsp;&nbsp;
-    <asp:Button ID="Button2" runat="server" Text="Stop Async" 
+    <asp:Button ID="Button2" CssClass="interactasync" runat="server" Text="Interact with Async Worker" Enabled="true"
         onclick="Button2_Click" />
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>

@@ -14,23 +14,13 @@ namespace Observlet.WebForms
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack && IsAsync && Button1.Enabled)
+            if (Session["halted"]!=null)
             {
-                Label1.Text = "BeginProcessRequest starting ...";
-                Timer1.Enabled = true;
-                AddOnPreRenderCompleteAsync(
-                    new BeginEventHandler(BeginProcessRequest),
-                    new EndEventHandler(EndProcessRequest));
-
-                // Initialize the WebRequest.                  
-                string address = "http://localhost/";
-                ;// Request.Url.ToString();                    
-                m_MyRequest = System.Net.WebRequest.Create(address);
+                Label3.Text = "Halted";
+                Session["halted"] = null;
+                Button2.Enabled = true;
             }
-            else
-            {
 
-            }
         }
         public bool IsReusable
         {
@@ -99,12 +89,15 @@ namespace Observlet.WebForms
                 Console.WriteLine(ex);
             }
 
-            if (AsyncOperation != null && AsyncOperation.IsCompleted)
-            {
-                Timer1.Enabled = false;
+            if (AsyncOperation!=null && AsyncOperation.IsCompleted)
+            {                
                 Button1.Enabled = true;
+                Timer1.Enabled = false;
                 AsyncOperation = null;
             }
+            else
+                if (AsyncOperation==null)
+                    Timer1.Enabled = false;
         }
 
         private void CallBackResult(IAsyncResult result)
@@ -115,9 +108,9 @@ namespace Observlet.WebForms
             //If ac is a delegate: AsynchOperationPattern ac = (AsynchOperationPattern)((AsyncResult)result).AsyncDelegate;
             var res = result;
 
-            if (AsyncOperation.IsCompleted || _Halted)
+            if (AsyncOperation.IsCompleted)
             {
-                Button1.Enabled = true;
+                Button1.Enabled = true;                
                 NotifyHalt(new NotifyObserverEventargs("stop"));                
             }
             Session["label3"] = AsyncOperation.AsyncState;
@@ -126,6 +119,21 @@ namespace Observlet.WebForms
         protected void Button1_Click(object sender, EventArgs e)
         {
             Button1.Enabled = false;
+
+            if (IsPostBack && IsAsync)
+            {
+                Label1.Text = "BeginProcessRequest starting ...";
+                Timer1.Enabled = true;
+                AddOnPreRenderCompleteAsync(
+                    new BeginEventHandler(BeginProcessRequest),
+                    new EndEventHandler(EndProcessRequest));
+
+                // Initialize the WebRequest.                  
+                string address = "http://localhost/";
+                ;// Request.Url.ToString();                    
+                m_MyRequest = System.Net.WebRequest.Create(address);
+            }
+
         }
 
         protected void Button2_Click(object sender, EventArgs e)
@@ -135,6 +143,9 @@ namespace Observlet.WebForms
                 _Halted = true;
                 AsyncOperation = null;
                 Button1.Enabled = true;
+                Label3.Text = Session["label3"] as string;
+                Session["halted"] = "yes";
+                if (Request.UrlReferrer != null) Response.Redirect(Request.UrlReferrer.ToString());
                 //if (operationPattern != null) operationPattern.Stop();
             }
             catch (Exception ex)
