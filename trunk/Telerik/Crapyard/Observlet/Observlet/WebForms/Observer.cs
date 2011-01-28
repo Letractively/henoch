@@ -55,12 +55,12 @@ namespace Observlet.WebForms
         {
             // Be sure we have not already been disposed!
             if (!disposed)
-            {
-                m_Subject.NotifyLogHandler -= DoNotify;
+            {                
                 // If disposing equals true, dispose all managed resources.
                 if (disposing)
                 {
                     // Dispose managed resources. 
+                    m_Subject.NotifyLogHandler -= DoNotify;
                 }
                 // Clean up unmanaged resources here.
             }
