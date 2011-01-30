@@ -90,7 +90,7 @@ namespace Observlet.WebForms
             
             AsyncOperation = new AsyncOperationPattern(CallBackResult, this.Context, extraData);
             _Observer = new Observer<AsyncOperationPattern, AsyncViewer>(AsyncOperation, this);
-            if (Request != null) AsyncOperation.StartAsync(DoMyWork);
+            AsyncOperation.Start(ExecuteCachePolicy);
 
             Label2.Text = "BeginProcessRequest queued ...";
             //Response.Write("<p>BeginProcessRequest queued ...</p>");
@@ -101,7 +101,7 @@ namespace Observlet.WebForms
         /// <summary>
         /// Do some work like caching.
         /// </summary>        
-        public void DoMyWork()
+        public void ExecuteCachePolicy()
         {            
             for (int i = 0; i < 250; i++)
             {
@@ -138,24 +138,21 @@ namespace Observlet.WebForms
 
         protected void Timer1_Tick(object sender, EventArgs e)
         {
-            try
-            {
-                Label3.Text = Session["label3"] as string;
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            Label3.Text = Session["label3"] as string;
 
             if (AsyncOperation != null && AsyncOperation.IsCompleted)
             {
+                /* if work is done by the workerthread within an async function, 
+                 * not an anonymous methoud or action passed by the caller.                
+                 */
                 Button1.Enabled = true;
                 Timer1.Enabled = false;
+                //Let the GC know the async operation could be collected for garbage.
                 AsyncOperation = null;
             }
             else
             {
+                //The work is an action started in a new w3w-process within the async operation.
                 if (AsyncOperation == null)
                 {
                     Button1.Enabled = true;
