@@ -142,8 +142,9 @@ namespace Observlet.WebForms
 
             if (AsyncOperation != null && AsyncOperation.IsCompleted)
             {
-                /* if work is done by the workerthread within an async function, 
-                 * not an anonymous methoud or action passed by the caller.                
+                /* The work is done by the workerthread within an async function, 
+                 * not an anonymous methoud or action passed by the caller.
+                 * Assume AsyncOperation.Start().
                  */
                 Button1.Enabled = true;
                 Timer1.Enabled = false;
@@ -152,9 +153,11 @@ namespace Observlet.WebForms
             }
             else
             {
-                //The work is an action started in a new w3w-process within the async operation.
                 if (AsyncOperation == null)
                 {
+                    /* The work is an action started in a new w3w-process within the async operation:
+                     * Assume AsyncOperation.Start(anAction).
+                     */
                     Button1.Enabled = true;
                     Button2.Enabled = false;
                     Timer1.Enabled = false;
