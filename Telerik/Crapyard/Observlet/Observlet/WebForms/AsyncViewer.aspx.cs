@@ -13,9 +13,11 @@ namespace Observlet.WebForms
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Label3.Text = "";
+            Label3.Text = String.Empty;
             if (Halted)
             {
+                Label1.Text = String.Empty;
+                Label2.Text = String.Empty;
                 Label3.Text = "Halted";
                 Halted = false;
                 Completed = false;
@@ -27,8 +29,8 @@ namespace Observlet.WebForms
                 Halted = false;
                 Button1.Enabled = true;
                 Button2.Enabled = true;
-                Label3.Text = Session["label3"] as string;
-                Session["label3"] = null;
+                Label1.Text = String.Empty;
+                Label2.Text = String.Empty;
             }
         }
         public bool IsReusable
@@ -105,7 +107,7 @@ namespace Observlet.WebForms
             {
                 Thread.Sleep(10);
                 Session["label3"] = "Cache updated " + i.ToString();
-                if (!Halted)
+                if (Halted)
                 {
                     Session["label3"] = "Halted!";
                     break;
@@ -114,8 +116,7 @@ namespace Observlet.WebForms
             if (!Halted) Session["label3"] = "Cache ready.";
             Completed = true;
             Button1.Enabled = true;
-            NotifyHalt(new NotifyObserverEventargs("stop"));
-            AsyncOperation = null;
+            if (AsyncOperation!=null) AsyncOperation.Stop();
             if (_Observer != null) _Observer.Dispose();
             //pContext.Response.Redirect(pContext.Request.UrlReferrer.ToString());
         }
@@ -125,7 +126,7 @@ namespace Observlet.WebForms
             Label2.Text = "Busy...";// +threadId;              
                        
             //System.Net.WebResponse myResponse = myRequest.EndGetResponse(ar);               
-            result.AsyncWaitHandle.WaitOne();
+            //result.AsyncWaitHandle.WaitOne();
         }
 
         #endregion
@@ -140,6 +141,7 @@ namespace Observlet.WebForms
             try
             {
                 Label3.Text = Session["label3"] as string;
+
             }
             catch (Exception ex)
             {
@@ -156,8 +158,7 @@ namespace Observlet.WebForms
                 if (AsyncOperation==null)
                 {
                     Button1.Enabled = true;
-                    Timer1.Enabled = false;
-                    if (_Observer != null) _Observer.Dispose();
+                    Timer1.Enabled = false;                    
                 }
         }
 
@@ -186,7 +187,7 @@ namespace Observlet.WebForms
             {
                 Label1.Text = "BeginProcessRequest starting ...";
                 //timer1 can be removed.
-                Timer1.Enabled = false;
+                Timer1.Enabled = true;
                 AddOnPreRenderCompleteAsync(
                     new BeginEventHandler(BeginProcessRequest),
                     new EndEventHandler(EndProcessRequest));
@@ -207,14 +208,13 @@ namespace Observlet.WebForms
                 Button1.Enabled = true;
                 Label3.Text = Session["label3"] as string;
                 Halted = true;
-                if (Request.UrlReferrer != null) Response.Redirect(Request.UrlReferrer.ToString());
+                //if (Request.UrlReferrer != null) Response.Redirect(Request.UrlReferrer.ToString());
                 //if (operationPattern != null) operationPattern.Stop();
             }
             catch (Exception ex)
             {
                 ;
             }
-            Timer1.Enabled = false;
             Button1.Enabled = true;
         }
 
