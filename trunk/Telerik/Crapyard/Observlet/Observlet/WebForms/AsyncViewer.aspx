@@ -20,17 +20,17 @@
      </asp:ScriptManager>
 
 
-    <asp:Button ID="Button1" CssClass="async" runat="server" Text="Start Async" onclick="Button1_Click" 
-         /> &nbsp;&nbsp;
-    <asp:Button ID="Button2" CssClass="interactasync" runat="server" Text="Interact with Async Worker" Enabled="true"
-        onclick="Button2_Click" />
+     
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
                 <table style="width: 100%;">
         <tr>
             <td>
-                &nbsp;
-                <asp:Label ID="Label1" runat="server"></asp:Label>
+                
+                <asp:Button ID="Button1" runat="server" CssClass="async" 
+                    onclick="Button1_Click" Text="Start Async" />&nbsp;&nbsp;&nbsp;
+                <asp:Button ID="Button2" runat="server" CssClass="interactasync" Enabled="true" 
+                    onclick="Button2_Click" Text="Interact with Async Worker" />
             </td>
             <td>
                 &nbsp;
@@ -41,20 +41,21 @@
         </tr>
         <tr>
             <td>
-                &nbsp;
+               
+                <asp:Label ID="Label1" runat="server"></asp:Label> &nbsp; &nbsp;
                 <asp:Label ID="Label2" runat="server"></asp:Label>
             </td>
             <td>
                 &nbsp;
-            </td>
+                </td>
             <td>
                 &nbsp;
             </td>
         </tr>
         <tr>
             <td>
-                &nbsp;
-                <asp:Label ID="Label3" runat="server"></asp:Label>
+               
+                <asp:Label ID="Label3" CssClass="result" runat="server"></asp:Label>
             </td>
             <td>
                 &nbsp;
@@ -63,16 +64,17 @@
                 &nbsp;
             </td>
         </tr>
-    </table>
+    </table>    
+        <asp:Timer ID="Timer1" runat="server" Interval="500" ontick="Timer1_Tick" 
+            Enabled="False">
+        </asp:Timer>
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="Button1" EventName="Click" />
             <asp:AsyncPostBackTrigger ControlID="Button2" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
-    <asp:Timer ID="Timer1" runat="server" Interval="1000" ontick="Timer1_Tick" 
-        Enabled="False">
-    </asp:Timer>
+
 
     </form>
 
