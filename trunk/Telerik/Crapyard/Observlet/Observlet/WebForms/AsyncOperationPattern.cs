@@ -51,7 +51,7 @@ namespace Observlet.WebForms
 
         #endregion
 
-        public void StartAsync()
+        public void Start()
         {
             //ThreadPool.QueueUserWorkItem(StartAsyncOperation,null);
             //ThreadStart myThreadDelegate = StartAsyncOperation;
@@ -59,7 +59,7 @@ namespace Observlet.WebForms
             myThread.Start();
             IsBusy = true;
         }
-        public void StartAsync(Action action)            
+        public void Start(Action action)            
         {
             //ThreadPool.QueueUserWorkItem(StartAsyncOperation,null);
             //ThreadStart myThreadDelegate = StartAsyncOperation;
