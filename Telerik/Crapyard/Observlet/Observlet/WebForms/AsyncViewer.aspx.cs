@@ -116,7 +116,7 @@ namespace Observlet.WebForms
             if (!Halted) Session["label3"] = "Cache ready.";
             Completed = true;
             Button1.Enabled = true;
-            if (AsyncOperation!=null) AsyncOperation.Stop();
+            AsyncOperation = null;            
             if (_Observer != null) _Observer.Dispose();
             //pContext.Response.Redirect(pContext.Request.UrlReferrer.ToString());
         }
@@ -148,18 +148,25 @@ namespace Observlet.WebForms
                 Console.WriteLine(ex);
             }
 
-            if (AsyncOperation!=null && AsyncOperation.IsCompleted)
-            {                
+            if (AsyncOperation != null && AsyncOperation.IsCompleted)
+            {
                 Button1.Enabled = true;
                 Timer1.Enabled = false;
                 AsyncOperation = null;
             }
             else
-                if (AsyncOperation==null)
+            {
+                if (AsyncOperation == null)
                 {
                     Button1.Enabled = true;
-                    Timer1.Enabled = false;                    
+                    Button2.Enabled = false;
+                    Timer1.Enabled = false;
                 }
+                else
+                {
+                    Button2.Enabled = true;
+                }
+            }
         }
 
         private void CallBackResult(IAsyncResult result)

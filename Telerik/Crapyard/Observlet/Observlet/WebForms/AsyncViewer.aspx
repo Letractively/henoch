@@ -29,7 +29,7 @@
                 
                 <asp:Button ID="Button1" runat="server" CssClass="async" 
                     onclick="Button1_Click" Text="Start Async" />&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="Button2" runat="server" CssClass="interactasync" Enabled="true" 
+                <asp:Button ID="Button2" runat="server" CssClass="interactasync" Enabled="false" 
                     onclick="Button2_Click" Text="Interact with Async Worker" />
             </td>
             <td>
