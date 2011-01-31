@@ -80,6 +80,10 @@ namespace Observlet.WebForms
 
     public interface ISubscriber
     {
+        /// <summary>
+        /// Subscriber has a problem-solution pair designated according to best practices.
+        /// </summary>
+        IAsyncResult AsyncOperator{ get; set;}
         event EventHandler<NotifyObserverEventargs> NotifyHaltHandler;
         void NotifyHalt(NotifyObserverEventargs args);
 
