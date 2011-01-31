@@ -177,6 +177,9 @@
       <DependentUpon>FireAndForget.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForms\Observer.cs" />
+    <Compile Include="WebForms\PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="WebForms\Tracer.aspx.cs">
       <DependentUpon>Tracer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

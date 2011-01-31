@@ -67,8 +67,12 @@ namespace Observlet.WebForms
             myThread.Start();
             IsBusy = true;            
         }
+
         public bool IsBusy { private set; get; }
 
+        /// <summary>
+        /// Only for testing. This generates a simple task: sleep 10 ms.
+        /// </summary>
         public void StartAsyncOperation()
         {
             try

@@ -10,7 +10,8 @@
 namespace Observlet.WebForms {
     
     
-    public partial class AsyncViewer {
+    public partial class AsyncViewer 
+    {
         
         /// <summary>
         /// ScriptManager1 control.
