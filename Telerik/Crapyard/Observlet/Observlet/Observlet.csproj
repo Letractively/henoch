@@ -154,7 +154,7 @@
     <Compile Include="WebForms\APL.aspx.designer.cs">
       <DependentUpon>APL.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebForms\AsyncOperationPattern.cs" />
+    <Compile Include="WebForms\AsyncRequestPattern.cs" />
     <Compile Include="WebForms\AsyncTracer.aspx.cs">
       <DependentUpon>AsyncTracer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -177,7 +177,7 @@
       <DependentUpon>FireAndForget.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForms\Observer.cs" />
-    <Compile Include="WebForms\AsyncPageBase.cs">
+    <Compile Include="WebForms\AsyncHandler.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WebForms\Tracer.aspx.cs">

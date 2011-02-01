@@ -6,18 +6,22 @@ using System.Web;
 namespace Observlet.WebForms
 {
     /// <summary>
-    /// Supports asynchronuous handling of request in an own process with notifications
+    /// Supports asynchronous handling of requests in an own process with notifications
     /// based on the observerpattern.
     /// </summary>
-    public abstract class AsyncPageBase : System.Web.UI.Page, IHttpAsyncHandler, ISubscriber
+    public abstract class AsyncHandler : System.Web.UI.Page, IHttpAsyncHandler, ISubscriber
     {
         protected WebRequest _MyRequest;
+
+        public delegate void ProcessRequestDelegate(HttpContext ctx);
+
         /// <summary>
         /// Observs the
         /// </summary>
-        protected Observer<AsyncOperationPattern, AsyncPageBase> _Observer;
+        protected Observer<AsyncRequestPattern, AsyncHandler> _Observer;
 
         private IAsyncResult _AsyncOperator;
+        private readonly string FOR_HTTPHANDLERS_ONLY = "Only for httphandlers.";
 
         /// <summary>
         /// Caches the asyncstate into session. TODO: use cache.
@@ -67,7 +71,7 @@ namespace Observlet.WebForms
 
         public virtual void ProcessRequest(HttpContext context)
         {
-            throw new InvalidOperationException();
+
         }
         protected virtual void CallBackResult(IAsyncResult result)
         {
@@ -106,14 +110,13 @@ namespace Observlet.WebForms
             Session["AsyncIsCompleted"] = null;
             Thread.CurrentThread.Name = new Guid().ToString();
             Trace.Write("BeginGetAsyncData", "Threadname = " + Thread.CurrentThread.Name);
-            //Response.Write("<p>BeginProcessRequest starting ...</p>");
 
-            var async = new AsyncOperationPattern(CallBackResult, this.Context, extraData);
+            var async = new AsyncRequestPattern(CallBackResult, Context, extraData);
             AsyncOperator = async;
-            _Observer = new Observer<AsyncOperationPattern, AsyncPageBase>((AsyncOperationPattern)_AsyncOperator, this);
+            _Observer = new Observer<AsyncRequestPattern, AsyncHandler>((AsyncRequestPattern)_AsyncOperator, this);
             async.Start(ExecuteCachePolicy);
-
-            //Response.Write("<p>BeginProcessRequest queued ...</p>");
+            
+            // Fire-and-forget
             return _MyRequest.BeginGetResponse(cb, AsyncState);
         }
 
@@ -126,7 +129,7 @@ namespace Observlet.WebForms
         /// <returns></returns>
         public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException(FOR_HTTPHANDLERS_ONLY);
         }
 
         public void EndProcessRequest(IAsyncResult result)
