@@ -60,6 +60,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -70,6 +71,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repository\BusinessDataStorage.cs" />
+    <Compile Include="Repository\BusinessObject.cs" />
+    <Compile Include="Repository\BusinessObjectCategory.cs" />
+    <Compile Include="Repository\BusinessObjectCategoryCollection.cs" />
+    <Compile Include="Repository\BusinessObjectCollection.cs" />
+    <Compile Include="Repository\BusinessObjectComparer.cs" />
+    <Compile Include="Repository\BusinessObjectEqualityComparer.cs" />
     <Compile Include="Metadata\InformationSchemaColumn.cs" />
     <Compile Include="Metadata\InformationSchemaTable.cs" />
     <Compile Include="Metadata\ISmartDataReader.cs" />

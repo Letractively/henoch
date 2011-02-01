@@ -81,6 +81,7 @@
     <Content Include="About.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="MyService.asmx" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
@@ -89,6 +90,7 @@
     <Content Include="WebForms\APL.aspx" />
     <Content Include="WebForms\AsyncViewer.aspx" />
     <Content Include="WebForms\FireAndForget.aspx" />
+    <Content Include="WebForms\PersistExpandedState20.aspx" />
     <Content Include="WebForms\Tracer.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -140,6 +142,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MyService.asmx.cs">
+      <DependentUpon>MyService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -179,6 +185,13 @@
     <Compile Include="WebForms\Observer.cs" />
     <Compile Include="WebForms\AsyncHandler.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\PersistExpandedState20.aspx.cs">
+      <DependentUpon>PersistExpandedState20.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\PersistExpandedState20.aspx.designer.cs">
+      <DependentUpon>PersistExpandedState20.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForms\RequestState.cs" />
     <Compile Include="WebForms\Tracer.aspx.cs">
