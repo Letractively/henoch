@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Observlet.WebForms
 {
-    public partial class AsyncViewer : AsyncPageBase
+    public partial class AsyncViewer : AsyncHandler
     {               
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -111,6 +111,7 @@ namespace Observlet.WebForms
         /// </summary>        
         public override void ExecuteCachePolicy()
         {
+            //throw new ArgumentException("test exception in thread.");
             for (int i = 0; i < 250; i++)
             {
                 Thread.Sleep(10);

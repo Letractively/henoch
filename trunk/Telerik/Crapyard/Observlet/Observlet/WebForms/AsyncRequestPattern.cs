@@ -1,25 +1,57 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Web;
 
 namespace Observlet.WebForms
 {
-    public class AsyncOperationPattern : SubjectBase, IAsyncResult 
+    /// <summary>
+    /// 
+    /// </summary>
+    public class AsyncRequestPattern : SubjectBase, IAsyncResult 
     {
         private bool _completed;
         private object _state;
         private AsyncCallback _callback;
         private HttpContext _httpContext;
         private Thread myThread;
-        private ManualResetEvent _waitHandle = new ManualResetEvent(false);
+        private ManualResetEvent _callCompleteEvent = null;
+        static BackgroundWorker _bw = new BackgroundWorker();
 
-        public AsyncOperationPattern(AsyncCallback callback, HttpContext httpContext, object state)
+        private AsyncRequestPattern()
+        {
+            //Default constructor is disabled to force parameterized instanciation.
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="callback">Put here the callback that will be called.</param>
+        /// <param name="httpContext">Put here the Context of the current page.</param>
+        /// <param name="state">Put here the instance to be monitored.</param>
+        public AsyncRequestPattern(AsyncCallback callback, HttpContext httpContext, object state)
         {
             _callback = callback;
             _httpContext = httpContext;
             _state = state;
             _completed = false;
-            //_waitHandle = new WaitHandle(new ManualResetEvent(false));
+
+        }
+        private void CompleteRequest()
+        {
+            if (_Stop)
+                _state = "Halted";
+            else
+                _state = "Asynch operation completed";
+
+            _completed = true;
+            lock (this)
+            {
+                if (_callCompleteEvent != null)
+                    _callCompleteEvent.Set();
+            }
+            // if a callback was registered, invoke it now
+            if (_callback != null)
+                _callback(this);
         }
 
         #region Implementation of IAsyncResult
@@ -31,7 +63,16 @@ namespace Observlet.WebForms
 
         public WaitHandle AsyncWaitHandle
         {
-            get { return _waitHandle; }
+            get
+            {
+                lock (this)
+                {
+                    if (_callCompleteEvent == null)
+                        _callCompleteEvent = new ManualResetEvent(false);
+
+                    return _callCompleteEvent;
+                }
+            }
         }
 
         public object AsyncState
@@ -59,17 +100,20 @@ namespace Observlet.WebForms
             myThread.Start();
             IsBusy = true;
         }
+        
         public void Start(Action action)            
         {
             //ThreadPool.QueueUserWorkItem(StartAsyncOperation,null);
-            //ThreadStart myThreadDelegate = StartAsyncOperation;
+            //ThreadStart myThreadDelegate = StartAsyncOperation;            
             if (action != null) myThread = new Thread(action.Invoke);
+            
             myThread.Start();
+            
             IsBusy = true;            
         }
 
-        public bool IsBusy { private set; get; }
 
+        public bool IsBusy { private set; get; }
         /// <summary>
         /// Only for testing. This generates a simple task: sleep 10 ms.
         /// </summary>
@@ -95,13 +139,7 @@ namespace Observlet.WebForms
             }
             finally
             {
-                //_waitHandle.Set();
-                if (_Stop)
-                    _state = "Halted";
-                else
-                    _state = "Asynch operation completed";
-                _completed = true;
-                _callback(this);
+                CompleteRequest();
             }
         }
 
