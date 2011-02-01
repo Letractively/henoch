@@ -180,6 +180,7 @@
     <Compile Include="WebForms\AsyncHandler.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="WebForms\RequestState.cs" />
     <Compile Include="WebForms\Tracer.aspx.cs">
       <DependentUpon>Tracer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

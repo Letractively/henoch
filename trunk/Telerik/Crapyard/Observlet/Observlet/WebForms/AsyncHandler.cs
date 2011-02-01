@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Web;
 
@@ -22,6 +24,7 @@ namespace Observlet.WebForms
 
         private IAsyncResult _AsyncOperator;
         private readonly string FOR_HTTPHANDLERS_ONLY = "Only for httphandlers.";
+        private static int BUFFER_SIZE = 1024;
 
         /// <summary>
         /// Caches the asyncstate into session. TODO: use cache.
@@ -117,8 +120,9 @@ namespace Observlet.WebForms
             async.Start(ExecuteCachePolicy);
             
             // Fire-and-forget
-            return _MyRequest.BeginGetResponse(cb, AsyncState);
+            return _MyRequest.BeginGetResponse(cb, extraData);
         }
+
 
         /// <summary>
         /// Only for httphandlers.
