@@ -52,13 +52,20 @@ public partial class Tickets_327691_Default : System.Web.UI.Page
         GridTableView table = (GridTableView)sender;
         foreach (GridDataItem item in table.Items)
         {
+            //build the item key that will be used to save the item as expanded
+            string itemKey = BuildItemKey(item);
             if (item.Expanded)
-            {
-                //build the item key that will be used to save the item as expanded
-                string itemKey = BuildItemKey(item);
+            {                
                 if (!ExpandedItemKeys.Contains(itemKey))
                 {
                     ExpandedItemKeys.Add(itemKey);
+                }
+            }
+            else
+            {
+                if (ExpandedItemKeys.Contains(itemKey))
+                {
+                    ExpandedItemKeys.Remove(itemKey);
                 }
             }
         }
@@ -75,8 +82,7 @@ public partial class Tickets_327691_Default : System.Web.UI.Page
             //this means the item should be expanded
             if (!item.Expanded && ExpandedItemKeys.Contains(itemKey))
             {
-                item.Expanded = true;
-                ExpandedItemKeys.Remove(itemKey);
+                item.Expanded = true;                
             }
         }
         
