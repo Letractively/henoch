@@ -206,6 +206,10 @@
     <Compile Include="Workers\Worker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AsyncHandlers\AsyncHandlers.csproj">
+      <Project>{F327D266-5EF7-45F6-AA91-A70F3A811FDC}</Project>
+      <Name>AsyncHandlers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApplicationTypes\ApplicationTypes.csproj">
       <Project>{61513A06-2764-4CEB-9B66-B488E42AA5FD}</Project>
       <Name>ApplicationTypes</Name>

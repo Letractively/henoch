@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Observlet.WebForms
 {
-    public partial class AsyncViewer : AsyncHandler
+    public partial class AsyncViewer : AsyncHandlers.AsyncHandler
     {               
         protected void Page_Load(object sender, EventArgs e)
         {
