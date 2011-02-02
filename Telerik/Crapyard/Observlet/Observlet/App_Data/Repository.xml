@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TeamsCollection>
+  <TeamsCollection>
+    <Team>
+      <name>ADO Den Haag</name>
+      <stadion>18000</stadion>
+    </Team>
+    <Team>
+      <name>Ajax</name>
+      <stadion>30000</stadion>
+    </Team>
+    <Team>
+      <name>PSV</name>
+      <stadion>40000</stadion>
+    </Team>
+  </TeamsCollection>
+</TeamsCollection>

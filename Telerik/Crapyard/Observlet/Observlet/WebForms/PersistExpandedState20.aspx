@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="True" Inherits="Tickets_327691_Default" CodeBehind="PersistExpandedState20.aspx.cs"
-    Culture="auto" meta:resourcekey="PageResource1" UICulture="auto"  MasterPageFile="~/Site.Master"%>
+    Culture="auto" meta:resourcekey="PageResource1" UICulture="auto"  MasterPageFile="~/Site.Master" EnableViewState="true" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
@@ -65,6 +65,8 @@
                                 </telerik:GridTableView></DetailTables>
                         </telerik:GridTableView></DetailTables>
                 </MasterTableView></telerik:RadGrid>
+            <telerik:RadGrid ID="RadGrid2" runat="server">
+            </telerik:RadGrid>
         </telerik:RadAjaxPanel>
 
         <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">            
