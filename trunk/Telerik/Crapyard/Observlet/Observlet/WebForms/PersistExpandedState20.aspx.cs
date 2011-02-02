@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Web.UI;
 using DataResource.Repository;
@@ -11,8 +12,19 @@ public partial class Tickets_327691_Default : System.Web.UI.Page
 
     protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
     {
-       
+        DataSet dataSet = new DataSet();
+        DataTable dataTable = new DataTable("Team");
+        dataTable.Columns.Add("name", typeof(string));
+        dataTable.Columns.Add("stadion", typeof(int));
+        dataSet.Tables.Add(dataTable);
+
+        String FilePath;
+        FilePath = Server.MapPath(@"/App_Data/Repository.xml");
+
+        dataSet.ReadXml(FilePath, XmlReadMode.IgnoreSchema);
+        RadGrid1.Visible = false;
         RadGrid1.DataSource = BusinessDataStorage.GetCategories();
+        RadGrid2.DataSource = dataSet;
         
     }
 

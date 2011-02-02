@@ -36,7 +36,7 @@ namespace DataResource.Repository
 
         public static BusinessObjectCollection GetData(int categoryId)
         {
-            List<BusinessObject> result = GetData().FindAll(delegate(BusinessObject obj) { return obj.CategoryID == categoryId; });
+            List<BusinessObject> result = GetData().FindAll(obj => obj.CategoryID == categoryId);
             BusinessObjectCollection ret = new BusinessObjectCollection();
             ret.Clear();
             ret.AddRange(result);
@@ -46,7 +46,7 @@ namespace DataResource.Repository
 
         public static BusinessObjectCollection GetHierarchicalData(int? parentId)
         {
-            List<BusinessObject> result = GetData().FindAll(delegate(BusinessObject obj) { return obj.ParentID == parentId; });
+            List<BusinessObject> result = GetData().FindAll(obj => obj.ParentID == parentId);
             BusinessObjectCollection ret = new BusinessObjectCollection();
             ret.Clear();
             ret.AddRange(result);
