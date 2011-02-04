@@ -79,7 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="App_Data\Repository.xml" />
+    <Content Include="App_Data\Repository.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="MyService.asmx" />
