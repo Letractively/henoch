@@ -1,12 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="True" Inherits="Observlet.WebForms.Persistor" CodeBehind="PersistExpandedState20.aspx.cs"
-    Culture="auto" meta:resourcekey="PageResource1" UICulture="auto"  MasterPageFile="~/Site.Master" EnableViewState="true" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NoViewstate.aspx.cs" Inherits="Observlet.WebForms.NoViewstate" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:ScriptManagerProxy ID="Proxy" runat="server">
+   <asp:ScriptManagerProxy ID="Proxy" runat="server">
         <Scripts>
             <asp:ScriptReference Path="~/Scripts/jquery-1.4.4.min.js" />            
         </Scripts>

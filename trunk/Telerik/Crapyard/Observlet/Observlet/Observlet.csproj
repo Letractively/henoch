@@ -93,6 +93,7 @@
     <Content Include="WebForms\APL.aspx" />
     <Content Include="WebForms\AsyncViewer.aspx" />
     <Content Include="WebForms\FireAndForget.aspx" />
+    <Content Include="WebForms\NoViewstate.aspx" />
     <Content Include="WebForms\PersistExpandedState20.aspx" />
     <Content Include="WebForms\Tracer.aspx" />
     <Content Include="Web.config">
@@ -184,6 +185,13 @@
     </Compile>
     <Compile Include="WebForms\FireAndForget.aspx.designer.cs">
       <DependentUpon>FireAndForget.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForms\NoViewstate.aspx.cs">
+      <DependentUpon>NoViewstate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForms\NoViewstate.aspx.designer.cs">
+      <DependentUpon>NoViewstate.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForms\Observer.cs" />
     <Compile Include="WebForms\AsyncHandler.cs">

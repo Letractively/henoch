@@ -10,7 +10,7 @@
 namespace Observlet.WebForms {
     
     
-    public partial class Persistor {
+    public partial class NoViewstate {
         
         /// <summary>
         /// Proxy control.
