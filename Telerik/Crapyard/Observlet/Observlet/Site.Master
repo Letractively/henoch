@@ -55,7 +55,10 @@
                             <asp:MenuItem Text="Fire&amp;Forget" Value="Fire&amp;Forget" 
                                 NavigateUrl="~/WebForms/FireAndForget.aspx"></asp:MenuItem>
                             <asp:MenuItem Text="ReliableSession" Value="ReliableSession" 
-                                NavigateUrl="~/WebForms/PersistExpandedState20.aspx"></asp:MenuItem>
+                                NavigateUrl="~/WebForms/PersistExpandedState20.aspx">
+                                <asp:MenuItem NavigateUrl="~/WebForms/NoViewstate.aspx" Text="ViewState Off" 
+                                    Value="ViewState Off"></asp:MenuItem>
+                            </asp:MenuItem>
                         </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
                     </Items>

@@ -8,9 +8,9 @@ using Telerik.Web.UI;
 
 namespace Observlet.WebForms
 {
-    public partial class Persistor : System.Web.UI.Page
+    public partial class NoViewstate : System.Web.UI.Page
     {
-   
+
         protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             DataSet dataSet = new DataSet();
@@ -69,7 +69,7 @@ namespace Observlet.WebForms
                 //build the item key that will be used to save the item as expanded
                 string itemKey = BuildItemKey(item);
                 if (item.Expanded)
-                {                
+                {
                     if (!ExpandedItemKeys.Contains(itemKey))
                     {
                         ExpandedItemKeys.Add(itemKey);
@@ -88,7 +88,7 @@ namespace Observlet.WebForms
         void GridTableView_DataBound(object sender, EventArgs e)
         {
             GridTableView table = (GridTableView)sender;
-        
+
             foreach (GridDataItem item in table.Items)
             {
                 string itemKey = BuildItemKey(item);
@@ -96,10 +96,10 @@ namespace Observlet.WebForms
                 //this means the item should be expanded
                 if (!item.Expanded && ExpandedItemKeys.Contains(itemKey))
                 {
-                    item.Expanded = true;                
+                    item.Expanded = true;
                 }
             }
-        
+
         }
 
         /// <summary>
