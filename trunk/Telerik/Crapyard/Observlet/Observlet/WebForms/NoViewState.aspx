@@ -1,4 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="NoViewState.aspx.cs" Inherits="Observlet.WebForms.NoViewState" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" 
+CodeBehind="NoViewState.aspx.cs" Inherits="Observlet.WebForms.NoViewState" EnableViewState="false"%>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
