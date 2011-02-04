@@ -59,9 +59,9 @@ namespace ApplicationTypes.Maintenance
             DebugLevel = new TraceSwitch("Debug", "The Output Debuglevel of tracing");
             // define the datastore for application specific files
 			
-            string applicationPath;
-            //dllName = Assembly.GetExecutingAssembly().Location;
-            applicationPath = @"D:\WWWRoot\Async\";// Path.GetDirectoryName(dllName);
+            string applicationPath; 
+            dllName = Assembly.GetExecutingAssembly().Location;
+            applicationPath = @"C:\Windows\temp";// Path.GetDirectoryName(dllName);
             if (applicationPath.ToUpperInvariant().Contains(@"C:\WINDOWS\MICROSOFT.NET"))
             {
                 applicationPath = applicationPath.ToUpperInvariant().Contains(@"ASP.NET") ? @"\\mxs116\Log" : Utility.HomePath;
