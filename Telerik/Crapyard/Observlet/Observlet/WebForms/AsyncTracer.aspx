@@ -4,9 +4,7 @@
 <asp:content id="Content1" contentplaceholderid="HeadContent" runat="server">
 </asp:content>
 <asp:content id="Content2" contentplaceholderid="MainContent" runat="server">
-    <div>
-        <asp:ScriptManager ID="ScriptManager1" runat="server" />
-    </div>
+
     
     
     <asp:label id="Label1" runat="server">
