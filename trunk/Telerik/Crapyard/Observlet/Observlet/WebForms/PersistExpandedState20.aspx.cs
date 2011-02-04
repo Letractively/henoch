@@ -19,7 +19,7 @@ public partial class Tickets_327691_Default : System.Web.UI.Page
         dataSet.Tables.Add(dataTable);
 
         String FilePath;
-        FilePath = Server.MapPath(@"/App_Data/Repository.xml");
+        FilePath = Server.MapPath(@"/Observlet/App_Data/Repository.xml");
 
         dataSet.ReadXml(FilePath, XmlReadMode.IgnoreSchema);
         RadGrid1.Visible = false;
