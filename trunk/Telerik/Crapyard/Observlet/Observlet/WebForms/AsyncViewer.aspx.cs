@@ -10,11 +10,11 @@ namespace Observlet.WebForms
         protected void Page_Load(object sender, EventArgs e)
         {
             string scriptLocation =
-            Page.ClientScript.GetWebResourceUrl(this.GetType(), "jqUtil.js");
+            Page.ClientScript.GetWebResourceUrl(this.GetType(), "../Scripts/jqUtil.js");
             Page.ClientScript.RegisterClientScriptInclude("jqUtil.js", scriptLocation);
-            Page.ClientScript.GetWebResourceUrl(this.GetType(), "jquery-1.4.4.min.js");
+            Page.ClientScript.GetWebResourceUrl(this.GetType(), "../Scripts/jquery-1.4.4.min.js");
             Page.ClientScript.RegisterClientScriptInclude("jquery-1.4.4.min.js", scriptLocation);
-            Page.ClientScript.GetWebResourceUrl(this.GetType(), "jquery-1.4.1.js");
+            Page.ClientScript.GetWebResourceUrl(this.GetType(), "../Scripts/jquery-1.4.1.js");
             Page.ClientScript.RegisterClientScriptInclude("jquery-1.4.1.js", scriptLocation);
 
             Label3.Text = String.Empty;
