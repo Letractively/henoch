@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" Async="true"
     CodeBehind="AsyncViewer.aspx.cs" Inherits="Observlet.WebForms.AsyncViewer" %>
 
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
@@ -56,9 +58,14 @@
             <td>
                
                 <asp:Label ID="Label3" CssClass="result" runat="server"></asp:Label>
+                 &nbsp;&nbsp;
+                <telerik:RadNumericTextBox ID="RadNumericTextBox1" Runat="server" 
+                    Skin="Windows7" NumberFormat-DecimalSeparator="." NumberFormat-KeepTrailingZerosOnFocus ="true" nu>
+                    <NumberFormat DecimalDigits="2"/>
+                </telerik:RadNumericTextBox> &nbsp;&nbsp;<asp:TextBox ID="numericTextBox" CssClass="numericCssClass" runat="server"></asp:TextBox>
             </td>
             <td>
-                &nbsp;
+               
             </td>
             <td>
                 &nbsp;

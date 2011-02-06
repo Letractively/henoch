@@ -10,8 +10,7 @@
 namespace Observlet.WebForms {
     
     
-    public partial class AsyncViewer 
-    {
+    public partial class AsyncViewer {
         
         /// <summary>
         /// ScriptManager1 control.
@@ -75,6 +74,15 @@ namespace Observlet.WebForms {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// RadNumericTextBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox RadNumericTextBox1;
         
         /// <summary>
         /// Timer1 control.
