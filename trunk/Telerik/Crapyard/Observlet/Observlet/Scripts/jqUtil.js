@@ -72,7 +72,7 @@ $(document).ready(function () {
                 alert("Error calling the web service.");
             }
         });
-    }); 
+    });
 
     $(".search").click(function () {
         var empId = 1;
@@ -90,6 +90,91 @@ $(document).ready(function () {
             }
         });
         //Create iframe
+    });
+
+    /*
+    NUMERICTEXT BOX
+    */
+    $(".numericCssClass").keypress(function (event) {
+        //$("#msg").append("<li class= 'log'>EventTarget:  " + event.target.value + ".</li>");
+
+        var key = String.fromCharCode(event.keyCode);
+
+        if (isNaN(key) && key != '.') {
+            //prevents from showing NaN except periods and numbers
+            event.preventDefault();
+        }
+//        if (key == '.') {
+//            var decimalseparators = event.target.value.toString().split(".", 4);
+//            if (decimalseparators.length > 1) {
+//                var inputField = '';
+//                try {
+//                    inputField = $(this)[0].value.toString().replace(".", "");
+//                    $(this)[0].value = inputField;
+//                    //event.preventDefault();
+//                } catch (e) {
+//                    //ignore
+//                }
+//            }
+//        }
+    });
+
+    try {
+        $(".numericCssClass").focusout(function (event) {
+            var eventTarget = parseFloat(event.target.value);
+
+            if (!isNaN(eventTarget)) {
+                $(this).valueOf().get(0).value = eventTarget.toFixed(2);
+            }
+        });
+    } catch (e) {
+        if (e != null) {
+
+            //$("#msg").append("<li class= 'log'>ERROR in focusout " + e.description + ".</li>");
+        }
+        else {
+            //$("#msg").append("<li class= 'log'>ERROR in focusout:  " + e + ".</li>");
+        }
+    }
+    $(".numericCssClass").keyup(function (event) {
+        //$("#msg").append("<li class= 'log'>EventTarget:  " + event.target.value + ".</li>");
+        regex = /\d*(\.?)(\d{0,2})/g;
+        result = regex.exec(event.target.value);
+
+        var eventTarget = parseFloat(event.target.value);
+        if (!isNaN(eventTarget)) {
+
+            regex = /^[0]+$/g;
+            zeros = regex.exec(event.target.value);
+            if (zeros != null && zeros[0].length == zeros.lastIndex && zeros[0].length > 1) {
+                //assert there are only zero's.
+                $(this).valueOf().get(0).value = 0;
+                //assert there is at most 1 period left in string.
+                return;
+            }
+
+            //todo remove leftmost zeros(on lostfocus?).                
+        }
+        if (result != null && $(this).valueOf().get(0).value != result[0]) {
+            event.preventDefault();
+            //check for periods and use only leftmost period (.
+            var numbers = event.target.value.toString().split(".", 4);
+
+            //find first occurence of a floating point. ( 0.23345.67 => 0.23345)
+            regex = /\d*(\.?)(\d{0,3})/g;
+            var result1 = regex.exec(event.target.value);
+
+            var numeric = 0;
+            if (result1 != null && result1.length > 2)
+                numeric = parseFloat(result1[0] + numbers[2]); //(0.2334567 )
+            else
+                numeric = parseFloat(event.target.value);
+
+            if (isNaN(numeric)) numeric = 0;
+            $(this).valueOf().get(0).value = numeric.toFixed(2);
+        }
+
+        //assert there is at most1 period left in string.
     });
 });
 
