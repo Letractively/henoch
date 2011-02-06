@@ -87,9 +87,9 @@
     <Content Include="MyService.asmx" />
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
-    <Content Include="Scripts\jquery-1.4.1.min.js" />
-    <Content Include="Scripts\jquery-1.4.4.min.js" />
-    <Content Include="Scripts\jqUtil.js" />
+    <EmbeddedResource Include="Scripts\jquery-1.4.1.min.js" />
+    <EmbeddedResource Include="Scripts\jquery-1.4.4.min.js" />
+    <EmbeddedResource Include="Scripts\jqUtil.js" />
     <Content Include="WebForms\APL.aspx" />
     <Content Include="WebForms\AsyncViewer.aspx" />
     <Content Include="WebForms\FireAndForget.aspx" />

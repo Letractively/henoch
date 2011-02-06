@@ -104,19 +104,6 @@ $(document).ready(function () {
             //prevents from showing NaN except periods and numbers
             event.preventDefault();
         }
-//        if (key == '.') {
-//            var decimalseparators = event.target.value.toString().split(".", 4);
-//            if (decimalseparators.length > 1) {
-//                var inputField = '';
-//                try {
-//                    inputField = $(this)[0].value.toString().replace(".", "");
-//                    $(this)[0].value = inputField;
-//                    //event.preventDefault();
-//                } catch (e) {
-//                    //ignore
-//                }
-//            }
-//        }
     });
 
     try {
@@ -141,6 +128,9 @@ $(document).ready(function () {
         regex = /\d*(\.?)(\d{0,2})/g;
         result = regex.exec(event.target.value);
 
+        /*
+        Handle zero's
+        */
         var eventTarget = parseFloat(event.target.value);
         if (!isNaN(eventTarget)) {
 
@@ -155,6 +145,10 @@ $(document).ready(function () {
 
             //todo remove leftmost zeros(on lostfocus?).                
         }
+
+        /*
+        Handle periods
+        */
         if (result != null && $(this).valueOf().get(0).value != result[0]) {
             event.preventDefault();
             //check for periods and use only leftmost period (.
