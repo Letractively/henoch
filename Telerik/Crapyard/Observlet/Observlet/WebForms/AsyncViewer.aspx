@@ -62,8 +62,7 @@
                 <telerik:RadNumericTextBox ID="RadNumericTextBox1" Runat="server" 
                     Skin="Windows7" NumberFormat-DecimalSeparator="." NumberFormat-KeepTrailingZerosOnFocus ="true">
                     <NumberFormat DecimalDigits="2"/>
-                </telerik:RadNumericTextBox> &nbsp;&nbsp;<asp:TextBox ID="numericTextBox" CssClass="numericCssClass" runat="server"></asp:TextBox>
-            </td>
+                </telerik:RadNumericTextBox> &nbsp;&nbsp;</td>
             <td>
                
             </td>
@@ -82,6 +81,9 @@
         </Triggers>
     </asp:UpdatePanel>
 
+<asp:TextBox ID="numericTextBox" 
+                    CssClass="numericCssClass" runat="server"></asp:TextBox>
+            
 
     </form>
 
