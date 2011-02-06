@@ -60,7 +60,7 @@
                 <asp:Label ID="Label3" CssClass="result" runat="server"></asp:Label>
                  &nbsp;&nbsp;
                 <telerik:RadNumericTextBox ID="RadNumericTextBox1" Runat="server" 
-                    Skin="Windows7" NumberFormat-DecimalSeparator="." NumberFormat-KeepTrailingZerosOnFocus ="true" nu>
+                    Skin="Windows7" NumberFormat-DecimalSeparator="." NumberFormat-KeepTrailingZerosOnFocus ="true">
                     <NumberFormat DecimalDigits="2"/>
                 </telerik:RadNumericTextBox> &nbsp;&nbsp;<asp:TextBox ID="numericTextBox" CssClass="numericCssClass" runat="server"></asp:TextBox>
             </td>

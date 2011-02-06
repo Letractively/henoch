@@ -85,6 +85,15 @@ namespace Observlet.WebForms {
         protected global::Telerik.Web.UI.RadNumericTextBox RadNumericTextBox1;
         
         /// <summary>
+        /// numericTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox numericTextBox;
+        
+        /// <summary>
         /// Timer1 control.
         /// </summary>
         /// <remarks>
