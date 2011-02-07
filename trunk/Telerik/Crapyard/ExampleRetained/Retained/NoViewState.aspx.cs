@@ -23,6 +23,18 @@ namespace Retained
                 this._selectedState = null;
                 this.Session["_selectedState"] = null;
             }
+            else
+            {
+                if (!RadGrid1.EnableViewState)
+                {
+                    ////perform some actions here
+                    //RadGrid1.DataSource = null;
+
+                    ////call the Rebind() method after nullifying the data source
+                    //RadGrid1.Rebind();
+                }
+
+            }
         }
         /// <summary>
         /// Uses cachemanager to retrieve/store state.
@@ -38,7 +50,11 @@ namespace Retained
                 }
                 else
                 {
-                    _ordersExpandedState = new Hashtable();
+                    if (this._ordersExpandedState == null)
+                    {
+                        _ordersExpandedState = new Hashtable();
+                        _ExpandedState.Add(_CacheIdentifier, _ordersExpandedState, CacheItemPriority.High, null, null);
+                    }
                 }
                 return _ordersExpandedState;
             }
@@ -48,7 +64,25 @@ namespace Retained
                 _ordersExpandedState = value;
             }
         }
+        //Save/load expanded states Hash from the session
+        //this can also be implemented in the ViewState
+        //private Hashtable ExpandedState
+        //{
+        //    get
+        //    {
+        //        if (this._ordersExpandedState == null)
+        //        {
+        //            _ordersExpandedState = ExpandedState;
+        //            if (_ordersExpandedState == null)
+        //            {
+        //                _ordersExpandedState = new Hashtable();
+        //                ExpandedState = _ordersExpandedState;
+        //            }
+        //        }
 
+        //        return this._ordersExpandedState;
+        //    }
+        //}
 
         //Clear the state for all expanded children if a parent item is collapsed
         private void ClearExpandedChildren(string parentHierarchicalIndex)
@@ -146,7 +180,6 @@ namespace Retained
                 bool value = (bool)this.ExpandedState[key];
                 if (value)
                 {
-                    //Slow when enableviewstate = false...
                     RadGrid1.Items[key].Expanded = true;
                 }
             }
