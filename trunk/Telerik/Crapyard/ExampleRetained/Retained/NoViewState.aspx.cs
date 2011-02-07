@@ -38,7 +38,7 @@ namespace Retained
                 }
                 else
                 {
-                    _ordersExpandedState = null;
+                    _ordersExpandedState = new Hashtable();
                 }
                 return _ordersExpandedState;
             }
@@ -48,38 +48,20 @@ namespace Retained
                 _ordersExpandedState = value;
             }
         }
-        //Save/load expanded states Hash from the session
-        //this can also be implemented in the ViewState
-        private Hashtable ExpandedStates
-        {
-            get
-            {
-                if (this._ordersExpandedState == null)
-                {
-                    _ordersExpandedState = ExpandedState;
-                    if (_ordersExpandedState == null)
-                    {
-                        _ordersExpandedState = new Hashtable();
-                        ExpandedState = _ordersExpandedState;
-                    }
-                }
 
-                return this._ordersExpandedState;
-            }
-        }
 
         //Clear the state for all expanded children if a parent item is collapsed
         private void ClearExpandedChildren(string parentHierarchicalIndex)
         {
-            string[] indexes = new string[this.ExpandedStates.Keys.Count];
-            this.ExpandedStates.Keys.CopyTo(indexes, 0);
+            string[] indexes = new string[this.ExpandedState.Keys.Count];
+            this.ExpandedState.Keys.CopyTo(indexes, 0);
             foreach (string index in indexes)
             {
                 //all indexes of child items
                 if (index.StartsWith(parentHierarchicalIndex + "_") ||
                     index.StartsWith(parentHierarchicalIndex + ":"))
                 {
-                    this.ExpandedStates.Remove(index);
+                    this.ExpandedState.Remove(index);
                 }
             }
         }
@@ -127,11 +109,11 @@ namespace Retained
                 if (!e.Item.Expanded)
                 {
                     //Save its unique index among all the items in the hierarchy
-                    this.ExpandedStates[e.Item.ItemIndexHierarchical] = true;
+                    this.ExpandedState[e.Item.ItemIndexHierarchical] = true;
                 }
                 else //collapsed
                 {
-                    this.ExpandedStates.Remove(e.Item.ItemIndexHierarchical);
+                    this.ExpandedState.Remove(e.Item.ItemIndexHierarchical);
                     this.ClearSelectedChildren(e.Item.ItemIndexHierarchical);
                     this.ClearExpandedChildren(e.Item.ItemIndexHierarchical);
                 }
@@ -151,8 +133,8 @@ namespace Retained
         protected void RadGrid1_DataBound(object sender, EventArgs e)
         {
             //Expand all items using our custom storage
-            string[] indexes = new string[this.ExpandedStates.Keys.Count];
-            this.ExpandedStates.Keys.CopyTo(indexes, 0);
+            string[] indexes = new string[this.ExpandedState.Keys.Count];
+            this.ExpandedState.Keys.CopyTo(indexes, 0);
 
             ArrayList arr = new ArrayList(indexes);
             //Sort so we can guarantee that a parent item is expanded before any of 
@@ -161,9 +143,10 @@ namespace Retained
 
             foreach (string key in arr)
             {
-                bool value = (bool)this.ExpandedStates[key];
+                bool value = (bool)this.ExpandedState[key];
                 if (value)
                 {
+                    //Slow when enableviewstate = false...
                     RadGrid1.Items[key].Expanded = true;
                 }
             }
