@@ -19,16 +19,19 @@ namespace Retained
             {
                 //reset states
                 this._ordersExpandedState = null;
-                this.Session[ORDERS_EXPANDED_STATE] = null;
+                //this.Session[ORDERS_EXPANDED_STATE] = null;
                 this._selectedState = null;
                 this.Session["_selectedState"] = null;
             }
         }
+        /// <summary>
+        /// Uses cachemanager to retrieve/store state.
+        /// </summary>
         protected Hashtable ExpandedState
         {
             get
             {
-                _CacheIdentifier = "ExpandedState" + new Guid().ToString();
+                _CacheIdentifier = "ExpandedState" + Context.Session.SessionID;
                 if (_ExpandedState.Contains(_CacheIdentifier))
                 {
                     _ordersExpandedState = _ExpandedState.GetData(_CacheIdentifier) as Hashtable;
@@ -53,11 +56,11 @@ namespace Retained
             {
                 if (this._ordersExpandedState == null)
                 {
-                    _ordersExpandedState = this.Session[ORDERS_EXPANDED_STATE] as Hashtable;
+                    _ordersExpandedState = ExpandedState;
                     if (_ordersExpandedState == null)
                     {
                         _ordersExpandedState = new Hashtable();
-                        this.Session[ORDERS_EXPANDED_STATE] = _ordersExpandedState;
+                        ExpandedState = _ordersExpandedState;
                     }
                 }
 

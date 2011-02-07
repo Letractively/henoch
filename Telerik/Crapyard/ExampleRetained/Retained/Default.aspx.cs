@@ -5,10 +5,8 @@ using Telerik.Web.UI;
 
 public partial class _Default : System.Web.UI.Page
 {
-    private static CacheManager _ExpandedState = CacheFactory.GetCacheManager();
     private Hashtable _ordersExpandedState;
     private Hashtable _selectedState;
-    private string _CacheIdentifier;
     private const string ORDERS_EXPANDED_STATE = "_ordersExpandedState";
 
     public void Page_Load(object sender, EventArgs e)
@@ -22,27 +20,7 @@ public partial class _Default : System.Web.UI.Page
             this.Session["_selectedState"] = null;
         }
     }
-    protected Hashtable ExpandedState
-    {
-        get
-        {
-            _CacheIdentifier = "ExpandedState" + new Guid().ToString();
-            if (_ExpandedState.Contains(_CacheIdentifier))
-            {
-                _ordersExpandedState = _ExpandedState.GetData(_CacheIdentifier) as Hashtable;
-            }
-            else
-            {
-                _ordersExpandedState = null;
-            }
-            return _ordersExpandedState;
-        }
-        set
-        {
-            _ExpandedState.Add(_CacheIdentifier, value, CacheItemPriority.High, null, null);
-            _ordersExpandedState = value;
-        }
-    }
+
     //Save/load expanded states Hash from the session
     //this can also be implemented in the ViewState
     private Hashtable ExpandedStates
