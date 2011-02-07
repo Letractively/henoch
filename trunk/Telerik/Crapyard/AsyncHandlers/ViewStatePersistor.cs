@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Microsoft.Practices.EnterpriseLibrary.Caching;
 
 namespace AsyncHandlers
 {
@@ -12,6 +14,9 @@ namespace AsyncHandlers
     {
 
         #region "Declarations"
+        private static CacheManager _ExpandedState = CacheFactory.GetCacheManager();
+        private Hashtable _viewState;
+        private string _CacheIdentifier;
 
         private const int DefaultViewStateTimeout = 20;
         private const string SP_GET_VIEWSTATE = "spGetViewState";
@@ -44,7 +49,34 @@ namespace AsyncHandlers
         #endregion
 
         #region "Properties"
-
+        /// <summary>
+        /// Uses cachemanager to retrieve/store state.
+        /// </summary>
+        protected Hashtable ViewStateCached
+        {
+            get
+            {
+                _CacheIdentifier = "ViewStateCached" + Context.Session.SessionID;
+                if (_ExpandedState.Contains(_CacheIdentifier))
+                {
+                    _viewState = _ExpandedState.GetData(_CacheIdentifier) as Hashtable;
+                }
+                else
+                {
+                    if (this._viewState == null)
+                    {
+                        _viewState = new Hashtable();
+                        _ExpandedState.Add(_CacheIdentifier, _viewState, CacheItemPriority.High, null, null);
+                    }
+                }
+                return _viewState;
+            }
+            set
+            {
+                _ExpandedState.Add(_CacheIdentifier, value, CacheItemPriority.High, null, null);
+                _viewState = value;
+            }
+        }
         protected bool IsDesignMode
         {
             get { return (this.Context == null); }
@@ -172,29 +204,7 @@ namespace AsyncHandlers
             using (MemoryStream stream = new MemoryStream())
             {
                 this.GetLosFormatter().Serialize(stream, viewState);
-                using (SqlConnection connection = new SqlConnection(this._viewStateConnectionString))
-                {
-                    using (SqlCommand command = new SqlCommand(ConfigurationManager.AppSettings[SP_SET_VIEWSTATE], connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.Add("@returnValue", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
-                        command.Parameters.Add("@viewStateId", SqlDbType.UniqueIdentifier).Value = viewStateGuid;
-                        command.Parameters.Add("@value", SqlDbType.Image).Value = stream.ToArray();
-                        command.Parameters.Add("@timeout", SqlDbType.Int).Value = this._viewStateTimeout.TotalMinutes;
-
-                        connection.Open();
-
-                        try
-                        {
-                            command.ExecuteNonQuery();
-                        }
-                        catch (Exception ex)
-                        {
-                            //LogException("BaseSqlViewStatePage.SavePageStateToPersistenceMedium ERROR", ex, Log.LogSeverity.lgsDataBaseError);
-                        }
-
-                    }
-                }
+                ///ViewStateCached = stream;
             }
             control = this.FindControl("__VIEWSTATEGUID") as HtmlInputHidden;
 
