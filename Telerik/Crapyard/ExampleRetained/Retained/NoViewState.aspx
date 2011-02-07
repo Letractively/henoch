@@ -1,4 +1,4 @@
-﻿<%@ Page EnableViewState="false" Language="C#" AutoEventWireup="true" CodeBehind="NoViewState.aspx.cs" Inherits="Retained.NoViewState" %>
+﻿<%@ Page EnableViewState="true" Language="C#" AutoEventWireup="true" CodeBehind="NoViewState.aspx.cs" Inherits="Retained.NoViewState" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
@@ -25,7 +25,7 @@
         <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Sunset" />
         <telerik:RadGrid ID="RadGrid1" DataSourceID="AccessDataSource1" runat="server" Skin="Sunset"
             Width="600px" AutoGenerateColumns="False" AllowSorting="True" AllowMultiRowSelection="True"
-            GridLines="None" OnDataBound="RadGrid1_DataBound" 
+            GridLines="None" OnDataBound="RadGrid1_DataBound" EnableViewState="true"
             OnItemCommand="RadGrid1_ItemCommand">
             <PagerStyle Mode="NumericPages"></PagerStyle>
             <MasterTableView DataSourceID="AccessDataSource1" DataKeyNames="CustomerID" CommandItemDisplay="Top">

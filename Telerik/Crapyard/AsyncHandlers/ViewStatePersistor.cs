@@ -50,7 +50,7 @@ namespace AsyncHandlers
             get { return (this.Context == null); }
         }
 
-        protected bool IsSqlViewStateEnabled
+        protected bool IsInProcCacheStateEnabled
         {
             get { return (this._viewStateConnectionString != null && this._viewStateConnectionString.Length > 0); }
         }
@@ -108,13 +108,12 @@ namespace AsyncHandlers
                 return null;
             }
 
-            if (!this.IsSqlViewStateEnabled)
+            if (!this.IsInProcCacheStateEnabled)
             {
                 return base.LoadPageStateFromPersistenceMedium();
             }
 
             viewStateGuid = this.GetViewStateGuid();
-            rawData = null;
 
             using (SqlConnection connection = new SqlConnection(this._viewStateConnectionString))
             {
@@ -163,7 +162,7 @@ namespace AsyncHandlers
                 return;
             }
 
-            if (!this.IsSqlViewStateEnabled)
+            if (!this.IsInProcCacheStateEnabled)
             {
                 base.SavePageStateToPersistenceMedium(viewState);
                 return;
