@@ -13,20 +13,21 @@ namespace Observlet.WebForms
 
         protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            DataSet dataSet = new DataSet();
-            DataTable dataTable = new DataTable("Team");
-            dataTable.Columns.Add("name", typeof(string));
-            dataTable.Columns.Add("stadion", typeof(int));
-            dataSet.Tables.Add(dataTable);
+            //DataSet dataSet = new DataSet();
+            //DataTable dataTable = new DataTable("Team");
+            //dataTable.Columns.Add("name", typeof(string));
+            //dataTable.Columns.Add("stadion", typeof(int));
+            //dataSet.Tables.Add(dataTable);
 
-            String FilePath;
-            FilePath = Server.MapPath(@"/App_Data/Repository.xml");
+            //String FilePath;
+            //FilePath = Server.MapPath(@"/App_Data/Repository.xml");
+            //dataSet.ReadXml(FilePath, XmlReadMode.IgnoreSchema);
+            //RadGrid2.DataSource = dataSet;
+            RadGrid2.Visible = false;
 
-            dataSet.ReadXml(FilePath, XmlReadMode.IgnoreSchema);
             RadGrid1.Visible = true;
             RadGrid1.DataSource = BusinessDataStorage.GetCategories();
-            RadGrid2.DataSource = dataSet;
-            RadGrid2.Visible = false;
+            
 
         }
 

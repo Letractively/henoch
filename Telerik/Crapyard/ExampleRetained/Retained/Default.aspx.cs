@@ -1,20 +1,15 @@
 using System;
-using System.Data;
-using System.Configuration;
 using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Web.UI;
-using System.Data.OleDb;
 
 public partial class _Default : System.Web.UI.Page
 {
+    private static CacheManager _ExpandedState = CacheFactory.GetCacheManager();
     private Hashtable _ordersExpandedState;
     private Hashtable _selectedState;
+    private string _CacheIdentifier;
+    private const string ORDERS_EXPANDED_STATE = "_ordersExpandedState";
 
     public void Page_Load(object sender, EventArgs e)
     {
@@ -22,9 +17,30 @@ public partial class _Default : System.Web.UI.Page
         {
             //reset states
             this._ordersExpandedState = null;
-            this.Session["_ordersExpandedState"] = null;
+            this.Session[ORDERS_EXPANDED_STATE] = null;
 			this._selectedState = null;
             this.Session["_selectedState"] = null;
+        }
+    }
+    protected Hashtable ExpandedState
+    {
+        get
+        {
+            _CacheIdentifier = "ExpandedState" + new Guid().ToString();
+            if (_ExpandedState.Contains(_CacheIdentifier))
+            {
+                _ordersExpandedState = _ExpandedState.GetData(_CacheIdentifier) as Hashtable;
+            }
+            else
+            {
+                _ordersExpandedState = null;
+            }
+            return _ordersExpandedState;
+        }
+        set
+        {
+            _ExpandedState.Add(_CacheIdentifier, value, CacheItemPriority.High, null, null);
+            _ordersExpandedState = value;
         }
     }
     //Save/load expanded states Hash from the session
@@ -35,11 +51,11 @@ public partial class _Default : System.Web.UI.Page
         {
             if (this._ordersExpandedState == null)
             {
-                _ordersExpandedState = this.Session["_ordersExpandedState"] as Hashtable;
+                _ordersExpandedState = this.Session[ORDERS_EXPANDED_STATE] as Hashtable;
                 if (_ordersExpandedState == null)
                 {
                     _ordersExpandedState = new Hashtable();
-                    this.Session["_ordersExpandedState"] = _ordersExpandedState;
+                    this.Session[ORDERS_EXPANDED_STATE] = _ordersExpandedState;
                 }
             }
 
