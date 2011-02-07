@@ -1,5 +1,4 @@
-﻿<%@ Page EnableViewState="true" Language="C#" AutoEventWireup="true"
-    Inherits="_Default" Codebehind="Default.aspx.cs" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="NoViewState.aspx.cs" Inherits="Retained.NoViewState" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
@@ -191,3 +190,4 @@
     </form>
 </body>
 </html>
+
