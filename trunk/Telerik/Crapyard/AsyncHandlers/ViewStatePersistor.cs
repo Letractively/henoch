@@ -14,7 +14,7 @@ namespace AsyncHandlers
     {
 
         #region "Declarations"
-        private static CacheManager _ExpandedState = CacheFactory.GetCacheManager();
+        private static CacheManager _ViewState = CacheFactory.GetCacheManager();
         private Object _viewState;
         private string _CacheIdentifier;
 
@@ -57,20 +57,20 @@ namespace AsyncHandlers
             get
             {
                 _CacheIdentifier = "ViewStateCached" + Context.Session.SessionID;
-                if (_ExpandedState.Contains(_CacheIdentifier))
+                if (_ViewState.Contains(_CacheIdentifier))
                 {
-                    _viewState = _ExpandedState.GetData(_CacheIdentifier) ;
+                    _viewState = _ViewState.GetData(_CacheIdentifier) ;
                 }
                 else
                 {                    
-                    _ExpandedState.Add(_CacheIdentifier, _viewState, CacheItemPriority.High, null, null);
+                    _ViewState.Add(_CacheIdentifier, _viewState, CacheItemPriority.High, null, null);
                 }
                 return _viewState;
             }
             set
             {
                 _CacheIdentifier = "ViewStateCached" + Context.Session.SessionID;
-                _ExpandedState.Add(_CacheIdentifier, value, CacheItemPriority.High, null, null);
+                _ViewState.Add(_CacheIdentifier, value, CacheItemPriority.High, null, null);
                 _viewState = value;
             }
         }
