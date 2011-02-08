@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections;
+using AsyncHandlers;
 using Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Web.UI;
 
 namespace Retained
 {
-    public partial class NoViewState : System.Web.UI.Page
+    /// <summary>
+    /// NoViewstate indicates viewstate enabled with a custom viewstate persistor (ViewStatePersistor).
+    /// It overrides loadpagestate and savepagestate.
+    /// </summary>
+    public partial class NoViewState : ViewStatePersistor
     {
         private static CacheManager _ExpandedState = CacheFactory.GetCacheManager();
         private Hashtable _ordersExpandedState;
