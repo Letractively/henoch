@@ -10,12 +10,12 @@ using Microsoft.Practices.EnterpriseLibrary.Caching;
 
 namespace AsyncHandlers
 {
-    public abstract class ViewStatePersistor : Page
+    public class ViewStatePersistor : Page
     {
 
         #region "Declarations"
         private static CacheManager _ExpandedState = CacheFactory.GetCacheManager();
-        private Hashtable _viewState;
+        private Object _viewState;
         private string _CacheIdentifier;
 
         private const int DefaultViewStateTimeout = 20;
@@ -30,20 +30,20 @@ namespace AsyncHandlers
         public ViewStatePersistor()
             : base()
         {
-
+           
             if (this.IsDesignMode)
             {
                 return;
             }
-            this._viewStateConnectionString = ConfigurationManager.ConnectionStrings["AMSConnectionString"].ConnectionString;
-            try
-            {
-                this._viewStateTimeout = TimeSpan.FromMinutes(Convert.ToDouble(ConfigurationManager.AppSettings["ViewStateTimeout"]));
-            }
-            catch
-            {
-                this._viewStateTimeout = TimeSpan.FromMinutes(ViewStatePersistor.DefaultViewStateTimeout);
-            }
+            //this._viewStateConnectionString = ConfigurationManager.ConnectionStrings["AMSConnectionString"].ConnectionString;
+            //try
+            //{
+            //    this._viewStateTimeout = TimeSpan.FromMinutes(Convert.ToDouble(ConfigurationManager.AppSettings["ViewStateTimeout"]));
+            //}
+            //catch
+            //{
+            //    this._viewStateTimeout = TimeSpan.FromMinutes(ViewStatePersistor.DefaultViewStateTimeout);
+            //}
         }
 
         #endregion
@@ -52,37 +52,35 @@ namespace AsyncHandlers
         /// <summary>
         /// Uses cachemanager to retrieve/store state.
         /// </summary>
-        protected Hashtable ViewStateCached
+        private Object ViewStateCached
         {
             get
             {
                 _CacheIdentifier = "ViewStateCached" + Context.Session.SessionID;
                 if (_ExpandedState.Contains(_CacheIdentifier))
                 {
-                    _viewState = _ExpandedState.GetData(_CacheIdentifier) as Hashtable;
+                    _viewState = _ExpandedState.GetData(_CacheIdentifier) ;
                 }
                 else
-                {
-                    if (this._viewState == null)
-                    {
-                        _viewState = new Hashtable();
-                        _ExpandedState.Add(_CacheIdentifier, _viewState, CacheItemPriority.High, null, null);
-                    }
+                {                    
+                    _ExpandedState.Add(_CacheIdentifier, _viewState, CacheItemPriority.High, null, null);
                 }
                 return _viewState;
             }
             set
             {
+                _CacheIdentifier = "ViewStateCached" + Context.Session.SessionID;
                 _ExpandedState.Add(_CacheIdentifier, value, CacheItemPriority.High, null, null);
                 _viewState = value;
             }
         }
-        protected bool IsDesignMode
+
+        private bool IsDesignMode
         {
             get { return (this.Context == null); }
         }
 
-        protected bool IsInProcCacheStateEnabled
+        private bool IsInProcCacheStateEnabled
         {
             get { return (this._viewStateConnectionString != null && this._viewStateConnectionString.Length > 0); }
         }
@@ -132,56 +130,13 @@ namespace AsyncHandlers
         #region Overrides
         protected override object LoadPageStateFromPersistenceMedium()
         {
-            Guid viewStateGuid = default(Guid);
-            byte[] rawData = null;
-
+           
             if (this.IsDesignMode)
             {
                 return null;
             }
 
-            if (!this.IsInProcCacheStateEnabled)
-            {
-                return base.LoadPageStateFromPersistenceMedium();
-            }
-
-            viewStateGuid = this.GetViewStateGuid();
-
-            using (SqlConnection connection = new SqlConnection(this._viewStateConnectionString))
-            {
-                using (SqlCommand command = new SqlCommand(ConfigurationManager.AppSettings[SP_GET_VIEWSTATE], connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add("@returnValue", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
-                    command.Parameters.Add("@viewStateId", SqlDbType.UniqueIdentifier).Value = viewStateGuid;
-
-                    connection.Open();
-
-                    try
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                rawData = (byte[])Array.CreateInstance(typeof(byte), reader.GetInt32(0));
-                            }
-                            if (reader.NextResult() && reader.Read())
-                            {
-                                reader.GetBytes(0, 0, rawData, 0, rawData.Length);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //LogException("BaseSqlViewStatePage.LoadPageStateFromPersistenceMedium ERROR", ex, Log.LogSeverity.lgsDataBaseError);
-                    }
-                }
-            }
-
-            using (MemoryStream stream = new MemoryStream(rawData))
-            {
-                return this.GetLosFormatter().Deserialize(stream);
-            }
+            return ViewStateCached;
         }
 
         protected override void SavePageStateToPersistenceMedium(object viewState)
@@ -194,18 +149,10 @@ namespace AsyncHandlers
                 return;
             }
 
-            if (!this.IsInProcCacheStateEnabled)
-            {
-                base.SavePageStateToPersistenceMedium(viewState);
-                return;
-            }
-
             viewStateGuid = this.GetViewStateGuid();
-            using (MemoryStream stream = new MemoryStream())
-            {
-                this.GetLosFormatter().Serialize(stream, viewState);
-                ///ViewStateCached = stream;
-            }
+
+            ViewStateCached = viewState;
+
             control = this.FindControl("__VIEWSTATEGUID") as HtmlInputHidden;
 
             if (control == null)
