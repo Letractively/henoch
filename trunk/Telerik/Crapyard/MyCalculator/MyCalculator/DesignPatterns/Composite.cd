@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UnitTestsIWSR.Component&lt;T&gt;">
+    <Position X="1" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAABAABQQAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DesignPatterns\Component.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="UnitTestsIWSR.Composite&lt;T&gt;">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAIAAABAABQQABAAIAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>DesignPatterns\Composite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="DesignPatterns.IComponent&lt;T&gt;">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAABAABQQAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DesignPatterns\IComponent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

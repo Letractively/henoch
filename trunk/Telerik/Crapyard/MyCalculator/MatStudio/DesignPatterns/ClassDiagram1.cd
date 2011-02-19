@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MatStudio.DesignPatterns.ObserverPattern">
+    <Position X="7" Y="2.25" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Interface Name="MatStudio.DesignPatterns.ObserverPattern.IObserver">
+        <TypeIdentifier>
+          <NewMemberFileName>DesignPatterns\Observer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Interface>
+      <Class Name="MatStudio.DesignPatterns.ObserverPattern.Observer">
+        <TypeIdentifier>
+          <NewMemberFileName>DesignPatterns\Observer.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DesignPatterns\Observer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatStudio.Forms.LayoutManager">
+    <Position X="0.5" Y="2" Width="2.5" />
+    <NestedTypes>
+      <Delegate Name="MatStudio.Forms.LayoutManager.Callback" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\LayoutManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="MatStudio.Forms.LayoutManager.Callback2" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\LayoutManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="MatStudio.Forms.LayoutManager.Callback3" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\LayoutManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAYCAAAAKAAABcAAASAAAQCAIIKAABSAEAAUgEBACI=</HashCode>
+      <FileName>Forms\LayoutManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
