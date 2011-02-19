@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Moles xmlns="http://schemas.microsoft.com/moles/2010/">
+  <Assembly Name="System" />
+  <StubGeneration>
+    <Types>
+      <Clear/>
+      <Add Namespace="System.DateTime"/>
+    </Types>
+  </StubGeneration>
+</Moles>
