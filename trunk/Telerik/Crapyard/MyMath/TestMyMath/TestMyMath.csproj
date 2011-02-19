@@ -35,15 +35,18 @@
   <ItemGroup>
     <Reference Include="Microsoft.Moles.Framework, Version=0.91.50418.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Pex.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="mscorlib.Behaviors, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="mscorlib.Moles, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0ae41878053f6703, processorArchitecture=MSIL" />
     <Reference Include="MyMath.Moles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Moles, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0ae41878053f6703, processorArchitecture=MSIL" />
+    <Reference Include="System.Core.Moles, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0ae41878053f6703, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -51,31 +54,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mscorlib.Designer.cs">
-      <DependentUpon>mscorlib.moles</DependentUpon>
-    </Compile>
-    <Compile Include="mscorlib1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>mscorlib.moles</DependentUpon>
-    </Compile>
-    <Compile Include="MyMath.Designer.cs">
-      <DependentUpon>MyMath.moles</DependentUpon>
-    </Compile>
-    <Compile Include="MyMath1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>MyMath.moles</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System.Designer.cs">
-      <DependentUpon>System.moles</DependentUpon>
-    </Compile>
-    <Compile Include="System1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>System.moles</DependentUpon>
-    </Compile>
     <Compile Include="TestReader.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,40 +70,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="mscorlib.moles">
-      <Generator>MolesGenerator</Generator>
-      <LastGenOutput>mscorlib1.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="MyMath.moles">
-      <Generator>MolesGenerator</Generator>
-      <LastGenOutput>MyMath1.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="System.moles">
-      <Generator>MolesGenerator</Generator>
-      <LastGenOutput>System1.Designer.cs</LastGenOutput>
-    </None>
+    <Moles Include="MyMath.moles" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="mscorlib.Moles.dll">
-      <DependentUpon>mscorlib.moles</DependentUpon>
-    </Content>
-    <Content Include="mscorlib.Moles.xml">
-      <DependentUpon>mscorlib.moles</DependentUpon>
-    </Content>
-    <Content Include="MyMath.Moles.dll">
-      <DependentUpon>MyMath.moles</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MyMath.Moles.xml">
-      <DependentUpon>MyMath.moles</DependentUpon>
-    </Content>
-    <Content Include="System.Moles.dll">
-      <DependentUpon>System.moles</DependentUpon>
-    </Content>
-    <Content Include="System.Moles.xml">
-      <DependentUpon>System.moles</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
+    <Moles Include="System.Core.moles" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

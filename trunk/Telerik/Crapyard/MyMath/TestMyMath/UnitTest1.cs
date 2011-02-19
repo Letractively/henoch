@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Moles;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Moles.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using MyMath;
 using MyMath.Moles;
-using Microsoft.Moles.Framework;
 
 namespace MyMath
 {
