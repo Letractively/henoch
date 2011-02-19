@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyMath.Moles</name>
+    </assembly>
+    <members>
+        <member name="T:MyMath.Moles.MFileSystem">
+            <summary>Mole type of <see cref="T:MyMath.FileSystem"/>
+            .</summary>
+        </member>
+        <member name="M:MyMath.Moles.MFileSystem.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MyMath.Moles.MFileSystem.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MyMath.Moles.MFileSystem.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MyMath.Moles.MFileSystem.Check">
+            <summary>Sets the mole of <see cref="M:MyMath.FileSystem.Check"/>
+            </summary>
+        </member>
+        <member name="P:MyMath.Moles.MFileSystem.ReadAllTextString">
+            <summary>Sets the mole of <see cref="M:MyMath.FileSystem.ReadAllText(T:System.String)"/>
+            </summary>
+        </member>
+        <member name="T:MyMath.Moles.SIFileSystem">
+            <summary>Stub type of <see cref="T:MyMath.IFileSystem"/>
+            .</summary>
+        </member>
+        <member name="M:MyMath.Moles.SIFileSystem.#ctor">
+            <summary>Initializes a new instance of type SIFileSystem</summary>
+        </member>
+        <member name="M:MyMath.Moles.SIFileSystem.mm::MyMath#IFileSystem#ReadAllText(System.String)">
+            <summary>Sets the stub of <see cref="M:MyMath.IFileSystem.ReadAllText(T:System.String)"/>
+            </summary>
+        </member>
+        <member name="F:MyMath.Moles.SIFileSystem.ReadAllTextString">
+            <summary>Sets the stub of <see cref="M:MyMath.IFileSystem.ReadAllText(T:System.String)"/>
+            </summary>
+        </member>
+    </members>
+</doc>
