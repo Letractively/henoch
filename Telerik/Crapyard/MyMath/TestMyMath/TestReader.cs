@@ -1,6 +1,4 @@
 ﻿using System;
-using Microsoft.Moles.Framework;
-using MyMath;
 
 namespace MyMath
 {
