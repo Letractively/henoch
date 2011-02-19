@@ -10,7 +10,21 @@ namespace MyMath
     {
         public static string ReadAllText(string fileName)
         {
-            return File.ReadAllText(fileName);
+            string read = String.Empty;
+
+            if (!String.IsNullOrEmpty(fileName))
+            {
+                try
+                {
+                    read = File.ReadAllText(fileName);
+                }
+                catch (Exception ex)
+                {                
+                    Console.WriteLine(ex);
+                }
+            }
+
+            return read;
         }
 
         public static void Check()
