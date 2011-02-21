@@ -11,7 +11,8 @@ namespace MyCalculator
 
         public double Add(double x, double y)
         {
-            return 1;///Dummy
+            //changed to 2 in order to demonstrate how a developer may introduce bugs
+            return 2;///Dummy
         }
 
         /// <summary>
