@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MathNet.Iridium">
-      <HintPath>..\MathNet\MathNet.Iridium.dll</HintPath>
+      <HintPath>bin\MathNet.Iridium.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
