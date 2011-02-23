@@ -1,5 +1,5 @@
 ﻿<%@ Page EnableViewState="true" Language="C#" AutoEventWireup="true"
-    Inherits="_Default" Codebehind="Default.aspx.cs" %>
+    Inherits="_Default" Codebehind="Default.aspx.cs" Async="true" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>

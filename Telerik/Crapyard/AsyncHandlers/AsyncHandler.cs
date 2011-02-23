@@ -103,7 +103,7 @@ namespace AsyncHandlers
         /// <returns></returns>
         public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
         {
-            throw new InvalidOperationException(FOR_HTTPHANDLERS_ONLY);
+            throw new InvalidOperationException(FOR_HTTPHANDLERS_ONLY);            
         }
 
         public void EndProcessRequest(IAsyncResult result)

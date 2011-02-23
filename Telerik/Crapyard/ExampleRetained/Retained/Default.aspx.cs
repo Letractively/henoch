@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
+using AsyncHandlers;
 using Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Web.UI;
 
-public partial class _Default : System.Web.UI.Page
+public partial class _Default : AsyncHandler
 {
     private Hashtable _ordersExpandedState;
     private Hashtable _selectedState;
@@ -161,5 +162,10 @@ public partial class _Default : System.Web.UI.Page
     protected void grdRebind_Click(object sender, EventArgs e)
     {
         RadGrid1.Rebind();
+    }
+
+    public override void ExecuteCachePolicy()
+    {
+        throw new NotImplementedException();
     }
 }
