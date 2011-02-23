@@ -12,7 +12,7 @@ namespace MyCalculator
         public double Add(double x, double y)
         {
             //changed to 3 in order to demonstrate how a developer may introduce bugs
-            return 3;///Dummy
+            return 1;///Dummy
         }
 
         /// <summary>
