@@ -2,14 +2,18 @@
 using System.Net;
 using System.Threading;
 using System.Web;
+using DataResource;
 
 namespace Observlet.WebForms
 {
     public partial class AsyncViewer : AsyncHandlers.AsyncHandler
-    {               
+    {
+        private string _Datasource;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Label3.Text = String.Empty;
+            _Datasource = MapPath(@"\bin\") + "Nwind.mdb";
             if (Halted)
             {
                 Label1.Text = String.Empty;
@@ -118,7 +122,7 @@ namespace Observlet.WebForms
         /// Do some work like caching/handling viewstate/session.
         /// </summary>        
         public override void ExecuteCachePolicy()
-        {
+        {            
             //throw new ArgumentException("test exception in thread.");
             for (int i = 0; i < 250; i++)
             {
@@ -130,6 +134,9 @@ namespace Observlet.WebForms
                     break;
                 }
             }
+            
+            AsyncState = new MyAccess().DoOleDbAction(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + _Datasource.ToString() + ";");
+
             if (!Halted) AsyncState = "Cache ready.";
             Completed = true;
             Button1.Enabled = true;

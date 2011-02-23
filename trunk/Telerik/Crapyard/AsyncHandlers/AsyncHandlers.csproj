@@ -55,6 +55,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Observlet\DataResource\DataResource.csproj">
+      <Project>{A5476257-008D-4A7C-915E-0318BACCC0DC}</Project>
+      <Name>DataResource</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

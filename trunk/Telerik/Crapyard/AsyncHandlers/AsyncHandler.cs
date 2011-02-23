@@ -133,7 +133,10 @@ namespace AsyncHandlers
             var async = new AsyncRequestPattern(CallBackResult, Context, extraData);
             AsyncOperator = async;
             _Observer = new Observer<AsyncRequestPattern, AsyncHandler>((AsyncRequestPattern) _AsyncOperator, this);
-            async.Start(ExecuteCachePolicy);
+
+            string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
+            async.StartAsyncOperation(mdfFile);
+            //async.Start(ExecuteCachePolicy);
 
             // Fire-and-forget
             return _MyRequest.BeginGetResponse(cb, extraData);

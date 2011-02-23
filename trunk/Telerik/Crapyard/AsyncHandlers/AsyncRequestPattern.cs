@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Web;
+using DataResource;
 
 namespace AsyncHandlers
 {
@@ -92,12 +93,12 @@ namespace AsyncHandlers
 
         #endregion
 
-        public void Start()
+        public void Start(string file)
         {
             //ThreadPool.QueueUserWorkItem(StartAsyncOperation,null);
             //ThreadStart myThreadDelegate = StartAsyncOperation;
             myThread = new Thread(StartAsyncOperation);
-            myThread.Start();
+            myThread.Start(file);
             IsBusy = true;
         }
         
@@ -115,12 +116,13 @@ namespace AsyncHandlers
 
         public bool IsBusy { private set; get; }
         /// <summary>
-        /// Only for testing. This generates a simple task: sleep 10 ms.
+        /// Only for testing. This generates a simple task: get rowcount intended to be excecuted in a 32-bit pool.
         /// </summary>
-        public void StartAsyncOperation()
+        public void StartAsyncOperation(object datasource)
         {
             try
             {
+                var result = new MyAccess().DoOleDbAction(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + datasource.ToString() + ";");
                 HttpResponse Response = _httpContext.Response;
 
                 for (int i = 0; i < 250; i++)
