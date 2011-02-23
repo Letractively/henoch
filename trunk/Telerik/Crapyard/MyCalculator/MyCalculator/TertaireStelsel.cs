@@ -12,7 +12,7 @@ namespace MyCalculator
         public double Add(double x, double y)
         {
             //changed to 3 in order to demonstrate how a developer may introduce bugs
-            return 1;///Dummy
+            return 3;///Dummy
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace MyCalculator
         /// <returns></returns>
         public double PersistResults()
         {
-            return 1;
+            return 2;
         }
 
         #endregion
