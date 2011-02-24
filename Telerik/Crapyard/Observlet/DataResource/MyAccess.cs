@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using DataResource.Metadata;
@@ -50,6 +51,39 @@ namespace DataResource
             }
 
             return result;
+        }
+        /// <summary>
+        /// To be run in a 32-bit application pool.
+        /// </summary>
+        public OleDbConnection ConnectOleDb(string connectionString)
+        {
+            OleDbConnection DBConnection;
+            object connection = null;
+
+            using (DBConnection = new OleDbConnection(connectionString))
+            {
+                connection = DBConnection;
+                DBConnection.Close();
+            }
+
+            return connection as OleDbConnection;
+        }
+
+        public object databaseConnectionStringRemote(string strDBServer, string strDB, string strDBUser, string  strDBPassword)
+        {
+	        //-- geef database connection string terug om naar de SQL database te connecten.
+	        //Dim strConnection = "Provider=SQLOleDB;server=" & strDBServer & ";uid=" & strDBUser & ";pwd=" & strDBPassword & ";Initial Catalog=" & strDB
+            string _dbconstrrem = null;
+            if (string.IsNullOrEmpty(_dbconstrrem)) {
+		        _dbconstrrem = "Provider=" + getGlobalVariable("AMS.dbprovider") + ";server=" + strDBServer + ";timeout=9600;uid=" + strDBUser + ";pwd=" + strDBPassword + ";Initial Catalog=" + strDB;		        
+	        }
+	        // w_debug(strConnection)
+	        return _dbconstrrem;
+        }
+
+        private string getGlobalVariable(string amsDbprovider)
+        {
+            throw new NotImplementedException();
         }
     }
 
