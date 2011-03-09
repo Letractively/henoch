@@ -38,6 +38,9 @@
     <Reference Include="Microsoft.Moles.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Pex.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="mscorlib.Moles">
+      <HintPath>..\TestMyMath\MolesAssemblies\mscorlib.Moles.dll</HintPath>
+    </Reference>
     <Reference Include="MyMath.Moles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">

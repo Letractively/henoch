@@ -17,11 +17,5 @@ namespace MyMath
 {
     public partial class FileSystemTest
     {
-[TestMethod]
-[PexGeneratedBy(typeof(FileSystemTest))]
-public void Check01()
-{
-    this.Check();
-}
     }
 }

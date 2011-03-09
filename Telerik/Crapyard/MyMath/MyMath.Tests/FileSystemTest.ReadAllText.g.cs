@@ -25,13 +25,5 @@ public void ReadAllText907()
     s = this.ReadAllText((string)null);
     Assert.AreEqual<string>("", s);
 }
-[TestMethod]
-[PexGeneratedBy(typeof(FileSystemTest))]
-public void ReadAllText492()
-{
-    string s;
-    s = this.ReadAllText("\0");
-    Assert.AreEqual<string>("", s);
-}
     }
 }
