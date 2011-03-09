@@ -71,7 +71,7 @@ namespace TestCalculator
         {
             MathFunctions<TCalculator> target = new MathFunctions<TCalculator>();
             ///Assert.Inconclusive("TODO: Implement code to verify target");
-            Assert.IsTrue(target.Add(0,1)==1);
+            Assert.IsTrue(target.Add(1,1)==2);
         }
 
         [TestMethod]

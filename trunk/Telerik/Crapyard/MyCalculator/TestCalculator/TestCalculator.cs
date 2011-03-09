@@ -86,8 +86,8 @@ namespace TestCalculator
             IMathFunctions andereCalculator = eenComputer.MathFunctions;
             IOutput anderUItvoer = eenComputer.Output;
             
-            bigInt = 1;
-            Assert.AreEqual(bigInt, andereCalculator.Add(1, 2), "1+1=2 ook in tertaire Stelsel.");
+            bigInt = 2;
+            Assert.AreEqual(bigInt, andereCalculator.Add(1, 1), "1+1=2 ook in tertaire Stelsel.");
             Assert.AreEqual(bigInt, anderUItvoer.PersistResults());
 
             
