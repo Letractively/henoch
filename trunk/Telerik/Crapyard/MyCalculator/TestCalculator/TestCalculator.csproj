@@ -118,6 +118,7 @@
     <Compile Include="TestFactory\IAssert.cs" />
     <None Include="Settings.aiis" />
     <None Include="WebAiiTest1.aii" />
+    <None Include="WebAiiTest2.aii" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -148,6 +149,11 @@
   <ItemGroup>
     <None Include="WebAiiTest1.resx">
       <DependentUpon>WebAiiTest1.aii</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="WebAiiTest2.resx">
+      <DependentUpon>WebAiiTest2.aii</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
