@@ -87,7 +87,7 @@
     <Compile Include="IUitvoerTest.cs" />
     <Compile Include="NumeriekeModuleTest.cs" />
     <Compile Include="TestObjectContainer.cs" />
-    <Compile Include="WebAiiTest1UnitTest.cs" />
+    <Compile Include="WebAiiTest3UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
@@ -117,8 +117,8 @@
     <Compile Include="TestFactory\Assert.cs" />
     <Compile Include="TestFactory\IAssert.cs" />
     <None Include="Settings.aiis" />
-    <None Include="WebAiiTest1.aii" />
     <None Include="WebAiiTest2.aii" />
+    <None Include="WebAiiTest3.aii" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -147,13 +147,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WebAiiTest1.resx">
-      <DependentUpon>WebAiiTest1.aii</DependentUpon>
+    <None Include="WebAiiTest2.resx">
+      <DependentUpon>WebAiiTest2.aii</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WebAiiTest2.resx">
-      <DependentUpon>WebAiiTest2.aii</DependentUpon>
+    <None Include="WebAiiTest3.resx">
+      <DependentUpon>WebAiiTest3.aii</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

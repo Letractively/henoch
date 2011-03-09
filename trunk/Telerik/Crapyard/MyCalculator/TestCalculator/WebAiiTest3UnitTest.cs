@@ -21,10 +21,10 @@ using Telerik.WebAii.Controls.Xaml;
 namespace TestCalculator
 {
     /// <summary>
-    /// Summary description for WebAiiTest1UnitTest
+    /// Summary description for WebAiiTest3UnitTest
     /// </summary>
     [TestClass]
-    public class WebAiiTest1UnitTest : BaseTest
+    public class WebAiiTest3UnitTest : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -181,22 +181,38 @@ namespace TestCalculator
         }
 
         [TestMethod()]
-        public void WebAiiTest1()
+        public void WebAiiTest3()
         {
             // Launch an instance of the browser
             Manager.LaunchNewBrowser();
 
 
-            // Navigate to : 'http://localhost:54104/'
-            ActiveBrowser.NavigateTo("http://localhost:54104/");
+            // Navigate to : 'http://dwight-pc:8084/'
+            ActiveBrowser.NavigateTo("http://dwight-pc:8084/");
 
 
-            // RadGridDataCell('RadGrid1_ctl00__0'): 'Expand' item '0'.
-            Pages.UntitledPage.TableCell.ExpandCollapseButtonClick();
+            // Click 'RequestResponseLink'
+            Pages.HomePage.RequestResponseLink.Click(false);
 
 
-            // RadGridDataCell('RadGrid1_ctl00_ctl06_Detail10__0:0_3'): 'Expand' item '3'.
-            Pages.UntitledPage.TableCell0.ExpandCollapseButtonClick();
+            // Click 'DuplexLink'
+            Pages.HttpDwight.DuplexLink.Click(false);
+
+
+            // Navigate Back
+            ActiveBrowser.GoBack();
+
+
+            // Click 'FireAmpForgetLink'
+            Pages.HttpDwight.FireAmpForgetLink.Click(false);
+
+
+            // Click 'Button1Submit'
+            Pages.HttpDwight0.FrameAsyncviewer.Button1Submit.Click(false);
+
+
+            // Click 'HomeLink'
+            Pages.HttpDwight0.HomeLink.Click(false);
 
 
 
