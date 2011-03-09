@@ -53,6 +53,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ArtOfTest.Common, Version=2010.3.1213.0, Culture=neutral, PublicKeyToken=14a0200bfcbb7b62, processorArchitecture=MSIL" />
+    <Reference Include="ArtOfTest.WebAii, Version=2010.3.1213.0, Culture=neutral, PublicKeyToken=4fd5f65be123776c, processorArchitecture=MSIL" />
+    <Reference Include="ArtOfTest.WebAii.Design, Version=2010.3.1213.0, Culture=neutral, PublicKeyToken=4fc62bbc3827ab1d, processorArchitecture=MSIL" />
     <Reference Include="MathNet.Iridium, Version=2008.8.16.470, Culture=neutral, PublicKeyToken=c061a3ec32cc0c6f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\MyCalculator\bin\MathNet.Iridium.dll</HintPath>
@@ -71,16 +74,20 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Telerik.WebAii.Controls.Html, Version=2010.3.1213.0, Culture=neutral, PublicKeyToken=528163f3e645de45" />
+    <Reference Include="Telerik.WebAii.Controls.Xaml, Version=2010.3.1213.0, Culture=neutral, PublicKeyToken=528163f3e645de45" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdapterTest.cs" />
     <Compile Include="IUitvoerTest.cs" />
     <Compile Include="NumeriekeModuleTest.cs" />
     <Compile Include="TestObjectContainer.cs" />
+    <Compile Include="WebAiiTest1UnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
@@ -109,8 +116,11 @@
     <Compile Include="TestCalculator.cs" />
     <Compile Include="TestFactory\Assert.cs" />
     <Compile Include="TestFactory\IAssert.cs" />
+    <None Include="Settings.aiis" />
+    <None Include="WebAiiTest1.aii" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="DesignPatterns\" />
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +145,17 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="WebAiiTest1.resx">
+      <DependentUpon>WebAiiTest1.aii</DependentUpon>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Name="TestCalculator" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -143,4 +163,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="$(MSBuildExtensionsPath)\Telerik\WebUITestStudio\Telerik.WebUITestStudio.targets" />
 </Project>
