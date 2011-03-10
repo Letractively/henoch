@@ -67,7 +67,9 @@
     <Moles Include="System.Core.moles" />
   </ItemGroup>
   <ItemGroup>
-    <Moles Include="MyMath.moles" />
+    <Moles Include="MyMath.moles">
+      <SubType>Designer</SubType>
+    </Moles>
   </ItemGroup>
   <ItemGroup>
     <Content Include="MolesAssemblies\MyMath.Moles.dll">
