@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace DataResource.Patterns
@@ -5,6 +6,6 @@ namespace DataResource.Patterns
     public interface IMyDatabase 
     {
         bool SaveBronBestand(int gegevensetId, string naam);
-        Collection<string> ReadFile(string filename);
+        ICollection<string> ReadFile(string filename);
     }
 }

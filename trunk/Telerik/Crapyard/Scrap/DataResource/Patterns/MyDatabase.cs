@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace DataResource.Patterns
@@ -21,7 +22,7 @@ namespace DataResource.Patterns
             return MyDataConsumer.SaveBronBestand(gegevensetId,naam);
         }
 
-        public Collection<string> ReadFile(string filename)
+        public ICollection<string> ReadFile(string filename)
         {
             return MyDataConsumer.ReadFile(filename);
         }
