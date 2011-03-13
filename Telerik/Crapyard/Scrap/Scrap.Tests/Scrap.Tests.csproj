@@ -69,11 +69,28 @@
       <HintPath>obj\Debug\Moles\bin\Release\Scrap.Moles.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataResource\DataResource.csproj">
+      <Project>{3E9B8753-63C8-4559-AB90-420555308FDA}</Project>
+      <Name>DataResource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MxSystemsLib\MxSystemsLib.csproj">
+      <Project>{BFFCDC52-64B1-43DB-8D75-C001E0916BA6}</Project>
+      <Name>MxSystemsLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Scrap\Scrap.csproj">
       <Project>{53B3EA32-FA81-48F9-AEE7-6094B7A043AD}</Project>
       <Name>Scrap</Name>
@@ -134,6 +151,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Scrap.moles</DependentUpon>
     </Compile>
+    <Compile Include="TeamTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scrap.moles">
