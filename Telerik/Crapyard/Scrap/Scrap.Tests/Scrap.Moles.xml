@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Scrap.Moles</name>
+    </assembly>
+    <members>
+        <member name="T:Scrap.Patterns.Moles.MAdaptee">
+            <summary>Mole type of <see cref="T:Scrap.Patterns.Adaptee"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MAdaptee.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MAdaptee.#ctor(Scrap.Patterns.Adaptee)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MAdaptee.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MAdaptee.Bind(Scrap.Patterns.IDistributions)">
+            <summary>Binds the members of the interface to the mole.</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdaptee.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdaptee.Constructor">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adaptee.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdaptee.NormCdfDouble">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adaptee.NormCdf(T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdaptee.PreciseDoubleDouble">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adaptee.Precise(T:System.Double,T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.MAdaptee.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdaptee.AllInstances.NormCdfDouble">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adaptee.NormCdf(T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdaptee.AllInstances.PreciseDoubleDouble">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adaptee.Precise(T:System.Double,T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.MAdapter">
+            <summary>Mole type of <see cref="T:Scrap.Patterns.Adapter"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MAdapter.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MAdapter.#ctor(Scrap.Patterns.Adapter)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MAdapter.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MAdapter.Bind(Scrap.Patterns.IDistributions)">
+            <summary>Binds the members of the interface to the mole.</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter.Constructor">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adapter.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter.ConstructorAdapteeDouble">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adapter.#ctor(T:Scrap.Patterns.Adaptee,T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter.ConstructorDistributions">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adapter.#ctor(T:Scrap.Patterns.Distributions)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter.DistributionsGet">
+            <summary>Sets the mole of <see cref="P:Scrap.Patterns.Adapter.Distributions"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter.NormCdfGet">
+            <summary>Sets the mole of <see cref="P:Scrap.Patterns.Adapter.NormCdf"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter._ctorb__0Double">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adapter.&lt;.ctor&gt;b__0(T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter._ctorb__2Double">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Adapter.&lt;.ctor&gt;b__2(T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.MAdapter.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter.AllInstances.DistributionsGet">
+            <summary>Sets the mole of <see cref="P:Scrap.Patterns.Adapter.Distributions"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MAdapter.AllInstances.NormCdfGet">
+            <summary>Sets the mole of <see cref="P:Scrap.Patterns.Adapter.NormCdf"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.MDistributions">
+            <summary>Mole type of <see cref="T:Scrap.Patterns.Distributions"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MDistributions.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MDistributions.#ctor(Scrap.Patterns.Distributions)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MDistributions.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.MDistributions.Bind(Scrap.Patterns.IDistributions)">
+            <summary>Binds the members of the interface to the mole.</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MDistributions.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MDistributions.Constructor">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Distributions.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MDistributions.EstimateInt32">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Distributions.Estimate(T:System.Int32)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MDistributions.NormCdfDouble">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Distributions.NormCdf(T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.MDistributions.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MDistributions.AllInstances.EstimateInt32">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Distributions.Estimate(T:System.Int32)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.MDistributions.AllInstances.NormCdfDouble">
+            <summary>Sets the mole of <see cref="M:Scrap.Patterns.Distributions.NormCdf(T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Moles.MMyMath">
+            <summary>Mole type of <see cref="T:Scrap.MyMath"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Moles.MMyMath.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Scrap.Moles.MMyMath.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Scrap.Moles.MMyMath.AddInt32Int32">
+            <summary>Sets the mole of <see cref="M:Scrap.MyMath.Add(T:System.Int32,T:System.Int32)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Moles.MMyMath.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Scrap.Moles.MMyMath.FacInt32">
+            <summary>Sets the mole of <see cref="M:Scrap.MyMath.Fac(T:System.Int32)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Moles.MMyMath.PowDoubleDouble">
+            <summary>Sets the mole of <see cref="M:Scrap.MyMath.Pow(T:System.Double,T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Moles.MMyMath.SubInt32Int32">
+            <summary>Sets the mole of <see cref="M:Scrap.MyMath.Sub(T:System.Int32,T:System.Int32)"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Moles.MProgram">
+            <summary>Mole type of <see cref="T:Scrap.Program"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Moles.MProgram.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:Scrap.Moles.MProgram.#ctor(Scrap.Program)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:Scrap.Moles.MProgram.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Scrap.Moles.MProgram.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:Scrap.Moles.MProgram.Constructor">
+            <summary>Sets the mole of <see cref="M:Scrap.Program.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:Scrap.Moles.MProgram.MainStringArray">
+            <summary>Sets the mole of <see cref="M:Scrap.Program.Main(T:System.String[])"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.SAdaptee">
+            <summary>Stub type of <see cref="T:Scrap.Patterns.Adaptee"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SAdaptee.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SAdaptee.InitializeStub">
+            <summary>Initializes a new instance of type SAdaptee</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.SAdaptee.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.SAdaptee.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.SAdapter">
+            <summary>Stub type of <see cref="T:Scrap.Patterns.Adapter"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SAdapter.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SAdapter.#ctor(Scrap.Patterns.Distributions)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SAdapter.#ctor(Scrap.Patterns.Adaptee,System.Double)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SAdapter.InitializeStub">
+            <summary>Initializes a new instance of type SAdapter</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.SAdapter.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.SAdapter.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.SDistributions">
+            <summary>Stub type of <see cref="T:Scrap.Patterns.Distributions"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SDistributions.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SDistributions.InitializeStub">
+            <summary>Initializes a new instance of type SDistributions</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.SDistributions.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Scrap.Patterns.Moles.SDistributions.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:Scrap.Patterns.Moles.SIDistributions">
+            <summary>Stub type of <see cref="T:Scrap.Patterns.IDistributions"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SIDistributions.#ctor">
+            <summary>Initializes a new instance of type SIDistributions</summary>
+        </member>
+        <member name="F:Scrap.Patterns.Moles.SIDistributions.NormCdfDouble">
+            <summary>Sets the stub of <see cref="M:Scrap.Patterns.IDistributions.NormCdf(T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="M:Scrap.Patterns.Moles.SIDistributions.global::Scrap#Patterns#IDistributions#NormCdf(System.Double)">
+            <summary>Sets the stub of <see cref="M:Scrap.Patterns.IDistributions.NormCdf(T:System.Double)"/>
+            </summary>
+        </member>
+        <member name="T:Scrap.Moles.SProgram">
+            <summary>Stub type of <see cref="T:Scrap.Program"/>
+            .</summary>
+        </member>
+        <member name="M:Scrap.Moles.SProgram.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Scrap.Moles.SProgram.InitializeStub">
+            <summary>Initializes a new instance of type SProgram</summary>
+        </member>
+        <member name="P:Scrap.Moles.SProgram.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Scrap.Moles.SProgram.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+    </members>
+</doc>

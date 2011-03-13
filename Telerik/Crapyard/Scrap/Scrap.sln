@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code Style Enforcer", "Code Style Enforcer", "{AD9C48C5-B0B4-48C6-B1D6-44B5FFB7B912}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Documents and Settings\modiwd\Mijn documenten\Code Style Enforcer\CustomRules\ImplementationRules.xml = ..\..\Documents and Settings\modiwd\Mijn documenten\Code Style Enforcer\CustomRules\ImplementationRules.xml
+		..\..\Documents and Settings\modiwd\Mijn documenten\Code Style Enforcer\CustomRules\NameRules.xml = ..\..\Documents and Settings\modiwd\Mijn documenten\Code Style Enforcer\CustomRules\NameRules.xml
+		..\..\Documents and Settings\modiwd\Mijn documenten\Code Style Enforcer\CustomRules\VisibilityRules.xml = ..\..\Documents and Settings\modiwd\Mijn documenten\Code Style Enforcer\CustomRules\VisibilityRules.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{532EFD6B-B060-4C52-A5DE-A419B835FFE5}"
+	ProjectSection(SolutionItems) = preProject
+		Scrap.vsmdi = Scrap.vsmdi
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrap", "Scrap\Scrap.csproj", "{53B3EA32-FA81-48F9-AEE7-6094B7A043AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrap.Tests", "Scrap.Tests\Scrap.Tests.csproj", "{A3D0D847-4F6C-4E9F-8138-D89D6334C797}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataResource", "DataResource\DataResource.csproj", "{3E9B8753-63C8-4559-AB90-420555308FDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MxSystemsLib", "MxSystemsLib\MxSystemsLib.csproj", "{BFFCDC52-64B1-43DB-8D75-C001E0916BA6}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Scrap.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53B3EA32-FA81-48F9-AEE7-6094B7A043AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B3EA32-FA81-48F9-AEE7-6094B7A043AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B3EA32-FA81-48F9-AEE7-6094B7A043AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B3EA32-FA81-48F9-AEE7-6094B7A043AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3D0D847-4F6C-4E9F-8138-D89D6334C797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D0D847-4F6C-4E9F-8138-D89D6334C797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D0D847-4F6C-4E9F-8138-D89D6334C797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D0D847-4F6C-4E9F-8138-D89D6334C797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E9B8753-63C8-4559-AB90-420555308FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9B8753-63C8-4559-AB90-420555308FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9B8753-63C8-4559-AB90-420555308FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9B8753-63C8-4559-AB90-420555308FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFFCDC52-64B1-43DB-8D75-C001E0916BA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFFCDC52-64B1-43DB-8D75-C001E0916BA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFFCDC52-64B1-43DB-8D75-C001E0916BA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFFCDC52-64B1-43DB-8D75-C001E0916BA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		CodeStyleEnforcer_Active = -1
+		CodeStyleEnforcer_RulesLocation = 0
+	EndGlobalSection
+EndGlobal
