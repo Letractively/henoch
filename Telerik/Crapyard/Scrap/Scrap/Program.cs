@@ -48,7 +48,7 @@ namespace Scrap
             int res = 0;
             if (i == 0 || i == 1)
                 return 1;
-            if (i > 0 && i <=15)
+            if (i > 0 )
             {
                 checked
                 {
