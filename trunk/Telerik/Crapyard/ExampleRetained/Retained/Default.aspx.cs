@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Web;
 using AsyncHandlers;
 using Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Web.UI;
@@ -19,6 +20,19 @@ public partial class _Default : AsyncHandler
             this.Session[ORDERS_EXPANDED_STATE] = null;
 			this._selectedState = null;
             this.Session["_selectedState"] = null;
+        }
+
+        if (IsAsync)
+        {
+            BeginEventHandler bh = new BeginEventHandler(this.BeginProcessRequest);
+            EndEventHandler eh = new EndEventHandler(this.EndProcessRequest);
+
+            AddOnPreRenderCompleteAsync(bh, eh);
+
+            // Initialize the WebRequest.
+            string address = "http://localhost/";
+
+            _MyRequest = System.Net.WebRequest.Create(address);
         }
     }
 
