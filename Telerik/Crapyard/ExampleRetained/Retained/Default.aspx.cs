@@ -166,6 +166,6 @@ public partial class _Default : AsyncHandler
 
     public override void ExecuteCachePolicy()
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException("By design or implement.");   
     }
 }
