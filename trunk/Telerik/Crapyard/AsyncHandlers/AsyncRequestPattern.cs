@@ -118,16 +118,16 @@ namespace AsyncHandlers
         /// <summary>
         /// Only for testing. This generates a simple task: get rowcount intended to be excecuted in a 32-bit pool.
         /// </summary>
-        public void StartAsyncOperation(object datasource)
+        private void StartAsyncOperation(object datasource)
         {
             try
             {
-                var result = new MyAccess().DoOleDbAction(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + datasource.ToString() + ";");
+                //var result = new MyAccess().DoOleDbAction(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + datasource.ToString() + ";");
                 HttpResponse Response = _httpContext.Response;
 
                 for (int i = 0; i < 250; i++)
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(100);
                     _state = i.ToString();
                     _callback(this);                    
                     NotifyObserverLog(new NotifyObserverEventargs(i.ToString()));
