@@ -22,6 +22,11 @@ public partial class _Default : AsyncHandler
             this.Session["_selectedState"] = null;
         }
 
+        DoAsync();
+    }
+
+    private void DoAsync()
+    {
         if (IsAsync)
         {
             BeginEventHandler bh = new BeginEventHandler(this.BeginProcessRequest);
