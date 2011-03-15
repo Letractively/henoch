@@ -181,6 +181,7 @@ public partial class _Default : AsyncHandler
     protected void grdRebind_Click(object sender, EventArgs e)
     {
         RadGrid1.Rebind();
+        ExecuteAsyncFun();
     }
 
     public override void ExecuteCachePolicy()

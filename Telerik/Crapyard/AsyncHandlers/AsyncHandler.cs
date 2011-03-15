@@ -134,9 +134,9 @@ namespace AsyncHandlers
             AsyncOperator = async;
             _Observer = new Observer<AsyncRequestPattern, AsyncHandler>((AsyncRequestPattern) _AsyncOperator, this);
 
-            string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
-            async.StartAsyncOperation(mdfFile);
-            //async.Start(ExecuteCachePolicy);
+            //string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
+            //async.StartAsyncOperation(mdfFile);
+            async.Start(ExecuteCachePolicy);
 
             // Fire-and-forget
             return _MyRequest.BeginGetResponse(cb, extraData);
@@ -144,6 +144,12 @@ namespace AsyncHandlers
 
         #endregion
 
+        public void ExecuteAsyncFun()   
+        {
+            var async = AsyncOperator as AsyncRequestPattern;
+            string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
+            if (async != null) async.Start(mdfFile);
+        }
         #region Implementation of ISubscriber
 
         public IAsyncResult AsyncOperator
