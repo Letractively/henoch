@@ -10,7 +10,7 @@ namespace AsyncHandlers
     /// Supports asynchronous handling of requests in an own process with notifications
     /// based on the observerpattern.
     /// </summary>
-    public abstract class AsyncHandler : Page, IHttpAsyncHandler, ISubscriber
+    public class AsyncHandler : HttpApplication, IHttpAsyncHandler, ISubscriber
     {
         #region Delegates
 
@@ -21,40 +21,42 @@ namespace AsyncHandlers
         private static int BUFFER_SIZE = 1024;
         private readonly string FOR_HTTPHANDLERS_ONLY = "Only for httphandlers.";
         private IAsyncResult _AsyncOperator;
-        protected WebRequest _MyRequest;
-
+        //protected WebRequest _MyRequest;
+        public WebRequest WebRequest { get; set; }
+        private HttpContext _context;
         /// <summary>
         /// Observs the
         /// </summary>
         protected Observer<AsyncRequestPattern, AsyncHandler> _Observer;
 
+        public AsyncHandler(HttpContext context)
+        {
+            _context = context;
+        }
+
         /// <summary>
         /// Caches the asyncstate into session. TODO: use cache.
         /// </summary>
-        protected Object AsyncState
-        {
-            get { return Session["AsyncState"]; }
-            set { Session["AsyncState"] = value; }
-        }
+        protected Object AsyncState { get; set; }
 
         protected bool Halted
         {
             get
             {
-                var res = (bool) (Session["halted"] ?? false);
+                var res = (bool)(_context.Session["halted"] ?? false);
                 return res;
             }
-            set { Session["halted"] = value; }
+            set { _context.Session["halted"] = value; }
         }
 
         protected bool Completed
         {
             get
             {
-                var res = (bool) (Session["Completed"] ?? false);
+                var res = (bool)(_context.Session["Completed"] ?? false);
                 return res;
             }
-            set { Session["Completed"] = value; }
+            set { _context.Session["Completed"] = value; }
         }
 
         #region IHttpAsyncHandler Members
@@ -78,6 +80,8 @@ namespace AsyncHandlers
             //If ac is a delegate: AsynchOperationPattern ac = (AsynchOperationPattern)((AsyncResult)result).AsyncDelegate;
             IAsyncResult res = result;
 
+            var asyncPattern = result as AsyncRequestPattern;
+            if (asyncPattern != null) Log(asyncPattern.AsyncState.ToString());
             if (_AsyncOperator.IsCompleted)
             {
                 NotifyHalt(new NotifyObserverEventargs("stop"));
@@ -90,7 +94,7 @@ namespace AsyncHandlers
         /// Derived classes must implement their own caching policy concerning different levels of
         /// staleness.
         /// </summary>  
-        public abstract void ExecuteCachePolicy();
+        //public abstract void ExecuteCachePolicy();
 
         #region Implementation of IHttpAsyncHandler
 
@@ -109,7 +113,7 @@ namespace AsyncHandlers
         public void EndProcessRequest(IAsyncResult result)
         {
             int threadId = Thread.CurrentThread.ManagedThreadId;
-            Trace.Write("EndProcessRequest", "Threadname = " + Thread.CurrentThread.Name);
+            //Trace.Write("EndProcessRequest", "Threadname = " + Thread.CurrentThread.Name);
             //System.Net.WebResponse myResponse = myRequest.EndGetResponse(ar);               
             //result.AsyncWaitHandle.WaitOne();
         }
@@ -126,20 +130,20 @@ namespace AsyncHandlers
         /// <returns></returns>
         public IAsyncResult BeginProcessRequest(object sender, EventArgs eventArgs, AsyncCallback cb, object extraData)
         {
-            Session["AsyncIsCompleted"] = null;
+            _context.Session["AsyncIsCompleted"] = null;
             Thread.CurrentThread.Name = new Guid().ToString();
-            Trace.Write("BeginGetAsyncData", "Threadname = " + Thread.CurrentThread.Name);
+            _context.Trace.Write("BeginGetAsyncData", "Threadname = " + Thread.CurrentThread.Name);
 
-            var async = new AsyncRequestPattern(CallBackResult, Context, extraData);
+            var async = new AsyncRequestPattern(CallBackResult, _context, extraData);
             AsyncOperator = async;
             _Observer = new Observer<AsyncRequestPattern, AsyncHandler>((AsyncRequestPattern) _AsyncOperator, this);
 
             //string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
             //async.StartAsyncOperation(mdfFile);
-            async.Start(ExecuteCachePolicy);
+            async.Start(String.Empty);
 
             // Fire-and-forget
-            return _MyRequest.BeginGetResponse(cb, extraData);
+            return WebRequest.BeginGetResponse(cb, extraData);
         }
 
         #endregion
@@ -147,8 +151,8 @@ namespace AsyncHandlers
         public void ExecuteAsyncFun()   
         {
             var async = AsyncOperator as AsyncRequestPattern;
-            string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
-            if (async != null) async.Start(mdfFile);
+            //string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
+            if (async != null) async.Start(String.Empty);
         }
         #region Implementation of ISubscriber
 
@@ -156,17 +160,18 @@ namespace AsyncHandlers
         {
             get
             {
-                _AsyncOperator = Session["AsynchOperationPattern"] as IAsyncResult;
+                _AsyncOperator = _context.Session["AsynchOperationPattern"] as IAsyncResult;
                 return _AsyncOperator;
             }
             set
             {
-                Session["AsynchOperationPattern"] = value;
+                _context.Session["AsynchOperationPattern"] = value;
                 _AsyncOperator = value;
             }
         }
 
         public event EventHandler<NotifyObserverEventargs> NotifyHaltHandler;
+        public event EventHandler<NotifyObserverEventargs> NotifyLogger;
 
         public void NotifyHalt(NotifyObserverEventargs args)
         {
@@ -175,7 +180,7 @@ namespace AsyncHandlers
 
         public void Log(string message)
         {
-            ;
+            NotifyLogger.Invoke(this,new NotifyObserverEventargs(message));
         }
 
         #endregion

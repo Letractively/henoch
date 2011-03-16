@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Web;
-using DataResource;
 
 namespace AsyncHandlers
 {
@@ -125,7 +124,8 @@ namespace AsyncHandlers
                 //var result = new MyAccess().DoOleDbAction(@"Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + datasource.ToString() + ";");
                 HttpResponse Response = _httpContext.Response;
 
-                for (int i = 0; i < 250; i++)
+                
+                for (int i = 0; i < 20; i++)
                 {
                     Thread.Sleep(100);
                     _state = i.ToString();
