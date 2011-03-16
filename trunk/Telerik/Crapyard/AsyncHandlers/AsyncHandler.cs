@@ -34,31 +34,6 @@ namespace AsyncHandlers
             _context = context;
         }
 
-        /// <summary>
-        /// Caches the asyncstate into session. TODO: use cache.
-        /// </summary>
-        protected Object AsyncState { get; set; }
-
-        protected bool Halted
-        {
-            get
-            {
-                var res = (bool)(_context.Session["halted"] ?? false);
-                return res;
-            }
-            set { _context.Session["halted"] = value; }
-        }
-
-        protected bool Completed
-        {
-            get
-            {
-                var res = (bool)(_context.Session["Completed"] ?? false);
-                return res;
-            }
-            set { _context.Session["Completed"] = value; }
-        }
-
         #region IHttpAsyncHandler Members
 
         public bool IsReusable
@@ -87,14 +62,8 @@ namespace AsyncHandlers
                 NotifyHalt(new NotifyObserverEventargs("stop"));
                 if (_Observer != null) _Observer.Dispose();
             }
-            AsyncState = _AsyncOperator.AsyncState;
-        }
 
-        /// <summary>
-        /// Derived classes must implement their own caching policy concerning different levels of
-        /// staleness.
-        /// </summary>  
-        //public abstract void ExecuteCachePolicy();
+        }
 
         #region Implementation of IHttpAsyncHandler
 
