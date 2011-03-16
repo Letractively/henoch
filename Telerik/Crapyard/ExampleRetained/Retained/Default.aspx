@@ -13,6 +13,18 @@
     <form id="form1" runat="server">
     <div> 
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <asp:Label ID="Label1" runat="server" Text="Test output..."></asp:Label>
+            </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="Timer1" EventName="Tick" />
+            </Triggers>
+        </asp:UpdatePanel>
+
+        <asp:Timer ID="Timer1" runat="server" Enabled="False" Interval="100" 
+            ontick="Timer1_Tick">
+        </asp:Timer>
         <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
             <AjaxSettings>
                 <telerik:AjaxSetting AjaxControlID="RadGrid1">

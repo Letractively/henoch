@@ -1,14 +1,16 @@
 using System;
 using System.Collections;
 using System.Web;
+using System.Web.UI;
 using AsyncHandlers;
 using Microsoft.Practices.EnterpriseLibrary.Caching;
 using Telerik.Web.UI;
 
-public partial class _Default : AsyncHandler
+public partial class _Default : Page
 {
     private Hashtable _ordersExpandedState;
     private Hashtable _selectedState;
+    private AsyncHandler _AsyncHandler;
     private const string ORDERS_EXPANDED_STATE = "_ordersExpandedState";
 
     public void Page_Load(object sender, EventArgs e)
@@ -20,27 +22,56 @@ public partial class _Default : AsyncHandler
             this.Session[ORDERS_EXPANDED_STATE] = null;
 			this._selectedState = null;
             this.Session["_selectedState"] = null;
+
         }
 
-        DoAsync();
+        
     }
 
     private void DoAsync()
     {
         if (IsAsync)
         {
-            BeginEventHandler bh = new BeginEventHandler(this.BeginProcessRequest);
-            EndEventHandler eh = new EndEventHandler(this.EndProcessRequest);
+            Session["Halted"] = false;
+            Timer1.Enabled = true;
+            AsyncHandler = new AsyncHandler(Context);
+            AsyncHandler.NotifyHaltHandler += Halted;
+            AsyncHandler.NotifyLogger += Logger;
+            BeginEventHandler bh = new BeginEventHandler(AsyncHandler.BeginProcessRequest);
+            EndEventHandler eh = new EndEventHandler(AsyncHandler.EndProcessRequest);
 
             AddOnPreRenderCompleteAsync(bh, eh);
 
             // Initialize the WebRequest.
             string address = "http://localhost/";
 
-            _MyRequest = System.Net.WebRequest.Create(address);
+            AsyncHandler.WebRequest = System.Net.WebRequest.Create(address);
         }
     }
 
+    private void Logger(object sender, NotifyObserverEventargs e)
+    {
+        Session["Logger"] = e.Message;
+    }
+
+    private void Halted(object sender, NotifyObserverEventargs e)
+    {
+        Session["Halted"] = true;
+    }
+
+    public AsyncHandler AsyncHandler
+    {
+        get
+        {
+            _AsyncHandler = Session["AsyncHandler"] as AsyncHandler;
+            return _AsyncHandler;
+        }
+        set
+        {
+            Session["AsyncHandler"] = value;
+            _AsyncHandler = value;
+        }
+    }
     //Save/load expanded states Hash from the session
     //this can also be implemented in the ViewState
     private Hashtable ExpandedStates
@@ -181,11 +212,15 @@ public partial class _Default : AsyncHandler
     protected void grdRebind_Click(object sender, EventArgs e)
     {
         RadGrid1.Rebind();
-        ExecuteAsyncFun();
+        DoAsync();
+
     }
 
-    public override void ExecuteCachePolicy()
+    protected void Timer1_Tick(object sender, EventArgs e)
     {
-        throw new InvalidOperationException("By design or implement.");   
+        if (Session["Halted"] != null && (Session["Halted"] as Boolean?) == true)
+            Timer1.Enabled = false;
+        Label1.Text = Session["Logger"] as string;
     }
+
 }
