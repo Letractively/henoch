@@ -103,7 +103,7 @@ namespace AsyncHandlers
     {
         protected bool _Stop;
 
-        public delegate void NotificationEventHandler(object sender, NotifyObserverEventargs e);
+        //public delegate void NotificationEventHandler(object sender, NotifyObserverEventargs e);
 
         #region Implementation of ISubject
 

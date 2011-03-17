@@ -33,6 +33,11 @@ namespace AsyncHandlers
             _context = context;
         }
 
+        public AsyncHandler()
+        {
+            ;
+        }
+
         #region IHttpAsyncHandler Members
 
         public bool IsReusable
@@ -102,9 +107,7 @@ namespace AsyncHandlers
         /// <returns></returns>
         public IAsyncResult BeginProcessRequest(object sender, EventArgs eventArgs, AsyncCallback cb, object extraData)
         {
-            _context.Session["AsyncIsCompleted"] = null;
             Thread.CurrentThread.Name = new Guid().ToString();
-            _context.Trace.Write("BeginGetAsyncData", "Threadname = " + Thread.CurrentThread.Name);
 
             var async = new AsyncRequestPattern(CallBackResult, _context, extraData);
             _Observer = new Observer<AsyncRequestPattern, AsyncHandler>(async, this);
