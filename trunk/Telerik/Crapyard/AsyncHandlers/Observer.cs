@@ -80,13 +80,9 @@ namespace AsyncHandlers
 
     public interface ISubscriber
     {
-        /// <summary>
-        /// Subscriber has a problem-solution pair designated according to best practices.
-        /// </summary>
-        IAsyncResult AsyncOperator{ get; set;}
         event EventHandler<NotifyObserverEventargs> NotifyHaltHandler;
+        event EventHandler<NotifyObserverEventargs> NotifyLogger;
         void NotifyHalt(NotifyObserverEventargs args);
-
         void Log(string message);
     }
 

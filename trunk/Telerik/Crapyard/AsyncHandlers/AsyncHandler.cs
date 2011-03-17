@@ -20,7 +20,6 @@ namespace AsyncHandlers
 
         private static int BUFFER_SIZE = 1024;
         private readonly string FOR_HTTPHANDLERS_ONLY = "Only for httphandlers.";
-        private IAsyncResult _AsyncOperator;
         //protected WebRequest _MyRequest;
         public WebRequest WebRequest { get; set; }
         private HttpContext _context;
@@ -56,12 +55,16 @@ namespace AsyncHandlers
             IAsyncResult res = result;
 
             var asyncPattern = result as AsyncRequestPattern;
-            if (asyncPattern != null) Log(asyncPattern.AsyncState.ToString());
-            if (_AsyncOperator.IsCompleted)
+            if (asyncPattern != null)
             {
-                NotifyHalt(new NotifyObserverEventargs("stop"));
-                if (_Observer != null) _Observer.Dispose();
+                Log(asyncPattern.AsyncState.ToString());
+                if (asyncPattern.IsCompleted)
+                {
+                    NotifyHalt(new NotifyObserverEventargs("stop"));
+                    if (_Observer != null) _Observer.Dispose();
+                }
             }
+
 
         }
 
@@ -104,8 +107,7 @@ namespace AsyncHandlers
             _context.Trace.Write("BeginGetAsyncData", "Threadname = " + Thread.CurrentThread.Name);
 
             var async = new AsyncRequestPattern(CallBackResult, _context, extraData);
-            AsyncOperator = async;
-            _Observer = new Observer<AsyncRequestPattern, AsyncHandler>((AsyncRequestPattern) _AsyncOperator, this);
+            _Observer = new Observer<AsyncRequestPattern, AsyncHandler>(async, this);
 
             //string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
             //async.StartAsyncOperation(mdfFile);
@@ -117,27 +119,7 @@ namespace AsyncHandlers
 
         #endregion
 
-        public void ExecuteAsyncFun()   
-        {
-            var async = AsyncOperator as AsyncRequestPattern;
-            //string mdfFile = MapPath(@"\bin\") + "Nwind.mdb";
-            if (async != null) async.Start(String.Empty);
-        }
         #region Implementation of ISubscriber
-
-        public IAsyncResult AsyncOperator
-        {
-            get
-            {
-                _AsyncOperator = _context.Session["AsynchOperationPattern"] as IAsyncResult;
-                return _AsyncOperator;
-            }
-            set
-            {
-                _context.Session["AsynchOperationPattern"] = value;
-                _AsyncOperator = value;
-            }
-        }
 
         public event EventHandler<NotifyObserverEventargs> NotifyHaltHandler;
         public event EventHandler<NotifyObserverEventargs> NotifyLogger;
