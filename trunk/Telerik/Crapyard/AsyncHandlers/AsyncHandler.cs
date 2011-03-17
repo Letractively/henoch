@@ -10,7 +10,7 @@ namespace AsyncHandlers
     /// Supports asynchronous handling of requests in an own process with notifications
     /// based on the observerpattern.
     /// </summary>
-    public class AsyncHandler : HttpApplication, IHttpAsyncHandler, ISubscriber
+    public class AsyncHandler : IHttpAsyncHandler, ISubscriber
     {
         #region Delegates
 
