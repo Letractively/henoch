@@ -47,6 +47,8 @@ public partial class _Default : Page
 
             asyncHandler.WebRequest = System.Net.WebRequest.Create(address);
         }
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
     }
 
     private void Logger(object sender, NotifyObserverEventargs e)
