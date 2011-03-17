@@ -34,18 +34,18 @@ public partial class _Default : Page
         {
             Session["Halted"] = false;
             Timer1.Enabled = true;
-            AsyncHandler = new AsyncHandler(Context);
-            AsyncHandler.NotifyHaltHandler += Halted;
-            AsyncHandler.NotifyLogger += Logger;
-            BeginEventHandler bh = new BeginEventHandler(AsyncHandler.BeginProcessRequest);
-            EndEventHandler eh = new EndEventHandler(AsyncHandler.EndProcessRequest);
+            var asyncHandler = new AsyncHandler(Context);
+            asyncHandler.NotifyHaltHandler += Halted;
+            asyncHandler.NotifyLogger += Logger;
+            BeginEventHandler bh = new BeginEventHandler(asyncHandler.BeginProcessRequest);
+            EndEventHandler eh = new EndEventHandler(asyncHandler.EndProcessRequest);
 
             AddOnPreRenderCompleteAsync(bh, eh);
 
             // Initialize the WebRequest.
             string address = "http://localhost/";
 
-            AsyncHandler.WebRequest = System.Net.WebRequest.Create(address);
+            asyncHandler.WebRequest = System.Net.WebRequest.Create(address);
         }
     }
 
@@ -59,19 +59,6 @@ public partial class _Default : Page
         Session["Halted"] = true;
     }
 
-    public AsyncHandler AsyncHandler
-    {
-        get
-        {
-            _AsyncHandler = Session["AsyncHandler"] as AsyncHandler;
-            return _AsyncHandler;
-        }
-        set
-        {
-            Session["AsyncHandler"] = value;
-            _AsyncHandler = value;
-        }
-    }
     //Save/load expanded states Hash from the session
     //this can also be implemented in the ViewState
     private Hashtable ExpandedStates
