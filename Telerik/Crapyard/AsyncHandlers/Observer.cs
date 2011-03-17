@@ -61,6 +61,7 @@ namespace AsyncHandlers
                 {
                     // Dispose managed resources. 
                     m_Subject.NotifyLogHandler -= DoNotify;
+                    m_Subscriber.NotifyHaltHandler -= DoNotifyStop;
                 }
                 // Clean up unmanaged resources here.
             }
