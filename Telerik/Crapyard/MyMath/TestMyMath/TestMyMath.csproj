@@ -33,11 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Moles.Framework, Version=0.91.50418.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Pex.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Moles.Framework, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="mscorlib.Behaviors, Version=0.94.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="mscorlib.Moles, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0ae41878053f6703, processorArchitecture=MSIL" />
@@ -68,12 +64,6 @@
       <Project>{29BA4378-A59B-435D-8328-B3FF44D1EEAC}</Project>
       <Name>MyMath</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Moles Include="MyMath.moles" />
-  </ItemGroup>
-  <ItemGroup>
-    <Moles Include="System.Core.moles" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MolesAssemblies\mscorlib.Behaviors.dll">

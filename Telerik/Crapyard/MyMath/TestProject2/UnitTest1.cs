@@ -62,12 +62,14 @@ namespace TestProject2
             var fileName = "test.txt";
             var content = "test";
             //File.WriteAllText(fileName, content); 
-            var fs = new SIFileSystem();
-            fs.ReadAllTextString = delegate(string f)
-                                       {
-                                           Assert.IsTrue(f == fileName);
-                                           return content;
-                                       };
+            var fs = new SIFileSystem
+                         {
+                             ReadAllTextString = delegate(string f)
+                                                     {
+                                                         Assert.IsTrue(f == fileName);
+                                                         return content;
+                                                     }
+                         };
 
             // act 
             //var test = new TestReader(); 

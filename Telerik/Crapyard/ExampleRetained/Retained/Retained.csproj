@@ -84,7 +84,6 @@
     </Compile>
     <Compile Include="NoViewState.aspx.cs">
       <DependentUpon>NoViewState.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="NoViewState.aspx.designer.cs">
       <DependentUpon>NoViewState.aspx</DependentUpon>
