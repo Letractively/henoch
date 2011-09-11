@@ -15,6 +15,7 @@ namespace OrderManager.Rules
         public Schedule(TimeSpan startTime, int numberOfDaysDelay)
         {
             StartTime = startTime;
+            if (numberOfDaysDelay < 1) numberOfDaysDelay = 1;
             NumberOfDaysDelay = numberOfDaysDelay;
         }
         /// <summary>
