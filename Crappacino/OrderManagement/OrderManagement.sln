@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{C812B3EB-8BAE-4B1D-AE15-030BD04755AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9C3E04BD-AAE7-46F9-9738-CD877AFD0F04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Interface", "Source\Infrastructure\Infrastructure.Interface\Infrastructure.Interface.csproj", "{33EB7519-59F1-413F-B9D5-4326B360C4E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Library", "Source\Infrastructure\Infrastructure.Library\Infrastructure.Library.csproj", "{3C3C28FE-A9D3-4755-A87C-541993859B2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Module", "Source\Infrastructure\Infrastructure.Module\Infrastructure.Module.csproj", "{38ECBD2D-6B55-468D-833B-CCCD55F5AE7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shell", "Source\Infrastructure\Shell\Shell.csproj", "{F426E197-4B81-4F51-A10B-E0457B45C9D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Layout", "Source\Infrastructure\Infrastructure.Layout\Infrastructure.Layout.csproj", "{76E11C80-1864-481F-9DBE-C3BD48427ECA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33EB7519-59F1-413F-B9D5-4326B360C4E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33EB7519-59F1-413F-B9D5-4326B360C4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33EB7519-59F1-413F-B9D5-4326B360C4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33EB7519-59F1-413F-B9D5-4326B360C4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C3C28FE-A9D3-4755-A87C-541993859B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C3C28FE-A9D3-4755-A87C-541993859B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C3C28FE-A9D3-4755-A87C-541993859B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C3C28FE-A9D3-4755-A87C-541993859B2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38ECBD2D-6B55-468D-833B-CCCD55F5AE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38ECBD2D-6B55-468D-833B-CCCD55F5AE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38ECBD2D-6B55-468D-833B-CCCD55F5AE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38ECBD2D-6B55-468D-833B-CCCD55F5AE7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F426E197-4B81-4F51-A10B-E0457B45C9D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F426E197-4B81-4F51-A10B-E0457B45C9D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F426E197-4B81-4F51-A10B-E0457B45C9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F426E197-4B81-4F51-A10B-E0457B45C9D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76E11C80-1864-481F-9DBE-C3BD48427ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76E11C80-1864-481F-9DBE-C3BD48427ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76E11C80-1864-481F-9DBE-C3BD48427ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76E11C80-1864-481F-9DBE-C3BD48427ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9C3E04BD-AAE7-46F9-9738-CD877AFD0F04} = {C812B3EB-8BAE-4B1D-AE15-030BD04755AE}
+		{33EB7519-59F1-413F-B9D5-4326B360C4E1} = {9C3E04BD-AAE7-46F9-9738-CD877AFD0F04}
+		{3C3C28FE-A9D3-4755-A87C-541993859B2A} = {9C3E04BD-AAE7-46F9-9738-CD877AFD0F04}
+		{38ECBD2D-6B55-468D-833B-CCCD55F5AE7E} = {9C3E04BD-AAE7-46F9-9738-CD877AFD0F04}
+		{F426E197-4B81-4F51-A10B-E0457B45C9D8} = {9C3E04BD-AAE7-46F9-9738-CD877AFD0F04}
+		{76E11C80-1864-481F-9DBE-C3BD48427ECA} = {9C3E04BD-AAE7-46F9-9738-CD877AFD0F04}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		RootNamespace = OrderManagement
+		CommonProjectGuid = 33eb7519-59f1-413f-b9d5-4326b360c4e1
+		ShellProjectGuid = f426e197-4b81-4f51-a10b-e0457b45c9d8
+	EndGlobalSection
+EndGlobal
