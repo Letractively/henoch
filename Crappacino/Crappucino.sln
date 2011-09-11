@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSuite", "TestSuite\TestSuite.csproj", "{DC4E3A3A-AE79-4F1B-9FC3-39BEB9FB4891}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderManager", "OrderManager\OrderManager.csproj", "{11F401ED-BA99-4141-B9BF-881E9067AAE1}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -23,6 +25,10 @@ Global
 		{DC4E3A3A-AE79-4F1B-9FC3-39BEB9FB4891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC4E3A3A-AE79-4F1B-9FC3-39BEB9FB4891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC4E3A3A-AE79-4F1B-9FC3-39BEB9FB4891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11F401ED-BA99-4141-B9BF-881E9067AAE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11F401ED-BA99-4141-B9BF-881E9067AAE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11F401ED-BA99-4141-B9BF-881E9067AAE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11F401ED-BA99-4141-B9BF-881E9067AAE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
