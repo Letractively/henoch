@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRunConfiguration name="Local Test Run" id="3f8dea78-522d-484e-b5c1-99523091d00b" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description>This is a default test run configuration for a local test run.</Description>
+  <CodeCoverage enabled="true">
+    <Regular>
+      <CodeCoverageItem binaryFile="BeheerThemas\bin\Release\BeheerThemas.dll" pdbFile="BeheerThemas\bin\Release\BeheerThemas.pdb" instrumentInPlace="true" />
+      <CodeCoverageItem binaryFile="BeheerThemas.Interface\bin\Release\BeheerThemas.Interface.dll" pdbFile="BeheerThemas.Interface\bin\Release\BeheerThemas.Interface.pdb" instrumentInPlace="true" />
+    </Regular>
+    <AspNet>
+      <AspNetCodeCoverageItem id="31206b31-6f06-4375-87b8-6f9bc1e72a63" name="WebSites\MetaData" applicationRoot="/MetaData" url="http://localhost:0/MetaData" />
+    </AspNet>
+  </CodeCoverage>
+  <Hosts skipUnhostableTests="false" />
+  <TestTypeSpecific />
+</TestRunConfiguration>

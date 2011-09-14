@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9F5D0675-D7B8-424A-8551-CA82773D1BA8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BeheerThemas.Pex.Tests</RootNamespace>
+    <AssemblyName>BeheerThemas.Pex.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/BeheerThemas.Pex.Tests/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BeheerThemas.Moles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>obj\Debug\Moles\bin\Release\BeheerThemas.Moles.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ExtendedReflection, Version=0.22.50128.1, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\WINDOWS\assembly\GAC_MSIL\Microsoft.ExtendedReflection\0.22.50128.1__76a274db078248c8\Microsoft.ExtendedReflection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Moles.Framework, Version=0.22.50128.1, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\WINDOWS\assembly\GAC_MSIL\Microsoft.Moles.Framework\0.22.50128.1__76a274db078248c8\Microsoft.Moles.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Pex.Framework, Version=0.22.50128.1, Culture=neutral, PublicKeyToken=76a274db078248c8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\WINDOWS\assembly\GAC_MSIL\Microsoft.Pex.Framework\0.22.50128.1__76a274db078248c8\Microsoft.Pex.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.CompositeWeb, Version=2.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BeheerThemas\bin\Debug\Microsoft.Practices.CompositeWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder, Version=1.0.51206.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\WINDOWS\assembly\GAC_MSIL\System.Configuration\2.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BeheerThemas.Interface\BeheerThemas.Interface.csproj">
+      <Project>{5FEF01A0-D98B-4270-BF01-F653793EB760}</Project>
+      <Name>BeheerThemas.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeheerThemas.Tests\BeheerThemas.Tests.csproj">
+      <Project>{67D891D2-28C0-4562-9B72-F21986BBB4C4}</Project>
+      <Name>BeheerThemas.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeheerThemas\BeheerThemas.csproj">
+      <Project>{A2C7A0B5-CEC2-41BD-A91E-645A918DD245}</Project>
+      <Name>BeheerThemas</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BeheerThemas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>BeheerThemas.moles</DependentUpon>
+    </Compile>
+    <Compile Include="BeheerThemasControllerTest.AddThema.g.cs">
+      <DependentUpon>BeheerThemasControllerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BeheerThemasControllerTest.BeheerThemasServiceGet.g.cs">
+      <DependentUpon>BeheerThemasControllerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BeheerThemasControllerTest.Constructor.g.cs">
+      <DependentUpon>BeheerThemasControllerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BeheerThemasControllerTest.cs" />
+    <Compile Include="BeheerThemasControllerTest.DeleteThema.g.cs">
+      <DependentUpon>BeheerThemasControllerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BeheerThemasControllerTest.GetThemaTable.g.cs">
+      <DependentUpon>BeheerThemasControllerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BeheerThemasControllerTest.UpdateThema.g.cs">
+      <DependentUpon>BeheerThemasControllerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BeheerThemasModuleInitializerTest.Configure.g.cs">
+      <DependentUpon>BeheerThemasModuleInitializerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BeheerThemasModuleInitializerTest.cs" />
+    <Compile Include="BeheerThemasModuleInitializerTest.Load.g.cs">
+      <DependentUpon>BeheerThemasModuleInitializerTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Factories\BeheerThemasControllerFactory.cs" />
+    <Compile Include="Factories\BeheerThemasPresenterFactory.cs" />
+    <Compile Include="Factories\BeheerThemasServiceFactory.cs" />
+    <Compile Include="Factories\CompositionContainerFactory.cs" />
+    <Compile Include="Factories\MockBeheerThemasServiceFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\PexAssemblyInfo.cs" />
+    <Compile Include="Services\BeheerThemasServiceTest.AddThema.g.cs">
+      <DependentUpon>BeheerThemasServiceTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BeheerThemasServiceTest.cs" />
+    <Compile Include="Services\BeheerThemasServiceTest.DeleteThema.g.cs">
+      <DependentUpon>BeheerThemasServiceTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BeheerThemasServiceTest.GetThemaTable.g.cs">
+      <DependentUpon>BeheerThemasServiceTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BeheerThemasServiceTest.UpdateThema.g.cs">
+      <DependentUpon>BeheerThemasServiceTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BeheerThemasPresenterTest.cs" />
+    <Compile Include="Views\BeheerThemasPresenterTest.OnViewInitialized.g.cs">
+      <DependentUpon>BeheerThemasPresenterTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BeheerThemasPresenterTest.OnViewLoaded.g.cs">
+      <DependentUpon>BeheerThemasPresenterTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DefaultViewPresenterTest.Constructor.g.cs">
+      <DependentUpon>DefaultViewPresenterTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DefaultViewPresenterTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BeheerThemas.moles">
+      <Generator>MolesGenerator</Generator>
+      <LastGenOutput>BeheerThemas.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BeheerThemas.Moles.dll">
+      <DependentUpon>BeheerThemas.moles</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BeheerThemas.Moles.xml">
+      <DependentUpon>BeheerThemas.moles</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
