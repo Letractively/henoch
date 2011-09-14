@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRunConfiguration name="TestRunConfigNoCoverage" id="112e7fc5-65fd-4211-80a8-2f7817ca420d" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description>This is a default test run configuration for a local test run.</Description>
+  <Hosts skipUnhostableTests="false" />
+  <TestTypeSpecific />
+</TestRunConfiguration>

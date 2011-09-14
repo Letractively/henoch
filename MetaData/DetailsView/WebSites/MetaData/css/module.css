@@ -1,0 +1,37 @@
+div.module {
+  width: 340px;
+  border: 2px #5f5f5f solid;
+  background-color: white;
+}
+
+div.module div.banner {
+  background: black url('module.banner.backg.png');
+  border: 1px solid black;
+  padding: 0 8px;
+  height: 24px;
+  color: white;
+  font-weight: bold;
+}
+
+div.module.rolledup div.banner {
+  background: black url('module.banner.backg.rolledup.png');
+}
+
+div.module div.banner span {
+  float: left;
+}
+
+div.module div.banner img {
+  float: right;
+  cursor: pointer;
+}
+
+div.module div.banner span,div.module div.banner img {
+  margin-top: 4px;
+}
+
+div.module div.body {
+  padding: 8px;
+  background-color: white;
+  border-width: 0;
+}

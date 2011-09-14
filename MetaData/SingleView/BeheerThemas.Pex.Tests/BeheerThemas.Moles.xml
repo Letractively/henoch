@@ -1,0 +1,988 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BeheerThemas.Moles</name>
+    </assembly>
+    <members>
+        <member name="T:MetaData.BeheerThemas.Moles.MBeheerThemasController">
+            <summary>Mole type of <see cref="T:MetaData.BeheerThemas.BeheerThemasController"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.MBeheerThemasController.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.MBeheerThemasController.#ctor(MetaData.BeheerThemas.BeheerThemasController)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.MBeheerThemasController.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.MBeheerThemasController.Bind(MetaData.BeheerThemas.IBeheerThemasController)">
+            <summary>Binds the members of the interface to the mole.</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AddThemaCalledGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.AddThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AddThemaCalledSetBoolean">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.AddThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AddThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.BeheerThemasServiceGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.BeheerThemasService"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.BeheerThemasServiceSetIBeheerThemasService">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.BeheerThemasService"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.Constructor">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.ConstructorIBeheerThemasService">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.#ctor(T:MetaData.BeheerThemas.Services.IBeheerThemasService)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.DeleteThemaCalledGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.DeleteThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.DeleteThemaCalledSetBoolean">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.DeleteThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.DeleteThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.DeletedThemaGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.DeletedThema"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.DeletedThemaSetThema">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.DeletedThema"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.GetThemaTable">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.ThemaTableGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.ThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.ThemaTableSetIListOfThema">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.ThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.UpdateThemaCalledGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.UpdateThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.UpdateThemaCalledSetBoolean">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.UpdateThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.UpdateThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.UpdatedThemaGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.UpdatedThema"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.UpdatedThemaSetThema">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.UpdatedThema"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.AddThemaCalledGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.AddThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.AddThemaCalledSetBoolean">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.AddThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.AddThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.BeheerThemasServiceGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.BeheerThemasService"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.BeheerThemasServiceSetIBeheerThemasService">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.BeheerThemasService"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.DeleteThemaCalledGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.DeleteThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.DeleteThemaCalledSetBoolean">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.DeleteThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.DeleteThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.DeletedThemaGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.DeletedThema"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.DeletedThemaSetThema">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.DeletedThema"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.GetThemaTable">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.ThemaTableGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.ThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.ThemaTableSetIListOfThema">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.ThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.UpdateThemaCalledGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.UpdateThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.UpdateThemaCalledSetBoolean">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.UpdateThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.UpdateThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.UpdatedThemaGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.UpdatedThema"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasController.AllInstances.UpdatedThemaSetThema">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BeheerThemasController.UpdatedThema"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer">
+            <summary>Mole type of <see cref="T:MetaData.BeheerThemas.BeheerThemasModuleInitializer"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.#ctor(MetaData.BeheerThemas.BeheerThemasModuleInitializer)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.Bind(Microsoft.Practices.CompositeWeb.Interfaces.IModuleInitializer)">
+            <summary>Binds the members of the interface to the mole.</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.AddGlobalServicesIServiceCollection">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.AddGlobalServices(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.AddModuleServicesIServiceCollection">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.AddModuleServices(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.ConfigureIServiceCollectionConfiguration">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.Configure(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection,T:System.Configuration.Configuration)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.Constructor">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.GetAuthorizationServiceIServiceCollection">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.GetAuthorizationService(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.LoadCompositionContainer">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.Load(T:Microsoft.Practices.CompositeWeb.CompositionContainer)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.RegisterSiteMapInformationISiteMapBuilderService">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.RegisterSiteMapInformation(T:Microsoft.Practices.CompositeWeb.Interfaces.ISiteMapBuilderService)"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.AllInstances.AddGlobalServicesIServiceCollection">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.AddGlobalServices(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.AllInstances.AddModuleServicesIServiceCollection">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.AddModuleServices(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.AllInstances.ConfigureIServiceCollectionConfiguration">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.Configure(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection,T:System.Configuration.Configuration)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.AllInstances.LoadCompositionContainer">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.Load(T:Microsoft.Practices.CompositeWeb.CompositionContainer)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.MBeheerThemasModuleInitializer.AllInstances.RegisterSiteMapInformationISiteMapBuilderService">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.RegisterSiteMapInformation(T:Microsoft.Practices.CompositeWeb.Interfaces.ISiteMapBuilderService)"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter">
+            <summary>Mole type of <see cref="T:MetaData.BeheerThemas.Views.BeheerThemasPresenter"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.#ctor(MetaData.BeheerThemas.Views.BeheerThemasPresenter)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.ConstructorIBeheerThemasController">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.#ctor(T:MetaData.BeheerThemas.IBeheerThemasController)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.OnThemasAddedThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnThemasAdded(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.OnThemasDeletedThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnThemasDeleted(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.OnThemasUpdatedThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnThemasUpdated(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.OnViewInitialized">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnViewInitialized"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.OnViewLoaded">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnViewLoaded"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.AllInstances.OnThemasAddedThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnThemasAdded(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.AllInstances.OnThemasDeletedThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnThemasDeleted(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.AllInstances.OnThemasUpdatedThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnThemasUpdated(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.AllInstances.OnViewInitialized">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnViewInitialized"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MBeheerThemasPresenter.AllInstances.OnViewLoaded">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.BeheerThemasPresenter.OnViewLoaded"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService">
+            <summary>Mole type of <see cref="T:MetaData.BeheerThemas.Services.BeheerThemasService"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.#ctor(MetaData.BeheerThemas.Services.BeheerThemasService)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.Bind(MetaData.BeheerThemas.Services.IBeheerThemasService)">
+            <summary>Binds the members of the interface to the mole.</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.AddThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.Constructor">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.DeleteThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.FindThemaIListOfThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.FindThema(System.Collections.Generic.IList`1{T:MetaData.BeheerThemas.BusinessEntities.Thema},T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.GetThemaTable">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.UpdateThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.AllInstances.AddThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.AllInstances.DeleteThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.AllInstances.GetThemaTable">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.MBeheerThemasService.AllInstances.UpdateThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Views.Moles.MDefaultViewPresenter">
+            <summary>Mole type of <see cref="T:MetaData.BeheerThemas.Views.DefaultViewPresenter"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.MDefaultViewPresenter.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.MDefaultViewPresenter.#ctor(MetaData.BeheerThemas.Views.DefaultViewPresenter)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.MDefaultViewPresenter.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MDefaultViewPresenter.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.MDefaultViewPresenter.ConstructorIBeheerThemasController">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.Views.DefaultViewPresenter.#ctor(T:MetaData.BeheerThemas.IBeheerThemasController)"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService">
+            <summary>Mole type of <see cref="T:MetaData.BeheerThemas.DataResource.MockBeheerThemasService"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.#ctor(MetaData.BeheerThemas.DataResource.MockBeheerThemasService)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.Bind(MetaData.BeheerThemas.Services.IBeheerThemasService)">
+            <summary>Binds the members of the interface to the mole.</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.AddThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.Constructor">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.DeleteThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.GetThemaTable">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.UpdateThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.AllInstances.AddThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.AllInstances.DeleteThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.AllInstances.GetThemaTable">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockBeheerThemasService.AllInstances.UpdateThemaThema">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource">
+            <summary>Mole type of <see cref="T:MetaData.BeheerThemas.DataResource.MockDataResource"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource.#ctor(MetaData.BeheerThemas.DataResource.MockDataResource)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource.Constructor">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockDataResource.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource.GetThemaTableStub">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockDataResource.GetThemaTableStub"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.MMockDataResource.AllInstances.GetThemaTableStub">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.DataResource.MockDataResource.GetThemaTableStub"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.BusinessEntities.Moles.MThema">
+            <summary>Mole type of <see cref="T:MetaData.BeheerThemas.BusinessEntities.Thema"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.#ctor">
+            <summary>Initializes a new mole</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.#ctor(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Initializes a new mole for the given instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the moled type</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.Bind(MetaData.BeheerThemas.Interface.DataResource.IThema)">
+            <summary>Binds the members of the interface to the mole.</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.Behavior">
+            <summary>Assigns the behavior for all methods of the moled type</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.Constructor">
+            <summary>Sets the mole of <see cref="M:MetaData.BeheerThemas.BusinessEntities.Thema.#ctor"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.IdGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BusinessEntities.Thema.Id"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.IdSetInt64">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BusinessEntities.Thema.Id"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.ThemaNaamGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BusinessEntities.Thema.ThemaNaam"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.ThemaNaamSetString">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BusinessEntities.Thema.ThemaNaam"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.AllInstances">
+            <summary>Define moles for all instances members</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.AllInstances.IdGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BusinessEntities.Thema.Id"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.AllInstances.IdSetInt64">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BusinessEntities.Thema.Id"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.AllInstances.ThemaNaamGet">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BusinessEntities.Thema.ThemaNaam"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.MThema.AllInstances.ThemaNaamSetString">
+            <summary>Sets the mole of <see cref="P:MetaData.BeheerThemas.BusinessEntities.Thema.ThemaNaam"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Moles.SBeheerThemasController">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.BeheerThemasController"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasController.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasController.#ctor(MetaData.BeheerThemas.Services.IBeheerThemasService)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasController.AddThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasController.AddThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasController.DeleteThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasController.DeleteThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasController.GetThemaTable">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasController.GetThemaTable01">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasController.InitializeStub">
+            <summary>Initializes a new instance of type SBeheerThemasController</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasController.UpdateThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasController.UpdateThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasController.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.SBeheerThemasController.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.SBeheerThemasController.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.BeheerThemasModuleInitializer"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.AddGlobalServices(Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.AddGlobalServices(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.AddGlobalServicesIServiceCollection">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.AddGlobalServices(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.AddModuleServices(Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.AddModuleServices(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.AddModuleServicesIServiceCollection">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.AddModuleServices(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.Configure(Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection,System.Configuration.Configuration)">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.ModuleInitializer.Configure(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection,T:System.Configuration.Configuration)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.ConfigureIServiceCollectionConfiguration">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.ModuleInitializer.Configure(T:Microsoft.Practices.CompositeWeb.Interfaces.IServiceCollection,T:System.Configuration.Configuration)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.InitializeStub">
+            <summary>Initializes a new instance of type SBeheerThemasModuleInitializer</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.Load(Microsoft.Practices.CompositeWeb.CompositionContainer)">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.ModuleInitializer.Load(T:Microsoft.Practices.CompositeWeb.CompositionContainer)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.LoadCompositionContainer">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.ModuleInitializer.Load(T:Microsoft.Practices.CompositeWeb.CompositionContainer)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.RegisterSiteMapInformation(Microsoft.Practices.CompositeWeb.Interfaces.ISiteMapBuilderService)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.RegisterSiteMapInformation(T:Microsoft.Practices.CompositeWeb.Interfaces.ISiteMapBuilderService)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.RegisterSiteMapInformationISiteMapBuilderService">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.BeheerThemasModuleInitializer.RegisterSiteMapInformation(T:Microsoft.Practices.CompositeWeb.Interfaces.ISiteMapBuilderService)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.SBeheerThemasModuleInitializer.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.Views.BeheerThemasPresenter"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter.#ctor(MetaData.BeheerThemas.IBeheerThemasController)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter.InitializeStub">
+            <summary>Initializes a new instance of type SBeheerThemasPresenter</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter.OnViewInitialized">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.Presenter`1.OnViewInitialized"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter.OnViewInitialized01">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.Presenter`1.OnViewInitialized"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter.OnViewLoaded">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.Presenter`1.OnViewLoaded"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter.OnViewLoaded01">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.Presenter`1.OnViewLoaded"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.SBeheerThemasPresenter.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.Services.BeheerThemasService"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.AddThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.AddThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.DeleteThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.DeleteThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.GetThemaTable">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.GetThemaTable01">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.InitializeStub">
+            <summary>Initializes a new instance of type SBeheerThemasService</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.UpdateThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.UpdateThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.BeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Services.Moles.SBeheerThemasService.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.Views.DefaultViewPresenter"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter.#ctor(MetaData.BeheerThemas.IBeheerThemasController)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter.InitializeStub">
+            <summary>Initializes a new instance of type SDefaultViewPresenter</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter.OnViewInitialized">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.Presenter`1.OnViewInitialized"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter.OnViewInitialized01">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.Presenter`1.OnViewInitialized"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter.OnViewLoaded">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.Presenter`1.OnViewLoaded"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter.OnViewLoaded01">
+            <summary>Sets the stub of <see cref="M:Microsoft.Practices.CompositeWeb.Presenter`1.OnViewLoaded"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.SDefaultViewPresenter.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Moles.SIBeheerThemasController">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.IBeheerThemasController"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SIBeheerThemasController.#ctor">
+            <summary>Initializes a new instance of type SIBeheerThemasController</summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.AddThemaCalledGet">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.AddThemaCalled"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.AddThemaCalledSetBoolean">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.AddThemaCalled"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.AddThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.IBeheerThemasController.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SIBeheerThemasController.AttachBackingFieldToAddThemaCalled">
+            <summary>Attaches delegates to emulate SIBeheerThemasController.AddThemaCalled as a property with a backing field</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SIBeheerThemasController.AttachBackingFieldToDeleteThemaCalled">
+            <summary>Attaches delegates to emulate SIBeheerThemasController.DeleteThemaCalled as a property with a backing field</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SIBeheerThemasController.AttachBackingFieldToUpdateThemaCalled">
+            <summary>Attaches delegates to emulate SIBeheerThemasController.UpdateThemaCalled as a property with a backing field</summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.DeleteThemaCalledGet">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.DeleteThemaCalled"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.DeleteThemaCalledSetBoolean">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.DeleteThemaCalled"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.DeleteThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.IBeheerThemasController.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.GetThemaTable">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.IBeheerThemasController.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SIBeheerThemasController.global::MetaData#BeheerThemas#IBeheerThemasController#AddThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.IBeheerThemasController.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SIBeheerThemasController.global::MetaData#BeheerThemas#IBeheerThemasController#DeleteThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.IBeheerThemasController.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SIBeheerThemasController.global::MetaData#BeheerThemas#IBeheerThemasController#GetThemaTable">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.IBeheerThemasController.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Moles.SIBeheerThemasController.global::MetaData#BeheerThemas#IBeheerThemasController#UpdateThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.IBeheerThemasController.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.UpdateThemaCalledGet">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.UpdateThemaCalled"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.UpdateThemaCalledSetBoolean">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.UpdateThemaCalled"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Moles.SIBeheerThemasController.UpdateThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.IBeheerThemasController.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.SIBeheerThemasController.global::MetaData#BeheerThemas#IBeheerThemasController#AddThemaCalled">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.AddThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.SIBeheerThemasController.global::MetaData#BeheerThemas#IBeheerThemasController#DeleteThemaCalled">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.DeleteThemaCalled"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Moles.SIBeheerThemasController.global::MetaData#BeheerThemas#IBeheerThemasController#UpdateThemaCalled">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.IBeheerThemasController.UpdateThemaCalled"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.Services.IBeheerThemasService"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.#ctor">
+            <summary>Initializes a new instance of type SIBeheerThemasService</summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.AddThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.IBeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.DeleteThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.IBeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.GetThemaTable">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.IBeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.global::MetaData#BeheerThemas#Services#IBeheerThemasService#AddThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.IBeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.global::MetaData#BeheerThemas#Services#IBeheerThemasService#DeleteThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.IBeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.global::MetaData#BeheerThemas#Services#IBeheerThemasService#GetThemaTable">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.IBeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.global::MetaData#BeheerThemas#Services#IBeheerThemasService#UpdateThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.IBeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Services.Moles.SIBeheerThemasService.UpdateThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.Services.IBeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Views.Moles.SIBeheerThemasView">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.Views.IBeheerThemasView"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SIBeheerThemasView.#ctor">
+            <summary>Initializes a new instance of type SIBeheerThemasView</summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.Views.Moles.SIBeheerThemasView.ThemaTableSetIListOfThema">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.Views.IBeheerThemasView.ThemaTable"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.Views.Moles.SIBeheerThemasView.global::MetaData#BeheerThemas#Views#IBeheerThemasView#ThemaTable">
+            <summary>Sets the stub of <see cref="P:MetaData.BeheerThemas.Views.IBeheerThemasView.ThemaTable"/>
+            </summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.Views.Moles.SIDefaultView">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.Views.IDefaultView"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.Views.Moles.SIDefaultView.#ctor">
+            <summary>Initializes a new instance of type SIDefaultView</summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.DataResource.MockBeheerThemasService"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.AddThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.AddThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.AddThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.DeleteThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.DeleteThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.DeleteThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.GetThemaTable">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.GetThemaTable01">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.GetThemaTable"/>
+            </summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.InitializeStub">
+            <summary>Initializes a new instance of type SMockBeheerThemasService</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.UpdateThema(MetaData.BeheerThemas.BusinessEntities.Thema)">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="F:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.UpdateThemaThema">
+            <summary>Sets the stub of <see cref="M:MetaData.BeheerThemas.DataResource.MockBeheerThemasService.UpdateThema(T:MetaData.BeheerThemas.BusinessEntities.Thema)"/>
+            </summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.SMockBeheerThemasService.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.DataResource.Moles.SMockDataResource">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.DataResource.MockDataResource"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.SMockDataResource.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.DataResource.Moles.SMockDataResource.InitializeStub">
+            <summary>Initializes a new instance of type SMockDataResource</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.SMockDataResource.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.DataResource.Moles.SMockDataResource.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+        <member name="T:MetaData.BeheerThemas.BusinessEntities.Moles.SThema">
+            <summary>Stub type of <see cref="T:MetaData.BeheerThemas.BusinessEntities.Thema"/>
+            .</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.BusinessEntities.Moles.SThema.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:MetaData.BeheerThemas.BusinessEntities.Moles.SThema.InitializeStub">
+            <summary>Initializes a new instance of type SThema</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.SThema.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:MetaData.BeheerThemas.BusinessEntities.Moles.SThema.InstanceBehavior">
+            <summary>Gets or sets the fallback behavior.</summary>
+        </member>
+    </members>
+</doc>

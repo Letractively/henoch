@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="45c333db-48d2-4566-a818-051296b120be" name="modiwd@MXS116 2010-02-19 09:48:19" runUser="MX\modiwd" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="Default Run Configuration" id="5d468bf2-7a0e-4b05-89d5-482d856d38eb">
+    <Deployment runDeploymentRoot="C:\Documents and Settings\modiwd\Mijn documenten\Visual Studio 2008\TFS\MetaData\BeheerThemas.Tests\bin\Debug\TestResults\modiwd_MXS116 2010-02-19 09_48_19" />
+    <Hosts skipUnhostableTests="false" />
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <Times creation="2010-02-19T09:48:19.5594993+01:00" queuing="2010-02-19T09:48:20.3719421+01:00" start="2010-02-19T09:48:20.4500616+01:00" finish="2010-02-19T09:48:20.8875308+01:00" />
+  <TestDefinitions>
+    <UnitTest name="HaalThemasOpTest" storage="c:\documents and settings\modiwd\mijn documenten\visual studio 2008\tfs\metadata\beheerthemas.tests\bin\debug\beheerthemas.tests.dll" id="be47fab5-cf4f-0e45-65a7-c049d59d38d3">
+      <Css projectStructure="" iteration="" />
+      <Execution timeOut="1800000" id="095ae01c-23ad-4872-9c49-5abf74421f6f" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <TestMethod codeBase="C:/Documents and Settings/modiwd/Mijn documenten/Visual Studio 2008/TFS/MetaData/BeheerThemas.Tests/bin/Debug/BeheerThemas.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter" className="MetaData.BeheerThemas.Tests.BeheerThemasModuleControllerFixture, BeheerThemas.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="HaalThemasOpTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="be47fab5-cf4f-0e45-65a7-c049d59d38d3" executionId="095ae01c-23ad-4872-9c49-5abf74421f6f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="095ae01c-23ad-4872-9c49-5abf74421f6f" testId="be47fab5-cf4f-0e45-65a7-c049d59d38d3" testName="HaalThemasOpTest" computerName="MXS116" duration="00:00:00.2655899" startTime="2010-02-19T09:48:20.4969333+01:00" endTime="2010-02-19T09:48:20.8406591+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.AreEqual failed. Expected:&lt;korttekst1&gt;. Actual:&lt;thema1&gt;. </Message>
+          <StackTrace>   bij MetaData.BeheerThemas.Tests.BeheerThemasModuleControllerFixture.HaalThemasOpTest() in C:\Documents and Settings\modiwd\Mijn documenten\Visual Studio 2008\TFS\MetaData\BeheerThemas.Tests\BeheerThemasModuleControllerFixture.cs:regel 55
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
