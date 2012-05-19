@@ -40,10 +40,13 @@
         </AjaxSettings>
     </telerik:RadAjaxManager>
     <div>
-        <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" EnableAJAX="false"><br /><telerik:RadButton ID="RadButton1" runat="server" CssClass="search" Skin="Windows7"
-                Text="Search" AutoPostBack="False"></telerik:RadButton><telerik:RadButton ID="RadButton2" runat="server" Text="Hello" CssClass="subroutine"
-                AutoPostBack="False" Skin="Windows7"></telerik:RadButton><telerik:RadButton ID="RadButton3" runat="server" AutoPostBack="False" BackColor="Red"
-                CssClass="error" ForeColor="Red" Skin="Telerik" Text="Error"></telerik:RadButton><telerik:RadButton ID="RadButton4" runat="server" Text="Postback"></telerik:RadButton><asp:TextBox ID="TextBox1" runat="server" CssClass="numericCssClass"></asp:TextBox>
+        <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server" EnableAJAX="false"><br />
+            <telerik:RadButton ID="RadButton1" runat="server" CssClass="search"
+                Text="Search" AutoPostBack="False"></telerik:RadButton>
+            <telerik:RadButton ID="RadButton2" runat="server" Text="Hello" CssClass="subroutine"
+                AutoPostBack="False"></telerik:RadButton><telerik:RadButton ID="RadButton3" 
+                runat="server" AutoPostBack="False" BackColor="Red"
+                CssClass="error" ForeColor="Red" Text="Error"></telerik:RadButton><telerik:RadButton ID="RadButton4" runat="server" Text="Postback"></telerik:RadButton><asp:TextBox ID="TextBox1" runat="server" CssClass="numericCssClass"></asp:TextBox>
                 <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox><cc1:FilteredTextBoxExtender
                     ID="FilteredTextBoxExtender1" runat="server" FilterType="Numbers" TargetControlID="TextBox2">
                 </cc1:FilteredTextBoxExtender>
