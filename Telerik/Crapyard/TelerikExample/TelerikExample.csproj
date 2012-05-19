@@ -61,6 +61,9 @@
     <Reference Include="Telerik.Web.UI">
       <HintPath>..\_SharedAssemblies\Telerik.Web.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Web.UI.Skins">
+      <HintPath>..\_SharedAssemblies\Telerik.Web.UI.Skins.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
