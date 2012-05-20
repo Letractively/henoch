@@ -13,5 +13,10 @@ namespace TelerikExample
         {
             
         }
+
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
