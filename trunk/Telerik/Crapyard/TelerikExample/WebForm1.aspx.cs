@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TelerikExample.GoldPriceFreeWeb;
 using TelerikExample.LondonGoldSilverFix;
 using TelerikExample.StockQuote;
 using System.Xml.Linq;
@@ -24,7 +25,6 @@ namespace TelerikExample
 
         protected void RadButton1_Click(object sender, EventArgs e)
         {
-            
             //Response.Redirect("~/WebForm1.aspx");
             //Server.Transfer("~/PersistExpandedState20.aspx");
             
@@ -32,9 +32,19 @@ namespace TelerikExample
             //var response = client.GetLondonGoldAndSilverFix(new GetLondonGoldAndSilverFixRequest());
             //var data = response.GetLondonGoldAndSilverFixResult;
 
+            double val = GetStockQuoteGoogle();
+            GetGoldPriceSoapClient  client = new GetGoldPriceSoapClient();
+            var data = client.GetCurrentGoldPrice("dmodiwirijo@hotmail.com", "dsm123");
+            double.TryParse(data[0], out val);
+
+            RadChart1.Series[0].AddItem(val);
+        }
+
+        private static double GetStockQuoteGoogle()
+        {
             StockQuoteSoapClient client = new StockQuoteSoapClient();
             var data = client.GetQuote("GOOG");
-             // convert string to stream            
+            // convert string to stream            
             byte[] byteArray = Encoding.ASCII.GetBytes(data);            
             MemoryStream stream = new MemoryStream( byteArray );
             XmlReader reader = XmlReader.Create(stream);
@@ -45,7 +55,7 @@ namespace TelerikExample
                               select sq;
             double val;
             double.TryParse(stockQuotes.First().Value, out val);
-            RadChart1.Series[0].AddItem(val);
+            return val;
         }
     }
 

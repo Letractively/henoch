@@ -8,9 +8,15 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link href="styles/kendo.common.min.css" rel="stylesheet" type="text/css" />    
+    <link href="styles/kendo.default.min.css" rel="stylesheet" type="text/css" />
+    <%--<link href="styles/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />--%>
+     <script src="Scripts/jquery.min.js" type="text/javascript"></script>    
+     <script src="Scripts/kendo.web.min.js" type="text/javascript"></script>
     <title></title>
 </head>
 <body>
+
     <form id="form1" runat="server">
     <div>
         <asp:ScriptManager ID="ScriptManager1" runat="server">
