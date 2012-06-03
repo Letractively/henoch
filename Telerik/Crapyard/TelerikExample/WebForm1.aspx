@@ -2,6 +2,8 @@
 
 <%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
 
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Charting" tagprefix="telerik" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,6 +29,16 @@
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             
             <ContentTemplate>
+                <telerik:RadChart ID="RadChart1" runat="server" DefaultType="Line">
+                    <series>
+                        <telerik:ChartSeries Name="Series 1" Type="Line">
+                            <appearance>
+                                <fillstyle maincolor="213, 247, 255">
+                                </fillstyle>
+                            </appearance>
+                        </telerik:ChartSeries>
+                    </series>
+                </telerik:RadChart>
             </ContentTemplate>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="RadButton2" EventName="Click" />

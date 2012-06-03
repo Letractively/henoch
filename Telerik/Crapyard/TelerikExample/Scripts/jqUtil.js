@@ -57,30 +57,33 @@ $(document).ready(function () {
         $('<iframe />').attr('src', 'WebForm1.aspx').appendTo('body');
     });
     $(".subroutine").click(function () {
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json",
-            url: "MyService.asmx/HelloWorld",
-            data: "",
-            success: function (data) {
-                alert("Message: " + data.d);
-            },
-            error: function () {
-                alert("Error calling the web service.");
-            }
-        });
+        if (loaded==0) {
+            $(this).attr("disabled", true);
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: "MyService.asmx/HelloWorld",
+                data: "",
+                success: function (data) {
+                    alert("Message: " + data.d);
+                },
+                error: function () {
+                    alert("Error calling the web service.");
+                }
+            });
 
-        //Create iframe with inner frame
-        $('<iframe id="myframe" src="WebForm1.aspx"/>').appendTo('body');
-        // possibly excessive use of jQuery - but I've got a live working example in production 
-        $('#myframe').load(function () {
-            alert('loading...');
-            loaded++;
-            //reload
-            //i.e. use counter 
-            if (loaded > 1) window.location.href = "PersistExpandedState20.aspx";
-        });
+            //Create iframe with inner frame
+            $('<iframe id="myframe" src="WebForm1.aspx"/>').appendTo('body');
+            // possibly excessive use of jQuery - but I've got a live working example in production 
+            $('#myframe').load(function () {
+                alert('loading...');
+                loaded++;
+                //reload
+                //i.e. use counter 
+                if (loaded > 1) window.location.href = "PersistExpandedState20.aspx";
+            });
+        }
     });
 
     $(".error").click(function () {
