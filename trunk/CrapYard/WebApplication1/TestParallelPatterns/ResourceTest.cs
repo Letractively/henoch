@@ -17,7 +17,7 @@ namespace TestParallelPatterns
         private int loop = 10;
         private Stopwatch stopwatch;
         private long start;
-        private Tree<string> taken;
+        private Tree<string,string> taken;
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -87,7 +87,7 @@ namespace TestParallelPatterns
 
             MyAction = MyTask2;
             testContextInstance.BeginTimer("stopwatch");
-            Tree<TaskInfo>.Queue = new ConcurrentQueue<TaskInfo>();
+            Tree<string,TaskInfo>.Queue = new ConcurrentQueue<TaskInfo>();
         }
         //Use TestCleanup to run code after each test has run
         [TestCleanup()]
@@ -98,14 +98,14 @@ namespace TestParallelPatterns
             stopwatch.Stop();
             
             long elapsed =  ended - start;
-            Console.WriteLine("Treewalk nodes: " + Tree<TaskInfo>.Queue.Count);
+            Console.WriteLine("Treewalk nodes: " + Tree<string, TaskInfo>.Queue.Count);
             Console.WriteLine("\n----- Environment.TickCount------");
             Console.WriteLine("Treewalk duration: " + elapsed);
 
             TaskInfo task;
             long totalTaskDuration = 0;
 
-            var query = from taak in Tree<TaskInfo>.Queue
+            var query = from taak in Tree<string, TaskInfo>.Queue
                         where ended <= taak.TaskEnded
                         select taak;
             var taskBusyAfterTreeWalk = from taak in query
@@ -115,14 +115,14 @@ namespace TestParallelPatterns
                 "A task was still busy while treewalk was ending.");
             int aantalVerdachteTaken = query.Count();
 
-            int len = Tree<TaskInfo>.Queue.Count;
-            var listQ = Tree<TaskInfo>.Queue.ToArray();
+            int len = Tree<string, TaskInfo>.Queue.Count;
+            var listQ = Tree<string, TaskInfo>.Queue.ToArray();
             Parallel.For(0, len, (i) =>
             {
                 Console.WriteLine(listQ[i].TaskDescription + " ----");
                 totalTaskDuration += listQ[i].Taskduration;
             });
-            while (Tree<TaskInfo>.Queue.TryDequeue(out task))
+            while (Tree<string, TaskInfo>.Queue.TryDequeue(out task))
             {
                 Console.WriteLine(task.TaskDescription);
                 totalTaskDuration += task.Taskduration;
@@ -160,10 +160,10 @@ namespace TestParallelPatterns
             taskInfo.TaskEnded2 = Stopwatch.GetTimestamp();
             var elapsed = taskInfo.TaskEnded - taskInfo.TaskStarted;
 
-            //Tree<string>.Queue.Enqueue(woord + elapsed);
+            //Tree<string,string>.Queue.Enqueue(woord + elapsed);
 
             taskInfo.TaskDescription = woord + " ;elapsed " + elapsed;
-            Tree<TaskInfo>.Queue.Enqueue(taskInfo);
+            Tree<string, TaskInfo>.Queue.Enqueue(taskInfo);
         }
         [TestMethod]
         public void TestWalkParallel()
@@ -172,7 +172,7 @@ namespace TestParallelPatterns
                 {
                     for (int i = 0; i < loop; i++)
                     {
-                        Tree<string>.WalkParallel(taken, MyAction);
+                        Tree<string,string>.WalkParallel(taken, MyAction);
                     }
                 }
             );
@@ -185,30 +185,30 @@ namespace TestParallelPatterns
         {
             var NTree = CreateTasksForNTree();
                         
-            //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
+            //Tree<string,string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
             {
-                Tree<string>.WalkParallelNTree(NTree, MyTask2, true);
+                Tree<string,string>.WalkParallelNTree(NTree, MyTask2, true);
             }
             );
            
             Task.WaitAll(t1);
 
-            Assert.AreEqual(9, Tree<TaskInfo>.Queue.Count);
+            Assert.AreEqual(9, Tree<string, TaskInfo>.Queue.Count);
         }
         [TestMethod]
         public void TestWalkNTree()
         {
             var NTree = CreateTasksForNTree();
 
-            //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
+            //Tree<string,string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
             {
-                Tree<string>.WalkNaryTree(NTree, MyTask2);
+                Tree<string,string>.WalkNaryTree(NTree, MyTask2);
             }
             );
 
-            //Assert.AreEqual(8, Tree<TaskInfo>.Queue.Count);
+            //Assert.AreEqual(8, Tree<string, TaskInfo>.Queue.Count);
             Task.WaitAll(t1);
         }
         [TestMethod]
@@ -216,7 +216,7 @@ namespace TestParallelPatterns
         {
             for (int i = 0; i < loop; i++)
             {
-                Tree<string>.WalkParallel(taken, MyAction, true);
+                Tree<string,string>.WalkParallel(taken, MyAction, true);
             }
           
         }
@@ -225,33 +225,33 @@ namespace TestParallelPatterns
         {
             for (int i = 0; i < loop; i++)
             {
-                Tree<string>.WalkClassic(taken, MyAction);
+                Tree<string,string>.WalkClassic(taken, MyAction);
             }
         }
         [TestMethod]
         public void TestWalkClassicUsingDelegates()
         {
-            Tree<string>.TreeHandler treeHandler = MyTask2;
+            Tree<string,string>.TreeHandler treeHandler = MyTask2;
             taken.RegisterWithTree(treeHandler);
 
             for (int i = 0; i < loop; i++)
             {
-                Tree<string>.WalkClassic(taken);
+                Tree<string,string>.WalkClassic(taken);
             }
             taken.UnRegisterWithTree(treeHandler);  
         }
 
-        private static Tree<string> CreateTasks()
+        private static Tree<string,string> CreateTasks()
         {
-            var taken = new Tree<string>
+            var taken = new Tree<string,string>
                                      {
-                                         Left = new Tree<string>(),
-                                         Right = new Tree<string>(),
+                                         Left = new Tree<string,string>(),
+                                         Right = new Tree<string,string>(),
                                          Data = "root"
                                      };
             taken.Left.Data = "A";
-            taken.Left.Left = new Tree<string> { Data = string.Format("{0}-C", taken.Left.Data) };
-            taken.Left.Right = new Tree<string> { Data = string.Format("{0}-D", taken.Left.Data) };
+            taken.Left.Left = new Tree<string,string> { Data = string.Format("{0}-C", taken.Left.Data) };
+            taken.Left.Right = new Tree<string,string> { Data = string.Format("{0}-D", taken.Left.Data) };
  
             taken.Right.Data = "B";
             return taken;
@@ -260,33 +260,33 @@ namespace TestParallelPatterns
         /// Create tree (non-binairy)
         /// </summary>
         /// <returns></returns>
-        private static Tree<string> CreateTasksForNTree()
+        private static Tree<string,string> CreateTasksForNTree()
         {
-            var taken = new Tree<string>
+            var taken = new Tree<string,string>
             {
                 Data = "root",
-                NTree = new Tree<string>[]
+                NTree = new Tree<string,string>[]
                 {
-                    new Tree<string>{ Data = "S11"},
-                    new Tree<string>
+                    new Tree<string,string>{ Data = "S11"},
+                    new Tree<string,string>
                     { 
                         Data = "S211",
-                        NTree = new Tree<string>[]
+                        NTree = new Tree<string,string>[]
                         {
-                          new Tree<string>{Data = "S22"}
+                          new Tree<string,string>{Data = "S22"}
                         }
                     },
-                    new Tree<string>
+                    new Tree<string,string>
                     { 
                         Data = "S221",
-                        NTree = new Tree<string>[]
+                        NTree = new Tree<string,string>[]
                         {
-                            new Tree<string>{ Data = "S21"},
-                            new Tree<string>{ Data = "m1"},
-                            new Tree<string>{ Data = "Sp"},
+                            new Tree<string,string>{ Data = "S21"},
+                            new Tree<string,string>{ Data = "m1"},
+                            new Tree<string,string>{ Data = "Sp"},
                         }
                     },
-                    new Tree<string>{ Data = "S31"}
+                    new Tree<string,string>{ Data = "S31"}
                 }
             };
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParallelResourcer
 {
-    public class Tree<T> : IEnumerable
+    public class Tree<TKey,TValue> : IEnumerable
     {
 
         // 1) Define a delegate type.
@@ -24,10 +24,10 @@ namespace ParallelResourcer
         {
             _listOfHandlers -= methodToCall;
         }
-        public static ConcurrentQueue<T> Queue;
-        public Tree<T> Left , Right;
-        public Tree<T>[] NTree;
-        public T Data;
+        public static ConcurrentQueue<TValue> Queue;
+        public Tree<TKey, TValue> Left, Right;
+        public Tree<TKey, TValue>[] NTree;
+        public TValue Data;
 
         private string _UID;
 
@@ -46,19 +46,19 @@ namespace ParallelResourcer
 
         static Tree()
         {
-            Queue = new ConcurrentQueue<T>();
+            Queue = new ConcurrentQueue<TValue>();
         }
-        public static IEnumerable<Tree<T>> Iterate(Tree<T> head)
+        public static IEnumerable<Tree<TKey, TValue>> Iterate(Tree<TKey,TValue> head)
         {
-            for (Tree<T> i = head; i != null; i = i.Right)
+            for (Tree<TKey,TValue> i = head; i != null; i = i.Right)
             {
                 yield return i;
             }
         }
-        public static IEnumerable<T> Iterate<T>(
-            Func<T> initialization, Func<T, bool> condition, Func<T, T> update)
+        public static IEnumerable<TValue> Iterate<TValue>(
+            Func<TValue> initialization, Func<TValue, bool> condition, Func<TValue, TValue> update)
         {
-            for (T i = initialization(); condition(i); i = update(i))
+            for (TValue i = initialization(); condition(i); i = update(i))
             {
                 yield return i;
             }
@@ -66,12 +66,12 @@ namespace ParallelResourcer
 
         public IEnumerator GetEnumerator()
         {
-            for (Tree<T> i = this; i != null; i = i.Right)
+            for (Tree<TKey, TValue> i = this; i != null; i = i.Right)
             {
                 yield return i;
             }
         }
-        public static void WalkParallel<T>(Tree<T> root, Action<T> action, bool waitAll=false)
+        public static void WalkParallel<TValue>(Tree<TKey, TValue> root, Action<TValue> action, bool waitAll=false)
         {
             if (root == null) return;
             //LRW wandeling in parallel!
@@ -84,7 +84,7 @@ namespace ParallelResourcer
             if (waitAll) Task.WaitAll(t1, t2, t3);
         }
 
-        public static void WalkParallelNTree<T>(Tree<T> root, Action<T> action, bool waitAll = false)
+        public static void WalkParallelNTree<TKey, TValue>(Tree<TKey, TValue> root, Action<TValue> action, bool waitAll = false)
         {
             if (root == null) return;
 
@@ -110,7 +110,7 @@ namespace ParallelResourcer
            
             if (waitAll) Task.WaitAll(tasks);
         }
-        public static void WalkNaryTree<T>(Tree<T> root, Action<T> action)
+        public static void WalkNaryTree<TKey, TValue>(Tree<TKey, TValue> root, Action<TValue> action)
         {
             if (root == null) 
                 return;
@@ -130,7 +130,7 @@ namespace ParallelResourcer
             }
 
         }
-        public static void WalkClassic<T>(Tree<T> root, Action<T> action)
+        public static void WalkClassic<TValue>(Tree<TKey, TValue> root, Action<TValue> action)
         {
             if (root == null) return;
             //LRW wandeling!
@@ -138,7 +138,7 @@ namespace ParallelResourcer
              WalkClassic(root.Right, action);
             action(root.Data);
         }
-        public static void WalkClassic<T>(Tree<T> root)
+        public static void WalkClassic<TValue>(Tree<TKey, TValue> root)
         {
             if (root == null) return;
             //LRW wandeling!
@@ -146,50 +146,51 @@ namespace ParallelResourcer
             WalkClassic(root.Right);
             _listOfHandlers(root.Data.ToString());            
         }
-        public static IList<T> GetParents(string root, IDictionary<T, IList<T>> linkedList)
+        public static IList<TValue> GetParents(TValue node, IDictionary<TValue, IList<TValue>> linkedList)
         {
             var parents = from pair in linkedList
-                          where pair.Value.Where(val => val.Equals(root)).FirstOrDefault() != null
+                          where pair.Value.Where(val => val.Equals(node)).FirstOrDefault() != null
                           select pair.Key;
 
-            return parents.ToList<T>();
+            return parents.ToList<TValue>();
         }
-        public static IList<T> GetChildren(T root, IDictionary<T, IList<T>> linkedList)
+        public static IList<TValue> GetChildren(TValue node, IDictionary<TValue, IList<TValue>> linkedList)
         {
             #region return null for root values : null, empty
             string defaultVar = default(string);
-            if (root == null)
+            if (node == null)
                 return null;
             else
             {
-                defaultVar = root.ToString();
+                defaultVar = node.ToString();
                 if (string.IsNullOrEmpty( defaultVar))
                     return null;
             }
             #endregion
 
-            IList<T> list;
+            IList<TValue> list;
 
-            linkedList.TryGetValue(root, out list);
+            linkedList.TryGetValue(node, out list);
             if (list == null)
-                list = new List<T>();
+                list = new List<TValue>();
 
             return list;
         }
-        public static Tree<T> CreateNTree(string root, IDictionary<string, IList<T>> linkedList)
+        public static Tree<TKey, TValue> CreateNTree(TValue node, IDictionary<TValue, IList<TValue>> linkedList)
         {
-            var parents = from c in linkedList
-                                   where c.Value.Where(s => s.Equals(root)).FirstOrDefault() != null
-                                   select c.Key;
+            var parents = GetParents(node, linkedList);
+
             return null;
         }
+
+
         /// <summary>
         /// Ambiguous
         /// </summary>
         /// <param name="root"></param>
         /// <param name="treeHandler"></param>
         /// <param name="waitAll"></param>
-        //public static void WalkParallel(Tree<T> root, TreeHandler treeHandler, bool waitAll = false)
+        //public static void WalkParallel(Tree<TKey, TValue> root, TreeHandler treeHandler, bool waitAll = false)
         //{
         //    if (root == null) return;
 
