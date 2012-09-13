@@ -7,14 +7,99 @@ using Microsoft.Practices.EnterpriseLibrary.Caching;
 
 namespace Repository
 {
+    /// <summary>
+    /// Focusses on shareholders and their relations. The data is cached.
+    /// </summary>
     public class ShareHolders
     {
         private const string cShareHolder ="shareholders";
-        IDictionary<string, IList<string>> _listCompanies = new Dictionary<string, IList<string>>();
+        /// <summary>
+        /// linked list of parents and their children
+        /// </summary>
         IDictionary<string, string> _organiGraph = new Dictionary<string, string>();
-        
+        /// <summary>
+        /// load the cache from dataresources involved
+        /// </summary>
         public ShareHolders()
         {
+            InitializeCache();
+        }
+
+        /// <summary>
+        /// linked list of parents and their children. Companies are stored in cache. 
+        /// </summary>
+        /// <returns></returns>
+        public IDictionary<string, IList<string>> Companies
+        {
+            get
+            {
+                IDictionary<string, IList<string>> list = InitializeCache();
+
+                return list;
+            }
+        }
+
+        private static IDictionary<string, IList<string>> InitializeCache()
+        {
+            IDictionary<string, IList<string>> list = null;
+            var myRepository = MyCache<Object>.CacheManager;
+            if (myRepository != null)
+            {
+                list = myRepository.GetData(cShareHolder) as IDictionary<string, IList<string>>;
+                if (list == null)
+                {
+                    //Initialize
+                    list = new Dictionary<string, IList<string>>();
+                    myRepository.Add(cShareHolder, list);
+                }
+            }
+            return list;
+        }
+        public IList<string> GetSubsidiaries(string shareHolder)
+        {
+            if (string.IsNullOrEmpty(shareHolder))
+                return null;
+
+            IList<string> list;
+            Boolean succeeded = Companies.TryGetValue(shareHolder, out list);
+            if (list == null)
+                list = new List<string>();
+            return list;
+
+        }
+        public IList<string> GetShareHolders(string subsidiary)
+        {
+            var listShareHolders  = from c in Companies
+                        where c.Value.Where(s => s.Equals(subsidiary)).FirstOrDefault() != null   
+                        select c.Key;
+
+
+            return listShareHolders.ToList<string>();
+        }
+
+        /// <summary>
+        /// adds a new shareholder with empty list of subsidiaries.
+        /// </summary>
+        /// <param name="shareHolder"></param>
+        public void AddShareHolders(string shareHolder)
+        {
+            Companies.Add(shareHolder, new List<string>());
+        }
+        public void AddSubsidiary(string shareHolder, string subsidiary)
+        {
+            Companies[shareHolder].Add(subsidiary);
+        }
+        public void RemoveSubsidiary(string shareHolder, string subsidiary)
+        {
+            Companies[shareHolder].Remove(subsidiary);
+
+        }
+        /// <summary>
+        /// Reloads cache from dataresources.
+        /// </summary>
+        public void Refresh()
+        {
+            Companies.Clear();
             string shareHolder = "Ahold";
             //_listCompanies.Add(shareHolder, new List<string>());
             //_listCompanies[shareHolder].Add("123");
@@ -30,59 +115,10 @@ namespace Repository
             this.AddShareHolders("Shell");
             this.AddSubsidiary("Shell", "s123");
             this.AddSubsidiary("Shell", "s567");
-            var myRepository = MyCache<IDictionary<string, IList<string>>>.CacheManager;
-            myRepository.Add(cShareHolder, _listCompanies);
         }
-
-        public IList<string> GetSubsidiaries(string shareHolder)
-        {
-            if (string.IsNullOrEmpty(shareHolder))
-                return null;
-            var myRepository = MyCache<Object>.CacheManager;
-            return (myRepository.GetData(cShareHolder) as IDictionary<string, IList<string>>)[shareHolder];
-
-        }
-        public IList<string> GetShareHolders(string subsidiary)
-        {
-            var myRepository = MyCache<Object>.CacheManager;
-            _listCompanies = myRepository.GetData(cShareHolder) as IDictionary<string, IList<string>>;
-            var listShareHolders  = from c in _listCompanies
-                        where c.Value.Where(s => s.Equals(subsidiary)).FirstOrDefault() != null   
-                        select c.Key;
-
-
-            return listShareHolders.ToList<string>();
-        }
-        public void AddShareHolders(string shareHolder)
-        {
-            _listCompanies.Add(shareHolder, new List<string>());
-
-            var myRepository = MyCache<Object>.CacheManager;
-            if (myRepository!=null)
-                MyCache<Object>.CacheManager.Add(cShareHolder, _listCompanies);
-        }
-        public void AddSubsidiary(string shareHolder, string subsidiary)
-        {
-            _listCompanies[shareHolder].Add(subsidiary);
-
-            var myRepository = MyCache<Object>.CacheManager;
-            if (myRepository != null)
-                MyCache<IDictionary<string, IList<string>>>.CacheManager.Add(cShareHolder, _listCompanies); 
-        }
-        public void RemoveSubsidiary(string shareHolder, string subsidiary)
-        {
-            _listCompanies[shareHolder].Remove(subsidiary);
-
-            var myRepository = MyCache<Object>.CacheManager;
-            if (myRepository != null)
-                MyCache<Object>.CacheManager.Add(cShareHolder, _listCompanies); 
-        }
-
         public IList<string> GetRoot(string company)
         {
             IList<string> candidates = new List<string>();
-            var myRepository = MyCache<Object>.CacheManager;
-            _listCompanies = myRepository.GetData(cShareHolder) as IDictionary<string, IList<string>>;
 
             var parents = GetShareHolders(company);
 
