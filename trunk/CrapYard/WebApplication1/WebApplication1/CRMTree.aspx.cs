@@ -15,7 +15,7 @@ namespace WebApplication1
         {
             if (!IsPostBack)
             {
-                new ShareHolders().Refresh();
+                
             }
             else
             { 

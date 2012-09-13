@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using Repository;
 
 namespace WebApplication1
 {
@@ -13,7 +14,7 @@ namespace WebApplication1
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
-
+            new ShareHolders().Refresh();
         }
 
         void Application_End(object sender, EventArgs e)
