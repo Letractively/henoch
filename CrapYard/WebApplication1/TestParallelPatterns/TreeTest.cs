@@ -67,15 +67,15 @@ namespace TestParallelPatterns
         /// <summary>
         ///A test for WalkClassic
         ///</summary>
-        public void WalkClassicTestHelper<T, T1>()
+        public void WalkClassicTestHelper<TKey, TValue>()
         {
-            Tree<T> root = null; // TODO: Initialize to an appropriate value
-            Action<T> action = null; // TODO: Initialize to an appropriate value
-            Tree<T>.WalkClassic<T>(root, action);
+            Tree<TKey, TValue> root = null; // TODO: Initialize to an appropriate value
+            Action<TValue> action = null; // TODO: Initialize to an appropriate value
+            Tree<TKey, TValue>.WalkClassic<TValue>(root, action);
             Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
 
-        [TestMethod()]
+        [Ignore()]
         public void WalkClassicTest()
         {
             WalkClassicTestHelper<GenericParameterHelper, GenericParameterHelper>();

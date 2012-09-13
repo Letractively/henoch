@@ -58,13 +58,13 @@ namespace Repository
         }
         public IList<string> GetSubsidiaries(string shareHolder)
         {
-            IList<string> list = Tree<string>.GetChildren(shareHolder, Companies);
+            IList<string> list =Tree<string,string>.GetChildren(shareHolder, Companies);
             return list;
 
         }
         public IList<string> GetShareHolders(string subsidiary)
         {
-            var listShareHolders = Tree<string>.GetParents(subsidiary, Companies);
+            var listShareHolders =Tree<string,string>.GetParents(subsidiary, Companies);
 
             return listShareHolders.ToList<string>();
         }
@@ -108,9 +108,9 @@ namespace Repository
             this.AddSubsidiary("Shell", "s123");
             this.AddSubsidiary("Shell", "s567");
         }
-        public Tree<string> GetRoot(string company)
+        public Tree<string,string> GetRoot(string company)
         {
-            Tree<string> NTree = new Tree<string>();
+           Tree<string,string> NTree = new Tree<string,string>();
 
             
 
