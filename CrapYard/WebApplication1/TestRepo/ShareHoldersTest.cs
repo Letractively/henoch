@@ -71,7 +71,6 @@ namespace TestRepo
         public void AddShareHoldersTest()
         {
             ShareHolders target = new ShareHolders(); 
-            string shareHolder = string.Empty; 
             target.Refresh();
             Assert.AreEqual(target.GetSubsidiaries("Ahold").Count, 2);
         }
