@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Caching;
+using Repository;
 
 namespace WebApplication1
 {
@@ -14,7 +15,11 @@ namespace WebApplication1
         {
             if (!IsPostBack)
             {
-                
+                new ShareHolders().Refresh();
+            }
+            else
+            { 
+
             }
          }   
     }

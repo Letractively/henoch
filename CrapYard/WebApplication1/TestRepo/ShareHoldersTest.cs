@@ -70,10 +70,10 @@ namespace TestRepo
         [TestMethod()]
         public void AddShareHoldersTest()
         {
-            ShareHolders target = new ShareHolders(); // TODO: Initialize to an appropriate value
-            string shareHolder = string.Empty; // TODO: Initialize to an appropriate value
-            target.AddShareHolders(shareHolder);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            ShareHolders target = new ShareHolders(); 
+            string shareHolder = string.Empty; 
+            target.Refresh();
+            Assert.AreEqual(target.GetSubsidiaries("Ahold").Count, 2);
         }
     }
 }
