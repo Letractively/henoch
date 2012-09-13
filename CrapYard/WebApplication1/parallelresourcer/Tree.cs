@@ -146,15 +146,15 @@ namespace ParallelResourcer
             WalkClassic(root.Right);
             _listOfHandlers(root.Data.ToString());            
         }
-        public static IList<TValue> GetParents(TValue node, IDictionary<TValue, IList<TValue>> linkedList)
+        public static IList<TKey> GetParents(TKey node, IDictionary<TKey, IList<TValue>> linkedList)
         {
             var parents = from pair in linkedList
                           where pair.Value.Where(val => val.Equals(node)).FirstOrDefault() != null
                           select pair.Key;
 
-            return parents.ToList<TValue>();
+            return parents.ToList<TKey>();
         }
-        public static IList<TValue> GetChildren(TValue node, IDictionary<TValue, IList<TValue>> linkedList)
+        public static IList<TValue> GetChildren(TKey node, IDictionary<TKey, IList<TValue>> linkedList)
         {
             #region return null for root values : null, empty
             string defaultVar = default(string);
@@ -176,7 +176,7 @@ namespace ParallelResourcer
 
             return list;
         }
-        public static Tree<TKey, TValue> CreateNTree(TValue node, IDictionary<TValue, IList<TValue>> linkedList)
+        public static Tree<TKey, TValue> CreateNTree(TKey node, IDictionary<TKey, IList<TValue>> linkedList)
         {
             var parents = GetParents(node, linkedList);
 
