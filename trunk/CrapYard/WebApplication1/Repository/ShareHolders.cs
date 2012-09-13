@@ -33,27 +33,6 @@ namespace Repository
             var myRepository = MyCache<IDictionary<string, IList<string>>>.CacheManager;
             myRepository.Add(cShareHolder, _listCompanies);
         }
-        /// <summary>
-        /// alleen voor test: default datasource
-        /// </summary>
-        /// <param name="test"></param>
-        public ShareHolders(bool test)
-        {
-            this.AddShareHolders("Ahold");
-            this.AddSubsidiary("Ahold", "123");
-            this.AddSubsidiary("Ahold", "ah567");
-
-            this.AddShareHolders("Unilever");
-            this.AddSubsidiary("Unilever", "123");
-            this.AddSubsidiary("Unilever", "u567");
-
-            this.AddShareHolders("Shell");
-            this.AddSubsidiary("Shell", "s123");
-            this.AddSubsidiary("Shell", "s567");
-            var myRepository = MyCache<Object>.CacheManager;
-            myRepository.Add(cShareHolder, _listCompanies);
-
-        }
 
         public IList<string> GetSubsidiaries(string shareHolder)
         {
