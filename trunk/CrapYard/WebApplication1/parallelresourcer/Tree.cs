@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -144,6 +145,43 @@ namespace ParallelResourcer
             WalkClassic(root.Left);
             WalkClassic(root.Right);
             _listOfHandlers(root.Data.ToString());            
+        }
+        public static IList<T> GetParents(string root, IDictionary<T, IList<T>> linkedList)
+        {
+            var parents = from pair in linkedList
+                          where pair.Value.Where(val => val.Equals(root)).FirstOrDefault() != null
+                          select pair.Key;
+
+            return parents.ToList<T>();
+        }
+        public static IList<T> GetChildren(T root, IDictionary<T, IList<T>> linkedList)
+        {
+            #region return null for root values : null, empty
+            string defaultVar = default(string);
+            if (root == null)
+                return null;
+            else
+            {
+                defaultVar = root.ToString();
+                if (string.IsNullOrEmpty( defaultVar))
+                    return null;
+            }
+            #endregion
+
+            IList<T> list;
+
+            linkedList.TryGetValue(root, out list);
+            if (list == null)
+                list = new List<T>();
+
+            return list;
+        }
+        public static Tree<T> CreateNTree(string root, IDictionary<string, IList<T>> linkedList)
+        {
+            var parents = from c in linkedList
+                                   where c.Value.Where(s => s.Equals(root)).FirstOrDefault() != null
+                                   select c.Key;
+            return null;
         }
         /// <summary>
         /// Ambiguous
