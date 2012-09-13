@@ -72,7 +72,11 @@ namespace TestRepo
         {
             ShareHolders target = new ShareHolders(); 
             target.Refresh();
-            Assert.AreEqual(target.GetSubsidiaries("Ahold").Count, 2);
+            Assert.AreEqual(2, target.GetSubsidiaries("Ahold").Count);
+
+            Assert.AreEqual(2,target.GetShareHolders("123").Count);
+            Assert.AreEqual("Ahold", target.GetShareHolders("123")[0]);
+            Assert.AreEqual("Unilever", target.GetShareHolders("123")[1]);
         }
     }
 }
