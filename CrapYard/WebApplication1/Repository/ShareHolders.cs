@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Caching;
 using Microsoft.Practices.EnterpriseLibrary.Caching;
+using ParallelResourcer;
 
 namespace Repository
 {
@@ -57,22 +58,13 @@ namespace Repository
         }
         public IList<string> GetSubsidiaries(string shareHolder)
         {
-            if (string.IsNullOrEmpty(shareHolder))
-                return null;
-
-            IList<string> list;
-            Boolean succeeded = Companies.TryGetValue(shareHolder, out list);
-            if (list == null)
-                list = new List<string>();
+            IList<string> list = Tree<string>.GetChildren(shareHolder, Companies);
             return list;
 
         }
         public IList<string> GetShareHolders(string subsidiary)
         {
-            var listShareHolders  = from c in Companies
-                        where c.Value.Where(s => s.Equals(subsidiary)).FirstOrDefault() != null   
-                        select c.Key;
-
+            var listShareHolders = Tree<string>.GetParents(subsidiary, Companies);
 
             return listShareHolders.ToList<string>();
         }
@@ -116,28 +108,14 @@ namespace Repository
             this.AddSubsidiary("Shell", "s123");
             this.AddSubsidiary("Shell", "s567");
         }
-        public IList<string> GetRoot(string company)
+        public Tree<string> GetRoot(string company)
         {
-            IList<string> candidates = new List<string>();
-
-            var parents = GetShareHolders(company);
-
-            if (parents != null && parents.Count > 1)
-            {
-                candidates = GetShareHolders(company);
-
-                foreach (var candidate in candidates)
-                {
-                    //find ancestores
-                    //IList<string> ancestores = GetAncestors(candidate);
-                }
-                return candidates;
-            }
-            else//the company is the parent and root
-                candidates = parents;
+            Tree<string> NTree = new Tree<string>();
 
             
-            return candidates;
+
+            
+            return NTree;
         }
 
         private void GetAncestors(string candidate)

@@ -52,6 +52,12 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\parallelresourcer\ParallelResourcer.csproj">
+      <Project>{EEA5E80B-D5B6-41B9-AB48-E82A3273C3CE}</Project>
+      <Name>ParallelResourcer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
