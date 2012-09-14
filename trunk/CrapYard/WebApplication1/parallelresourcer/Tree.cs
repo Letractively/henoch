@@ -120,7 +120,13 @@ namespace ParallelResourcer
                 , TaskCreationOptions.AttachedToParent);
             if (waitAll) Task.WaitAll(t1, t2, t3);
         }
-
+        /// <summary>
+        /// Walk the tree and do an action for each node
+        /// </summary>
+        /// <typeparam name="TKeyValue"></typeparam>
+        /// <param name="root"></param>
+        /// <param name="action"></param>
+        /// <param name="waitAll"></param>
         public static void WalkParallelNTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action, bool waitAll = false)
         {
             if (root == null) return;
@@ -146,6 +152,43 @@ namespace ParallelResourcer
                 );
            
             if (waitAll) Task.WaitAll(tasks);
+        }
+        /// <summary>
+        /// Walk the tree and do an action for each node
+        /// </summary>
+        /// <typeparam name="TKeyValue"></typeparam>
+        /// <param name="root"></param>
+        /// <param name="action"></param>
+        /// <param name="waitAll"></param>
+        public static void WalkParallelNTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue, IList<TKeyValue>> action, bool waitAll = false)
+        {
+            if (root == null) return;
+
+            if (root.NTree == null)
+            {
+                var t0= Task.Factory.StartNew(() => action(root.Data, null)
+                        , TaskCreationOptions.AttachedToParent);
+                if (waitAll) Task.WaitAll(t0);
+                return;
+            }
+
+            int countNodes = root.NTree.Count;
+            Task[] tasks = new Task[countNodes];
+            IList<TKeyValue> children= new List<TKeyValue>();
+
+            Parallel.For(0, countNodes, 
+                (i) => 
+                {
+                    tasks[i] = Task.Factory.StartNew(() => WalkParallelNTree(root.NTree[i], action,waitAll));
+                    children.Add(root.NTree[i].Data);
+                }
+                );
+           
+            if (waitAll) Task.WaitAll(tasks);
+
+            var task = Task.Factory.StartNew(() => action(root.Data, children), TaskCreationOptions.AttachedToParent);
+            Task.WaitAll(task);
+
         }
         public static void WalkNaryTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action)
         {
@@ -241,7 +284,6 @@ namespace ParallelResourcer
             }
             return nTree;
         }
-
 
         /// <summary>
         /// Ambiguous
