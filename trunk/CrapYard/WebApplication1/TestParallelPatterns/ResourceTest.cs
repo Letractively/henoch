@@ -6,6 +6,7 @@ using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParallelResourcer;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace TestParallelPatterns
 {
@@ -18,7 +19,7 @@ namespace TestParallelPatterns
         private Stopwatch stopwatch;
         private long start;
         private Tree<string> taken;
-
+        private static ConcurrentDictionary<string, IList<string>> _TestDictionary = new ConcurrentDictionary<string, IList<string>>();
         /// <summary>
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
@@ -197,6 +198,47 @@ namespace TestParallelPatterns
             Assert.AreEqual(9, Tree<TaskInfo>.Queue.Count);
         }
         [TestMethod]
+        public void TestCreateNTree()
+        {
+            var NTree = CreateTasksForNTree();
+            CreateTestdictionary(NTree);
+            Tree<string> shareHolders;
+            //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
+            var t1 = Task.Factory.StartNew(() =>
+            {
+                shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents);
+            }
+            );
+
+            Task.WaitAll(t1);
+
+            //Assert.AreEqual(9, Tree<TaskInfo>.Queue.Count);
+        }
+        private void CreateTestdictionary(Tree<string> outerTree)
+        {
+            var nTree = outerTree.NTree;
+            if (nTree != null)
+            {
+                var children = from n in nTree
+                               where !string.IsNullOrEmpty(n.Data)
+                               select n.Data;
+                _TestDictionary.TryAdd(outerTree.Data, children.ToList<string>());
+
+                foreach (var tree in nTree)
+                {
+                    CreateTestdictionary(tree);
+                }
+            }
+            else
+            {
+                IList<string> list = null;
+                if (!(_TestDictionary.TryGetValue(outerTree.Data, out list)))
+                    _TestDictionary.TryAdd(outerTree.Data, null);
+            }
+
+        }
+
+        [TestMethod]
         public void TestWalkNTree()
         {
             var NTree = CreateTasksForNTree();
@@ -267,13 +309,30 @@ namespace TestParallelPatterns
                 Data = "root",
                 NTree = new Tree<string>[]
                 {
-                    new Tree<string>{ Data = "S11"},
+                    new Tree<string>
+                    { 
+                        Data = "S11",
+                        NTree = new Tree<string>[]
+                        {
+                            new Tree<string>{ Data = "S211"},
+                            new Tree<string>{ Data = "S221"}
+                        }
+
+                    },
                     new Tree<string>
                     { 
                         Data = "S211",
                         NTree = new Tree<string>[]
                         {
-                          new Tree<string>{Data = "S22"}
+                          new Tree<string>
+                          {
+                              Data = "S22",
+                              NTree = new Tree<string>[]
+                             {
+                                new Tree<string>{ Data = "S41"},
+                                new Tree<string>{ Data = "S42"}
+                             }
+                          }
                         }
                     },
                     new Tree<string>
@@ -348,6 +407,7 @@ namespace TestParallelPatterns
             // If nothing went wrong, say so 
             if (numFailures == 0) Console.WriteLine("  OK!");
         }
+
     }
 
 }
