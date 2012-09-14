@@ -195,7 +195,7 @@ namespace TestParallelPatterns
            
             Task.WaitAll(t1);
 
-            Assert.AreEqual(9, Tree<TaskInfo>.Queue.Count);
+            Assert.AreEqual(13, Tree<TaskInfo>.Queue.Count);
         }
         [TestMethod]
         public void TestCreateNTree()
@@ -204,8 +204,8 @@ namespace TestParallelPatterns
             CreateTestdictionary(NTree);
             Assert.AreEqual(11, _TestDictionary.Count);
 
-            Tree<string> shareHolders;
-            Tree<string> subsidiaries;
+            Tree<string> shareHolders = new Tree<string>();
+            Tree<string> subsidiaries = new Tree<string>();
             //Tree<string>.WalkNaryTree(
             //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
@@ -222,7 +222,18 @@ namespace TestParallelPatterns
             );
             Task.WaitAll(t1,t2);
 
-            
+            Assert.AreEqual(2, shareHolders.NTree.Count);
+            Assert.AreEqual("S211", shareHolders.Key);
+            Assert.AreEqual("root", shareHolders.NTree[0].Key);
+            Assert.AreEqual("S11", shareHolders.NTree[1].Key);
+            Assert.AreEqual("root", shareHolders.NTree[1].NTree[0].Key);
+
+            Assert.AreEqual(1, subsidiaries.NTree.Count);
+            Assert.AreEqual("S211", shareHolders.Key);
+            Assert.AreEqual("S22", subsidiaries.NTree[0].Key);
+            Assert.AreEqual(2, subsidiaries.NTree[0].NTree.Count);
+            Assert.AreEqual("S41", subsidiaries.NTree[0].NTree[0].Key);
+            Assert.AreEqual("S42", subsidiaries.NTree[0].NTree[1].Key);
         }
         private void CreateTestdictionary(Tree<string> outerTree)
         {
