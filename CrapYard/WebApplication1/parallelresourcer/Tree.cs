@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParallelResourcer
 {
-    public class Tree<TKey,TValue> : IEnumerable
+    public class Tree<TKeyValue> : IEnumerable
     {
 
         // 1) Define a delegate type.
@@ -24,10 +24,41 @@ namespace ParallelResourcer
         {
             _listOfHandlers -= methodToCall;
         }
-        public static ConcurrentQueue<TValue> Queue;
-        public Tree<TKey, TValue> Left, Right;
-        public Tree<TKey, TValue>[] NTree;
-        public TValue Data;
+        public static ConcurrentQueue<TKeyValue> Queue;
+        public Tree<TKeyValue> Left, Right;
+        public IList<Tree<TKeyValue>> NTree;
+        public TKeyValue Data;
+
+        /// <summary>
+        /// Indicates whether the node is unique.
+        /// </summary>
+        public bool IsUnique{ get; private set;}
+        /// <summary>
+        /// List of all nodes keyvalues.
+        /// </summary>
+        public static ConcurrentDictionary<TKeyValue,TKeyValue> Nodes { get; private set; }
+
+        private TKeyValue _Key;
+
+        /// <summary>
+        /// The uniqueness of the key will be also set.
+        /// </summary>
+        public TKeyValue Key 
+        { 
+            get
+            {
+                return _Key;
+            }
+            set 
+            {
+                _Key = Key;
+               //if (Nodes == null) Nodes = new LinkedList<TKeyValue>();
+                if (Nodes.TryAdd(_Key, _Key))
+                    IsUnique = true;
+                else
+                    IsUnique = false;
+            }
+        }
 
         private string _UID;
 
@@ -46,19 +77,25 @@ namespace ParallelResourcer
 
         static Tree()
         {
-            Queue = new ConcurrentQueue<TValue>();
+            Queue = new ConcurrentQueue<TKeyValue>();
+            Nodes = new ConcurrentDictionary<TKeyValue, TKeyValue>();
+
         }
-        public static IEnumerable<Tree<TKey, TValue>> Iterate(Tree<TKey,TValue> head)
+        public Tree()
         {
-            for (Tree<TKey,TValue> i = head; i != null; i = i.Right)
+            IsUnique = true;
+        }
+        public static IEnumerable<Tree<TKeyValue>> Iterate(Tree<TKeyValue> head)
+        {
+            for (Tree<TKeyValue> i = head; i != null; i = i.Right)
             {
                 yield return i;
             }
         }
-        public static IEnumerable<TValue> Iterate<TValue>(
-            Func<TValue> initialization, Func<TValue, bool> condition, Func<TValue, TValue> update)
+        public static IEnumerable<TKeyValue> Iterate<TKeyValue>(
+            Func<TKeyValue> initialization, Func<TKeyValue, bool> condition, Func<TKeyValue, TKeyValue> update)
         {
-            for (TValue i = initialization(); condition(i); i = update(i))
+            for (TKeyValue i = initialization(); condition(i); i = update(i))
             {
                 yield return i;
             }
@@ -66,12 +103,12 @@ namespace ParallelResourcer
 
         public IEnumerator GetEnumerator()
         {
-            for (Tree<TKey, TValue> i = this; i != null; i = i.Right)
+            for (Tree<TKeyValue> i = this; i != null; i = i.Right)
             {
                 yield return i;
             }
         }
-        public static void WalkParallel<TValue>(Tree<TKey, TValue> root, Action<TValue> action, bool waitAll=false)
+        public static void WalkParallel<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action, bool waitAll=false)
         {
             if (root == null) return;
             //LRW wandeling in parallel!
@@ -84,7 +121,7 @@ namespace ParallelResourcer
             if (waitAll) Task.WaitAll(t1, t2, t3);
         }
 
-        public static void WalkParallelNTree<TKey, TValue>(Tree<TKey, TValue> root, Action<TValue> action, bool waitAll = false)
+        public static void WalkParallelNTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action, bool waitAll = false)
         {
             if (root == null) return;
 
@@ -96,7 +133,7 @@ namespace ParallelResourcer
                 return;
             }
 
-            int countNodes = root.NTree.Length;
+            int countNodes = root.NTree.Count;
             Task[] tasks = new Task[countNodes +1 ];
             tasks[countNodes] = Task.Factory.StartNew(() => action(root.Data)
                 , TaskCreationOptions.AttachedToParent);
@@ -110,7 +147,7 @@ namespace ParallelResourcer
            
             if (waitAll) Task.WaitAll(tasks);
         }
-        public static void WalkNaryTree<TKey, TValue>(Tree<TKey, TValue> root, Action<TValue> action)
+        public static void WalkNaryTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action)
         {
             if (root == null) 
                 return;
@@ -120,7 +157,7 @@ namespace ParallelResourcer
                 action(root.Data);
                 return;
             }
-            int countNodes = root.NTree.Length;
+            int countNodes = root.NTree.Count;
             action(root.Data);
 
             for (int i = 0; i < countNodes; i++)
@@ -130,7 +167,7 @@ namespace ParallelResourcer
             }
 
         }
-        public static void WalkClassic<TValue>(Tree<TKey, TValue> root, Action<TValue> action)
+        public static void WalkClassic<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action)
         {
             if (root == null) return;
             //LRW wandeling!
@@ -138,7 +175,7 @@ namespace ParallelResourcer
              WalkClassic(root.Right, action);
             action(root.Data);
         }
-        public static void WalkClassic<TValue>(Tree<TKey, TValue> root)
+        public static void WalkClassic<TKeyValue>(Tree<TKeyValue> root)
         {
             if (root == null) return;
             //LRW wandeling!
@@ -146,15 +183,15 @@ namespace ParallelResourcer
             WalkClassic(root.Right);
             _listOfHandlers(root.Data.ToString());            
         }
-        public static IList<TKey> GetParents(TKey node, IDictionary<TKey, IList<TValue>> linkedList)
+        public static IList<TKeyValue> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
-            var parents = from pair in linkedList
+            var parents = from pair in dictionary
                           where pair.Value.Where(val => val.Equals(node)).FirstOrDefault() != null
                           select pair.Key;
 
-            return parents.ToList<TKey>();
+            return parents.ToList<TKeyValue>();
         }
-        public static IList<TValue> GetChildren(TKey node, IDictionary<TKey, IList<TValue>> linkedList)
+        public static IList<TKeyValue> GetChildren(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             #region return null for root values : null, empty
             string defaultVar = default(string);
@@ -168,19 +205,41 @@ namespace ParallelResourcer
             }
             #endregion
 
-            IList<TValue> list;
+            IList<TKeyValue> list;
 
-            linkedList.TryGetValue(node, out list);
+            dictionary.TryGetValue(node, out list);
             if (list == null)
-                list = new List<TValue>();
+                list = new List<TKeyValue>();
 
             return list;
         }
-        public static Tree<TKey, TValue> CreateNTree(TKey node, IDictionary<TKey, IList<TValue>> linkedList)
+        /// <summary>
+        /// Creates  a N-ary tree. A node has a key-valued pair 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="dictionary"></param>
+        /// <param name="GetRelations"></param>
+        /// <returns></returns>
+        public static Tree<TKeyValue> CreateNTree(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
+                                                    Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations)
         {
-            var parents = GetParents(node, linkedList);
+            var parents = GetRelations(node, outerdictionary);
 
-            return null;
+            Tree<TKeyValue> nTree = new Tree<TKeyValue>();
+            nTree.Key = node;
+
+            int parentCount = parents.Count;
+
+            if (parentCount > 0)
+            {
+                // create subtrees
+                nTree.NTree = new List<Tree<TKeyValue>>();
+                foreach (var parent in parents)
+                {
+                    nTree.NTree.Add(CreateNTree(parent, outerdictionary, GetRelations));
+                }
+            }
+            return nTree;
         }
 
 
@@ -190,7 +249,7 @@ namespace ParallelResourcer
         /// <param name="root"></param>
         /// <param name="treeHandler"></param>
         /// <param name="waitAll"></param>
-        //public static void WalkParallel(Tree<TKey, TValue> root, TreeHandler treeHandler, bool waitAll = false)
+        //public static void WalkParallel(Tree<TKeyValue> root, TreeHandler treeHandler, bool waitAll = false)
         //{
         //    if (root == null) return;
 

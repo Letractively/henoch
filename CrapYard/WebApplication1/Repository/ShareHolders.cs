@@ -39,32 +39,35 @@ namespace Repository
                 return list;
             }
         }
-
+        /// <summary>
+        /// See http://xlinux.nist.gov/dads//HTML/dictionary.html
+        /// </summary>
+        /// <returns></returns>
         private static IDictionary<string, IList<string>> InitializeCache()
         {
-            IDictionary<string, IList<string>> list = null;
+            IDictionary<string, IList<string>> dictionary = null;
             var myRepository = MyCache<Object>.CacheManager;
             if (myRepository != null)
             {
-                list = myRepository.GetData(cShareHolder) as IDictionary<string, IList<string>>;
-                if (list == null)
+                dictionary = myRepository.GetData(cShareHolder) as IDictionary<string, IList<string>>;
+                if (dictionary == null)
                 {
                     //Initialize
-                    list = new Dictionary<string, IList<string>>();
-                    myRepository.Add(cShareHolder, list);
+                    dictionary = new Dictionary<string, IList<string>>();
+                    myRepository.Add(cShareHolder, dictionary);
                 }
             }
-            return list;
+            return dictionary;
         }
         public IList<string> GetSubsidiaries(string shareHolder)
         {
-            IList<string> list =Tree<string,string>.GetChildren(shareHolder, Companies);
+            IList<string> list =Tree<string>.GetChildren(shareHolder, Companies);
             return list;
 
         }
         public IList<string> GetShareHolders(string subsidiary)
         {
-            var listShareHolders =Tree<string,string>.GetParents(subsidiary, Companies);
+            var listShareHolders =Tree<string>.GetParents(subsidiary, Companies);
 
             return listShareHolders.ToList<string>();
         }
@@ -107,10 +110,14 @@ namespace Repository
             this.AddShareHolders("Shell");
             this.AddSubsidiary("Shell", "s123");
             this.AddSubsidiary("Shell", "s567");
+
+            this.AddShareHolders("123");
+            this.AddSubsidiary("123", "c123");
+            this.AddSubsidiary("123", "c123");
         }
-        public Tree<string,string> GetRoot(string company)
+        public Tree<string> GetRoot(string company)
         {
-           Tree<string,string> NTree = new Tree<string,string>();
+           Tree<string> NTree = new Tree<string>();
 
             
 
