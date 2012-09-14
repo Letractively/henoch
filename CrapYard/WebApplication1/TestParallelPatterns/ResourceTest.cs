@@ -210,7 +210,7 @@ namespace TestParallelPatterns
             //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
             {
-                //shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents);
+                shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents);
             }
             );
 
