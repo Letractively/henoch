@@ -51,7 +51,7 @@ namespace ParallelResourcer
             }
             set 
             {
-                _Key = Key;
+                _Key = value;
                //if (Nodes == null) Nodes = new LinkedList<TKeyValue>();
                 if (Nodes.TryAdd(_Key, _Key))
                     IsUnique = true;
@@ -186,7 +186,7 @@ namespace ParallelResourcer
         public static IList<TKeyValue> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             var parents = from pair in dictionary
-                          where pair.Value.Where(val => val.Equals(node)).FirstOrDefault() != null
+                          where pair.Value != null && pair.Value.Where(val => val.Equals(node)).FirstOrDefault() != null
                           select pair.Key;
 
             return parents.ToList<TKeyValue>();
