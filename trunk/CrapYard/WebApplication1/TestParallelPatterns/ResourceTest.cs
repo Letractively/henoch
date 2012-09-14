@@ -202,17 +202,27 @@ namespace TestParallelPatterns
         {
             var NTree = CreateTasksForNTree();
             CreateTestdictionary(NTree);
+            Assert.AreEqual(11, _TestDictionary.Count);
+
             Tree<string> shareHolders;
+            Tree<string> subsidiaries;
+            //Tree<string>.WalkNaryTree(
             //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
             {
-                shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents);
+                //shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents);
             }
             );
 
-            Task.WaitAll(t1);
+            Assert.AreEqual(11, _TestDictionary.Count);
+            var t2 = Task.Factory.StartNew(() =>
+            {
+                subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren);
+            }
+            );
+            Task.WaitAll(t1,t2);
 
-            //Assert.AreEqual(9, Tree<TaskInfo>.Queue.Count);
+            
         }
         private void CreateTestdictionary(Tree<string> outerTree)
         {
@@ -222,7 +232,11 @@ namespace TestParallelPatterns
                 var children = from n in nTree
                                where !string.IsNullOrEmpty(n.Data)
                                select n.Data;
-                _TestDictionary.TryAdd(outerTree.Data, children.ToList<string>());
+                IList<string> list = null;
+                if ((_TestDictionary.TryGetValue(outerTree.Data, out list)))
+                    _TestDictionary.TryUpdate(outerTree.Data, children.ToList<string>(), null);
+                else
+                    _TestDictionary.TryAdd(outerTree.Data, children.ToList<string>());
 
                 foreach (var tree in nTree)
                 {
