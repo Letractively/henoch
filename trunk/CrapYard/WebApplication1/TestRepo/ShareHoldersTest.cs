@@ -77,6 +77,9 @@ namespace TestRepo
             Assert.AreEqual(2,target.GetShareHolders("123").Count);
             Assert.AreEqual("Ahold", target.GetShareHolders("123")[0]);
             Assert.AreEqual("Unilever", target.GetShareHolders("123")[1]);
+
+            Assert.AreNotEqual(null, target.GetShareHolders("Ahold"));
+            Assert.AreEqual(0, target.GetShareHolders("Ahold").Count);
         }
     }
 }

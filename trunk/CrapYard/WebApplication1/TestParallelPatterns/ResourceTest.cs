@@ -17,7 +17,7 @@ namespace TestParallelPatterns
         private int loop = 10;
         private Stopwatch stopwatch;
         private long start;
-        private Tree<string,string> taken;
+        private Tree<string> taken;
 
         /// <summary>
         ///Gets or sets the test context which provides
@@ -87,7 +87,7 @@ namespace TestParallelPatterns
 
             MyAction = MyTask2;
             testContextInstance.BeginTimer("stopwatch");
-            Tree<string,TaskInfo>.Queue = new ConcurrentQueue<TaskInfo>();
+            Tree<TaskInfo>.Queue = new ConcurrentQueue<TaskInfo>();
         }
         //Use TestCleanup to run code after each test has run
         [TestCleanup()]
@@ -98,14 +98,14 @@ namespace TestParallelPatterns
             stopwatch.Stop();
             
             long elapsed =  ended - start;
-            Console.WriteLine("Treewalk nodes: " + Tree<string, TaskInfo>.Queue.Count);
+            Console.WriteLine("Treewalk nodes: " + Tree<TaskInfo>.Queue.Count);
             Console.WriteLine("\n----- Environment.TickCount------");
             Console.WriteLine("Treewalk duration: " + elapsed);
 
             TaskInfo task;
             long totalTaskDuration = 0;
 
-            var query = from taak in Tree<string, TaskInfo>.Queue
+            var query = from taak in Tree<TaskInfo>.Queue
                         where ended <= taak.TaskEnded
                         select taak;
             var taskBusyAfterTreeWalk = from taak in query
@@ -115,14 +115,14 @@ namespace TestParallelPatterns
                 "A task was still busy while treewalk was ending.");
             int aantalVerdachteTaken = query.Count();
 
-            int len = Tree<string, TaskInfo>.Queue.Count;
-            var listQ = Tree<string, TaskInfo>.Queue.ToArray();
+            int len = Tree<TaskInfo>.Queue.Count;
+            var listQ = Tree<TaskInfo>.Queue.ToArray();
             Parallel.For(0, len, (i) =>
             {
                 Console.WriteLine(listQ[i].TaskDescription + " ----");
                 totalTaskDuration += listQ[i].Taskduration;
             });
-            while (Tree<string, TaskInfo>.Queue.TryDequeue(out task))
+            while (Tree<TaskInfo>.Queue.TryDequeue(out task))
             {
                 Console.WriteLine(task.TaskDescription);
                 totalTaskDuration += task.Taskduration;
@@ -160,10 +160,10 @@ namespace TestParallelPatterns
             taskInfo.TaskEnded2 = Stopwatch.GetTimestamp();
             var elapsed = taskInfo.TaskEnded - taskInfo.TaskStarted;
 
-            //Tree<string,string>.Queue.Enqueue(woord + elapsed);
+            //Tree<string>.Queue.Enqueue(woord + elapsed);
 
             taskInfo.TaskDescription = woord + " ;elapsed " + elapsed;
-            Tree<string, TaskInfo>.Queue.Enqueue(taskInfo);
+            Tree<TaskInfo>.Queue.Enqueue(taskInfo);
         }
         [TestMethod]
         public void TestWalkParallel()
@@ -172,7 +172,7 @@ namespace TestParallelPatterns
                 {
                     for (int i = 0; i < loop; i++)
                     {
-                        Tree<string,string>.WalkParallel(taken, MyAction);
+                        Tree<string>.WalkParallel(taken, MyAction);
                     }
                 }
             );
@@ -185,30 +185,30 @@ namespace TestParallelPatterns
         {
             var NTree = CreateTasksForNTree();
                         
-            //Tree<string,string>.WalkNaryTree(NTree, Console.WriteLine);   
+            //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
             {
-                Tree<string,string>.WalkParallelNTree(NTree, MyTask2, true);
+                Tree<string>.WalkParallelNTree(NTree, MyTask2, true);
             }
             );
            
             Task.WaitAll(t1);
 
-            Assert.AreEqual(9, Tree<string, TaskInfo>.Queue.Count);
+            Assert.AreEqual(9, Tree<TaskInfo>.Queue.Count);
         }
         [TestMethod]
         public void TestWalkNTree()
         {
             var NTree = CreateTasksForNTree();
 
-            //Tree<string,string>.WalkNaryTree(NTree, Console.WriteLine);   
+            //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
             {
-                Tree<string,string>.WalkNaryTree(NTree, MyTask2);
+                Tree<string>.WalkNaryTree(NTree, MyTask2);
             }
             );
 
-            //Assert.AreEqual(8, Tree<string, TaskInfo>.Queue.Count);
+            //Assert.AreEqual(8, Tree<TaskInfo>.Queue.Count);
             Task.WaitAll(t1);
         }
         [TestMethod]
@@ -216,7 +216,7 @@ namespace TestParallelPatterns
         {
             for (int i = 0; i < loop; i++)
             {
-                Tree<string,string>.WalkParallel(taken, MyAction, true);
+                Tree<string>.WalkParallel(taken, MyAction, true);
             }
           
         }
@@ -225,33 +225,33 @@ namespace TestParallelPatterns
         {
             for (int i = 0; i < loop; i++)
             {
-                Tree<string,string>.WalkClassic(taken, MyAction);
+                Tree<string>.WalkClassic(taken, MyAction);
             }
         }
         [TestMethod]
         public void TestWalkClassicUsingDelegates()
         {
-            Tree<string,string>.TreeHandler treeHandler = MyTask2;
+            Tree<string>.TreeHandler treeHandler = MyTask2;
             taken.RegisterWithTree(treeHandler);
 
             for (int i = 0; i < loop; i++)
             {
-                Tree<string,string>.WalkClassic(taken);
+                Tree<string>.WalkClassic(taken);
             }
             taken.UnRegisterWithTree(treeHandler);  
         }
 
-        private static Tree<string,string> CreateTasks()
+        private static Tree<string> CreateTasks()
         {
-            var taken = new Tree<string,string>
+            var taken = new Tree<string>
                                      {
-                                         Left = new Tree<string,string>(),
-                                         Right = new Tree<string,string>(),
+                                         Left = new Tree<string>(),
+                                         Right = new Tree<string>(),
                                          Data = "root"
                                      };
             taken.Left.Data = "A";
-            taken.Left.Left = new Tree<string,string> { Data = string.Format("{0}-C", taken.Left.Data) };
-            taken.Left.Right = new Tree<string,string> { Data = string.Format("{0}-D", taken.Left.Data) };
+            taken.Left.Left = new Tree<string> { Data = string.Format("{0}-C", taken.Left.Data) };
+            taken.Left.Right = new Tree<string> { Data = string.Format("{0}-D", taken.Left.Data) };
  
             taken.Right.Data = "B";
             return taken;
@@ -260,37 +260,93 @@ namespace TestParallelPatterns
         /// Create tree (non-binairy)
         /// </summary>
         /// <returns></returns>
-        private static Tree<string,string> CreateTasksForNTree()
+        private static Tree<string> CreateTasksForNTree()
         {
-            var taken = new Tree<string,string>
+            var taken = new Tree<string>
             {
                 Data = "root",
-                NTree = new Tree<string,string>[]
+                NTree = new Tree<string>[]
                 {
-                    new Tree<string,string>{ Data = "S11"},
-                    new Tree<string,string>
+                    new Tree<string>{ Data = "S11"},
+                    new Tree<string>
                     { 
                         Data = "S211",
-                        NTree = new Tree<string,string>[]
+                        NTree = new Tree<string>[]
                         {
-                          new Tree<string,string>{Data = "S22"}
+                          new Tree<string>{Data = "S22"}
                         }
                     },
-                    new Tree<string,string>
+                    new Tree<string>
                     { 
                         Data = "S221",
-                        NTree = new Tree<string,string>[]
+                        NTree = new Tree<string>[]
                         {
-                            new Tree<string,string>{ Data = "S21"},
-                            new Tree<string,string>{ Data = "m1"},
-                            new Tree<string,string>{ Data = "Sp"},
+                            new Tree<string>{ Data = "S21"},
+                            new Tree<string>{ Data = "m1"},
+                            new Tree<string>{ Data = "Sp"},
                         }
                     },
-                    new Tree<string,string>{ Data = "S31"}
+                    new Tree<string>{ Data = "S31"}
                 }
             };
 
             return taken;
+        }
+        [TestMethod]
+        public void ConcurrentDictionaryTryAddTest()
+        {
+            int numFailures = 0; // for bookkeeping 
+
+            // Construct an empty dictionary
+            ConcurrentDictionary<int, String> cd = new ConcurrentDictionary<int, string>();
+
+            // This should work 
+            if (!cd.TryAdd(1, "one"))
+            {
+                Console.WriteLine("CD.TryAdd() failed when it should have succeeded");
+                numFailures++;
+            }
+
+            // This shouldn't work -- key 1 is already in use 
+            if (!cd.TryAdd(12, "uno"))
+            {
+                Console.WriteLine("CD.TryAdd() succeeded when it should have failed");
+                numFailures++;
+            }
+
+            // Now change the value for key 1 from "one" to "uno" -- should work
+            if (!cd.TryUpdate(2, "uno", "one"))
+            {
+                Console.WriteLine("CD.TryUpdate() failed when it should have succeeded");
+                numFailures++;
+            }
+
+            // Try to change the value for key 1 from "eine" to "one"  
+            //    -- this shouldn't work, because the current value isn't "eine" 
+            if (!cd.TryUpdate(1, "one", "eine"))
+            {
+                Console.WriteLine("CD.TryUpdate() succeeded when it should have failed");
+                numFailures++;
+            }
+
+            // Remove key/value for key 1.  Should work. 
+            string value1;
+            if (!cd.TryRemove(1, out value1))
+            {
+                Console.WriteLine("CD.TryRemove() failed when it should have succeeded");
+                numFailures++;
+            }
+
+            // Remove key/value for key 1.  Shouldn't work, because I already removed it 
+            string value2;
+            if (cd.TryRemove(1, out value2))
+            {
+                Console.WriteLine("CD.TryRemove() succeeded when it should have failed");
+                numFailures++;
+            }
+
+            // If nothing went wrong, say so 
+            if (numFailures == 0) Console.WriteLine("  OK!");
         }
     }
 

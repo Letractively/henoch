@@ -7,15 +7,15 @@ namespace ParallelResourcer
     {
         static void Main(string[] args)
         {
-            Tree<string,string> taken = CreateTasks();
-            Tree<string,string>.TreeHandler treeHandler = OnTreeEvent;
+            Tree<string> taken = CreateTasks();
+            Tree<string>.TreeHandler treeHandler = OnTreeEvent;
             taken.RegisterWithTree(treeHandler);
 
             var t1 = Task.Factory.StartNew(() =>
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Tree<string,string>.WalkClassic(taken, MyTask);
+                    Tree<string>.WalkClassic(taken, MyTask);
                 }
             });
 
@@ -24,19 +24,19 @@ namespace ParallelResourcer
             taken.UnRegisterWithTree(treeHandler);            
             Console.ReadKey();
         }
-        private static Tree<string,string> CreateTasks()
+        private static Tree<string> CreateTasks()
         {
-            var taken = new Tree<string,string>
+            var taken = new Tree<string>
                                      {
-                                         Left = new Tree<string,string>(),
-                                         Right = new Tree<string,string>(),
+                                         Left = new Tree<string>(),
+                                         Right = new Tree<string>(),
                                          Data = "root"
                                      };
 
 
             taken.Left.Data = "A";
-            taken.Left.Left = new Tree<string,string> { Data = string.Format("{0}-C", taken.Left.Data) };
-            taken.Left.Right = new Tree<string,string> { Data = string.Format("{0}-D", taken.Left.Data) };
+            taken.Left.Left = new Tree<string> { Data = string.Format("{0}-C", taken.Left.Data) };
+            taken.Left.Right = new Tree<string> { Data = string.Format("{0}-D", taken.Left.Data) };
 
             taken.Right.Data = "B";
             return taken;
