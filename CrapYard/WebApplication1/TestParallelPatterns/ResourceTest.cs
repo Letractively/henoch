@@ -7,6 +7,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParallelResourcer;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Linq;
 
 namespace TestParallelPatterns
 {
@@ -210,17 +212,27 @@ namespace TestParallelPatterns
             //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
             {
-                shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents);
+                
             }
             );
+            shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents, true);
 
             Assert.AreEqual(11, _TestDictionary.Count);
             var t2 = Task.Factory.StartNew(() =>
             {
-                subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren);
+               
             }
             );
+            //subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren);
             Task.WaitAll(t1,t2);
+
+            XElement stackItem;
+            XElement result = new XElement("Tree");
+            //while (Tree<string>.StackNodes.TryPop(out stackItem))
+            //{
+            //    result.Add(stackItem);
+            //}
+            Tree<string>.XDoc.Add(result);
 
             Assert.AreEqual(2, shareHolders.NTree.Count);
             Assert.AreEqual("S211", shareHolders.Key);
@@ -234,7 +246,16 @@ namespace TestParallelPatterns
             Assert.AreEqual(2, subsidiaries.NTree[0].NTree.Count);
             Assert.AreEqual("S41", subsidiaries.NTree[0].NTree[0].Key);
             Assert.AreEqual("S42", subsidiaries.NTree[0].NTree[1].Key);
+
+            string tempPath = Path.Combine(Path.GetTempPath(), "test.xml");
+            Console.WriteLine();
+            Console.WriteLine( tempPath);
+            //doc.Dump();
+            Tree<string>.XDoc.Save(tempPath);
+            Console.WriteLine(File.ReadAllText(tempPath));
+
         }
+
         private void CreateTestdictionary(Tree<string> outerTree)
         {
             var nTree = outerTree.NTree;
