@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ParallelResourcer
 {
@@ -24,7 +25,11 @@ namespace ParallelResourcer
         {
             _listOfHandlers -= methodToCall;
         }
+
+        public static XDocument XDoc;
         public static ConcurrentQueue<TKeyValue> Queue;
+        public static ConcurrentStack<XElement> StackNodes;
+        public static ConcurrentQueue<XElement> QueueNodes;
         public Tree<TKeyValue> Left, Right;
         public IList<Tree<TKeyValue>> NTree;
         public TKeyValue Data;
@@ -78,8 +83,10 @@ namespace ParallelResourcer
         static Tree()
         {
             Queue = new ConcurrentQueue<TKeyValue>();
+            StackNodes = new ConcurrentStack<XElement>();
+            QueueNodes = new ConcurrentQueue<XElement>();
             Nodes = new ConcurrentDictionary<TKeyValue, TKeyValue>();
-
+            XDoc = new XDocument(new XElement("Tree"));
         }
         public Tree()
         {
@@ -190,9 +197,30 @@ namespace ParallelResourcer
             Task.WaitAll(task);
 
         }
-        public static void WalkNaryTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action)
+        public static void WalkNaryTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue, IList<TKeyValue>> action)
         {
             if (root == null) 
+                return;
+            
+            IList<TKeyValue> children = new List<TKeyValue>();
+            if (root.NTree == null)
+            {
+                action(root.Data, null);
+                return;
+            }
+            int countNodes = root.NTree.Count;
+           
+            for (int i = 0; i < countNodes; i++)
+            {
+                //travelsal of children.
+                WalkNaryTree(root.NTree[i], action);
+                children.Add(root.NTree[i].Data);
+            }
+            action(root.Data, children);
+        }
+        public static void WalkNaryTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action)
+        {
+            if (root == null)
                 return;
 
             if (root.NTree == null)
@@ -234,6 +262,16 @@ namespace ParallelResourcer
 
             return parents.ToList<TKeyValue>();
         }
+
+        public static IList<TKeyValue> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary,
+                                                     Func<TKeyValue , IList<TKeyValue>, IList<XElement>> CreateXElements)
+        {
+            var parents = GetParents(node, dictionary);
+
+            var list = CreateXmlElementsBottomUp(node, parents);
+
+            return parents.ToList<TKeyValue>();
+        }
         public static IList<TKeyValue> GetChildren(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             #region return null for root values : null, empty
@@ -264,12 +302,16 @@ namespace ParallelResourcer
         /// <param name="GetRelations"></param>
         /// <returns></returns>
         public static Tree<TKeyValue> CreateNTree(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
-                                                    Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations)
+                                                    Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations,
+                                                    bool isBottomUp)
         {
             var parents = GetRelations(node, outerdictionary);
+            IList<TKeyValue> children = new List<TKeyValue>();
+            //
 
             Tree<TKeyValue> nTree = new Tree<TKeyValue>();
             nTree.Key = node;
+            nTree.Data = node;
 
             int parentCount = parents.Count;
 
@@ -279,12 +321,114 @@ namespace ParallelResourcer
                 nTree.NTree = new List<Tree<TKeyValue>>();
                 foreach (var parent in parents)
                 {
-                    nTree.NTree.Add(CreateNTree(parent, outerdictionary, GetRelations));
+                    nTree.NTree.Add(CreateNTree(parent, outerdictionary, GetRelations, isBottomUp));
+                    children.Add(parent);       
+                }
+                if (isBottomUp)
+                {
+                    IList<XElement> listOfSubTrees = new List<XElement>();
+                    XElement xEltsubTree;
+                    IList<XElement> newListxElt = new List<XElement>();
+                    //pop the root value of each subtrees from stack
+                    for (int i = 0; i < parentCount; i++)
+                    {
+                        StackNodes.TryPop(out xEltsubTree);
+                        listOfSubTrees.Add(xEltsubTree);
+                    }
+                    IList<XElement> list = CreateXmlElementsBottomUp(node, parents);
+
+                    foreach (var subTree in listOfSubTrees)
+                    {
+                        var nodeList = from elt in list
+                                       where elt.Attribute("Text").Value.Equals(subTree.Name.LocalName)
+                                       select elt.Elements();
+                        foreach (var child in nodeList)
+                        {
+                            subTree.Add(child.Elements());
+                            foreach (var item in subTree.Elements())
+                            {
+                                //item.Add(child.Elements());
+                            };
+                            newListxElt.Add(subTree);
+                            StackNodes.Push(subTree);
+                        }
+                    }
+                   
+                }
+                else
+                {
+
                 }
             }
+            else
+            {
+                if (isBottomUp)
+                {
+                    //stack
+                    XElement xElt = new XElement("Node");
+                    xElt.Add(new XAttribute("Text", node.ToString()));
+                    xElt.Add(new XAttribute("Expanded", "True"));
+                    StackNodes.Push(xElt);
+
+                }
+                else
+                {
+
+                }
+            }
+
             return nTree;
         }
 
+        public static IList<XElement> CreateXmlElementsBottomUp(TKeyValue parent, IList<TKeyValue> children)
+        {
+
+            var nodeParent = new XElement("Node");
+            nodeParent.Add(new XAttribute("Text", parent));
+            nodeParent.Add(new XAttribute("Expanded", "True"));
+            var list = new List<XElement>();
+
+            if (children != null && children.Count>0)
+                foreach (var child in children)
+                {
+                    var nodeChild = new XElement("Node", "");
+                    nodeChild.Add(new XAttribute("Text", child));
+                    nodeChild.Add(new XAttribute("Expanded", "True"));
+
+                    nodeChild.Add(nodeParent);
+                    //StackNodes.Push(nodeChild);
+                    list.Add(nodeChild);
+                }
+            else
+            //StackNodes.Push(nodeParent);
+            {
+                
+                list.Add(nodeParent);
+                
+            }
+            return list;
+        }
+        public static void CreateXmlElementsTopDown(TKeyValue parent, IList<TKeyValue> children)
+        {
+            var nodeParent = new XElement("Node");
+            nodeParent.Add(new XAttribute("Text", parent));
+            nodeParent.Add(new XAttribute("Expanded", "True"));
+
+            if (children!=null)
+                foreach (var child in children)
+                {
+                    var nodeChild = new XElement("Node", "");
+                    nodeChild.Add(new XAttribute("Text", child));
+                    nodeChild.Add(new XAttribute("Expanded", "True"));
+
+                    nodeParent.Add(nodeChild);
+
+                   
+                }
+
+            QueueNodes.Enqueue(nodeParent);
+
+        }
         /// <summary>
         /// Ambiguous
         /// </summary>
