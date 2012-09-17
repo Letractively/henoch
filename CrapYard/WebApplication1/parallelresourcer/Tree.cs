@@ -297,21 +297,20 @@ namespace ParallelResourcer
         /// <summary>
         /// Creates  a N-ary tree. A node has a key-valued pair 
         /// </summary>
-        /// <param name="node"></param>
+        /// <param name="rootValue"></param>
         /// <param name="dictionary"></param>
         /// <param name="GetRelations"></param>
         /// <returns></returns>
-        public static Tree<TKeyValue> CreateNTree(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
+        public static Tree<TKeyValue> CreateNTree(TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
                                                     Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations,
                                                     bool isBottomUp)
         {
-            var parents = GetRelations(node, outerdictionary);
+            var parents = GetRelations(rootValue, outerdictionary);
             IList<TKeyValue> children = new List<TKeyValue>();
-            //
 
             Tree<TKeyValue> nTree = new Tree<TKeyValue>();
-            nTree.Key = node;
-            nTree.Data = node;
+            nTree.Key = rootValue;
+            nTree.Data = rootValue;
 
             int parentCount = parents.Count;
 
@@ -326,29 +325,27 @@ namespace ParallelResourcer
                 }
                 if (isBottomUp)
                 {
-                    IList<XElement> listOfSubTrees = new List<XElement>();
-                    XElement xEltsubTree;
+                    IList<XElement> listOfSubTreeRoots = new List<XElement>();
+                    XElement xEltsubTreeRoot;
                     IList<XElement> newListxElt = new List<XElement>();
                     //pop the root value of each subtrees from stack
                     for (int i = 0; i < parentCount; i++)
                     {
-                        StackNodes.TryPop(out xEltsubTree);
-                        listOfSubTrees.Add(xEltsubTree);
+                        StackNodes.TryPop(out xEltsubTreeRoot);
+                        listOfSubTreeRoots.Add(xEltsubTreeRoot);
                     }
-                    IList<XElement> list = CreateXmlElementsBottomUp(node, parents);
 
-                    foreach (var subTree in listOfSubTrees)
+                    ///relationships of node with rootValue in current depth
+                    IList<XElement> listCurDepthRelations = CreateXmlElementsBottomUp(rootValue, parents);
+                    foreach (var subTree in listOfSubTreeRoots)
                     {
-                        var nodeList = from elt in list
-                                       where elt.Attribute("Text").Value.Equals(subTree.Name.LocalName)
-                                       select elt.Elements();
+                        var nodeList = from elt in listCurDepthRelations
+                                        //where elt.Attribute("Text").Value.Equals(subTree.Name.LocalName)
+                                        select elt.Elements();
                         foreach (var child in nodeList)
                         {
-                            subTree.Add(child.Elements());
-                            foreach (var item in subTree.Elements())
-                            {
-                                //item.Add(child.Elements());
-                            };
+                            child.First().Add(subTree.Elements());
+                          
                             newListxElt.Add(subTree);
                             StackNodes.Push(subTree);
                         }
@@ -366,7 +363,7 @@ namespace ParallelResourcer
                 {
                     //stack
                     XElement xElt = new XElement("Node");
-                    xElt.Add(new XAttribute("Text", node.ToString()));
+                    xElt.Add(new XAttribute("Text", rootValue.ToString()));
                     xElt.Add(new XAttribute("Expanded", "True"));
                     StackNodes.Push(xElt);
 
