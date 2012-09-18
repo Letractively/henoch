@@ -227,7 +227,7 @@ namespace TestParallelPatterns
             Task.WaitAll(t1, t2);
 
             subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren,
-                                                             Tree<string>.TransFormXSubTreeBottomUp);
+                                                             Tree<string>.TransFormXSubTreeTopDown);
             
             IList<XElement> stackItem;
             XElement result = new XElement("Tree");
