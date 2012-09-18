@@ -86,7 +86,7 @@ namespace ParallelResourcer
             StackNodes = new ConcurrentStack<IList<XElement>>();
             QueueNodes = new ConcurrentQueue<XElement>();
             Nodes = new ConcurrentDictionary<TKeyValue, TKeyValue>();
-            XDoc = new XDocument(new XElement("Tree"));
+            XDoc = new XDocument();
         }
         public Tree()
         {
@@ -303,7 +303,7 @@ namespace ParallelResourcer
         /// <returns></returns>
         public static Tree<TKeyValue> CreateNTree(TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
                                                     Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations,
-                                                    Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormSubTree)
+                                                    Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormXsubTree)
         {
             var parents = GetRelations(rootValue, outerdictionary);
 
@@ -319,9 +319,9 @@ namespace ParallelResourcer
                 nTree.NTree = new List<Tree<TKeyValue>>();
                 foreach (var parent in parents)
                 {
-                    nTree.NTree.Add(CreateNTree(parent, outerdictionary, GetRelations, TransFormSubTree));
+                    nTree.NTree.Add(CreateNTree(parent, outerdictionary, GetRelations, TransFormXsubTree));
 
-                    TransFormSubTree(rootValue, parent, parents);
+                    TransFormXsubTree(rootValue, parent, parents);
                 }
 
             }
@@ -339,12 +339,12 @@ namespace ParallelResourcer
             return nTree;
         }
         /// <summary>
-        /// Transforms each child in subtree with its 
+        /// Expand each child's relationship in parent's subtree with the current relation of the parent  
         /// </summary>
         /// <param name="rootValue"></param>
         /// <param name="parents"></param>
         /// <param name="parent"></param>
-        public static void TransFormSubTreeBottomUp(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
+        public static void TransFormXSubTreeBottomUp(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
         {
             IList<XElement> listSubtreeParents;
             IList<XElement> newListxElt = new List<XElement>();
@@ -366,6 +366,29 @@ namespace ParallelResourcer
             }
             else
                 StackNodes.Push(childOfP1.ToList());
+        }
+        public static void TransFormXSubTreeTopDown(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
+        {
+            IList<XElement> listSubtreeParents = new List<XElement>();
+            IList<XElement> newListxElt = new List<XElement>();
+            //pop the root value of current subtree from stack
+            //StackNodes.TryPop(out listSubtreeParents);
+
+            ///relationships of node with rootValue in current depth
+            IList<XElement> listCurDepthRelations = CreateXmlElementsTopDown(rootValue, parents);
+            var childrenOfP1InSubtree = listSubtreeParents.Descendants().Where(d => d.Attribute("Text").Value == parent.ToString());
+            var childOfP1 = listCurDepthRelations.Where(d => d.Attribute("Text").Value == parent.ToString());
+
+            if (childrenOfP1InSubtree.Count() > 0)
+            {
+                for (int i = 0; i < childrenOfP1InSubtree.Count(); i++)
+                {
+                    childrenOfP1InSubtree.ToList()[i].Add(childOfP1.FirstOrDefault().Elements());
+                };
+                //StackNodes.Push(listSubtreeParents);
+            }
+            //else
+                //StackNodes.Push(childOfP1.ToList());
         }
 
         public static IList<XElement> CreateXmlElementsBottomUp(TKeyValue parent, IList<TKeyValue> children)
@@ -396,25 +419,32 @@ namespace ParallelResourcer
             }
             return list;
         }
-        public static void CreateXmlElementsTopDown(TKeyValue parent, IList<TKeyValue> children)
+        public static IList<XElement> CreateXmlElementsTopDown(TKeyValue parent, IList<TKeyValue> children)
         {
             var nodeParent = new XElement("Node");
             nodeParent.Add(new XAttribute("Text", parent));
             nodeParent.Add(new XAttribute("Expanded", "True"));
+            var list = new List<XElement>();
 
-            if (children!=null)
+            if (children != null && children.Count > 0)
                 foreach (var child in children)
                 {
                     var nodeChild = new XElement("Node", "");
                     nodeChild.Add(new XAttribute("Text", child));
                     nodeChild.Add(new XAttribute("Expanded", "True"));
 
-                    nodeParent.Add(nodeChild);
-
-                   
+                    nodeChild.Add(nodeParent);
+                    //StackNodes.Push(nodeChild);
+                    list.Add(nodeChild);
                 }
+            else
+            //StackNodes.Push(nodeParent);
+            {
 
-            QueueNodes.Enqueue(nodeParent);
+                list.Add(nodeParent);
+
+            }
+            return list;          
 
         }
         /// <summary>

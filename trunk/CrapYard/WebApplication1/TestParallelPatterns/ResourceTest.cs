@@ -215,7 +215,8 @@ namespace TestParallelPatterns
                 
             }
             );
-            shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents, true);
+            shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents, 
+                                                    Tree<string>.TransFormXSubTreeBottomUp);
 
             Assert.AreEqual(11, _TestDictionary.Count);
             var t2 = Task.Factory.StartNew(() =>
@@ -223,15 +224,21 @@ namespace TestParallelPatterns
                
             }
             );
-            //subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren);
+            subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren,
+                                                             Tree<string>.TransFormXSubTreeTopDown);
             Task.WaitAll(t1,t2);
 
-            XElement stackItem;
+            IList<XElement> stackItem;
             XElement result = new XElement("Tree");
-            //while (Tree<string>.StackNodes.TryPop(out stackItem))
-            //{
-            //    result.Add(stackItem);
-            //}
+            Tree<string>.StackNodes.TryPop(out stackItem);
+            Tree<string>.StackNodes.TryPop(out stackItem);
+            Tree<string>.StackNodes.TryPop(out stackItem);
+            result.Add(stackItem);
+
+            while (Tree<string>.StackNodes.TryPop(out stackItem))
+            {
+                result.Descendants().First().Add(stackItem.Descendants().First());
+            }
             Tree<string>.XDoc.Add(result);
 
             Assert.AreEqual(2, shareHolders.NTree.Count);
