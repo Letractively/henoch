@@ -224,10 +224,11 @@ namespace TestParallelPatterns
                
             }
             );
-            subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren,
-                                                             Tree<string>.TransFormXSubTreeTopDown);
-            Task.WaitAll(t1,t2);
+            Task.WaitAll(t1, t2);
 
+            subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren,
+                                                             Tree<string>.TransFormXSubTreeBottomUp);
+            
             IList<XElement> stackItem;
             XElement result = new XElement("Tree");
             Tree<string>.StackNodes.TryPop(out stackItem);
@@ -238,7 +239,7 @@ namespace TestParallelPatterns
             while (Tree<string>.StackNodes.TryPop(out stackItem))
             {
                 result.Descendants().First().Add(stackItem.Descendants().First());
-            }
+            }            
             Tree<string>.XDoc.Add(result);
 
             Assert.AreEqual(2, shareHolders.NTree.Count);
