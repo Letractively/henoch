@@ -379,16 +379,16 @@ namespace ParallelResourcer
             var childrenOfP1InSubtree = listSubtreeParents.Descendants().Where(d => d.Attribute("Text").Value == parent.ToString());
             var childOfP1 = listCurDepthRelations.Where(d => d.Attribute("Text").Value == parent.ToString());
 
-            if (childrenOfP1InSubtree.Count() > 0)
+            if (childOfP1.Count() > 0)
             {
-                for (int i = 0; i < childrenOfP1InSubtree.Count(); i++)
+                for (int i = 0; i < childOfP1.Count(); i++)
                 {
-                    childrenOfP1InSubtree.ToList()[i].Add(childOfP1.FirstOrDefault().Elements());
+                    childOfP1.ToList()[i].Add(childrenOfP1InSubtree.FirstOrDefault().Elements());
                 };
-                //StackNodes.Push(listSubtreeParents);
+                StackNodes.Push(listSubtreeParents);
             }
-            //else
-                //StackNodes.Push(childOfP1.ToList());
+            else
+                StackNodes.Push(childrenOfP1InSubtree.ToList());
         }
 
         public static IList<XElement> CreateXmlElementsBottomUp(TKeyValue parent, IList<TKeyValue> children)
@@ -421,25 +421,29 @@ namespace ParallelResourcer
         }
         public static IList<XElement> CreateXmlElementsTopDown(TKeyValue parent, IList<TKeyValue> children)
         {
-            var nodeParent = new XElement("Node");
-            nodeParent.Add(new XAttribute("Text", parent));
-            nodeParent.Add(new XAttribute("Expanded", "True"));
             var list = new List<XElement>();
 
             if (children != null && children.Count > 0)
                 foreach (var child in children)
                 {
+                    var nodeParent = new XElement("Node");
+                    nodeParent.Add(new XAttribute("Text", parent));
+                    nodeParent.Add(new XAttribute("Expanded", "True"));
+
                     var nodeChild = new XElement("Node", "");
                     nodeChild.Add(new XAttribute("Text", child));
                     nodeChild.Add(new XAttribute("Expanded", "True"));
 
-                    nodeChild.Add(nodeParent);
+                    nodeParent.Add(nodeChild);
                     //StackNodes.Push(nodeChild);
-                    list.Add(nodeChild);
+                    list.Add(nodeParent);
                 }
             else
             //StackNodes.Push(nodeParent);
             {
+                var nodeParent = new XElement("Node");
+                nodeParent.Add(new XAttribute("Text", parent));
+                nodeParent.Add(new XAttribute("Expanded", "True"));
 
                 list.Add(nodeParent);
 
