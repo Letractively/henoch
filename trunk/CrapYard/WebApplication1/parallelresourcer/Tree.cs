@@ -372,23 +372,24 @@ namespace ParallelResourcer
             IList<XElement> listSubtreeParents = new List<XElement>();
             IList<XElement> newListxElt = new List<XElement>();
             //pop the root value of current subtree from stack
-            //StackNodes.TryPop(out listSubtreeParents);
+            StackNodes.TryPop(out listSubtreeParents);
 
             ///relationships of node with rootValue in current depth
             IList<XElement> listCurDepthRelations = CreateXmlElementsTopDown(rootValue, parents);
-            var childrenOfP1InSubtree = listSubtreeParents.Descendants().Where(d => d.Attribute("Text").Value == parent.ToString());
-            var childOfP1 = listCurDepthRelations.Where(d => d.Attribute("Text").Value == parent.ToString());
+            var childrenOfP1InSubtree = listSubtreeParents.Where(d => d.Attribute("Text").Value == parent.ToString());
+            var childOfP1 = listCurDepthRelations.Descendants().Where(d => d.Attribute("Text").Value == parent.ToString());
 
-            if (childOfP1.Count() > 0)
+            if (childrenOfP1InSubtree.Count() > 0)
             {
-                for (int i = 0; i < childOfP1.Count(); i++)
+                for (int i = 0; i < childrenOfP1InSubtree.Count(); i++)
                 {
-                    childOfP1.ToList()[i].Add(childrenOfP1InSubtree.FirstOrDefault().Elements());
+                    if(childrenOfP1InSubtree.FirstOrDefault() != null)
+                        childOfP1.First().Add(childrenOfP1InSubtree.ToList()[i].Elements());
                 };
-                StackNodes.Push(listSubtreeParents);
+                StackNodes.Push(listCurDepthRelations);
             }
             else
-                StackNodes.Push(childrenOfP1InSubtree.ToList());
+                StackNodes.Push(listSubtreeParents);
         }
 
         public static IList<XElement> CreateXmlElementsBottomUp(TKeyValue parent, IList<TKeyValue> children)
