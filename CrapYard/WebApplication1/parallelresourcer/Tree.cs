@@ -386,10 +386,11 @@ namespace ParallelResourcer
                     if(childrenOfP1InSubtree.FirstOrDefault() != null)
                         childOfP1.First().Add(childrenOfP1InSubtree.ToList()[i].Elements());
                 };
-                StackNodes.Push(listCurDepthRelations);
+                var res = listCurDepthRelations.Where( elt => elt.Elements().Any(e => e.Attribute("Text").Value == parent.ToString()));
+                StackNodes.Push(res.ToList());
             }
             else
-                StackNodes.Push(listSubtreeParents);
+                StackNodes.Push(childOfP1.ToList());
         }
 
         public static IList<XElement> CreateXmlElementsBottomUp(TKeyValue parent, IList<TKeyValue> children)
