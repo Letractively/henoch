@@ -5,6 +5,8 @@ using System.Text;
 using Caching;
 using Microsoft.Practices.EnterpriseLibrary.Caching;
 using ParallelResourcer;
+using System.Collections.Concurrent;
+using System.Xml.Linq;
 
 namespace Repository
 {
@@ -26,34 +28,65 @@ namespace Repository
             InitializeCache();
         }
 
+        public ShareHolders(bool isTest)
+        {
+            if (isTest)
+            {
+                Companies.Clear();
+                string shareHolder = "Ahold";
+                this.AddShareHolders("Ahold");
+                this.AddSubsidiary("Ahold", "123");
+                this.AddSubsidiary("Ahold", "ah567");
+
+                this.AddShareHolders("Unilever");
+                this.AddSubsidiary("Unilever", "123");
+                this.AddSubsidiary("Unilever", "u567");
+
+                this.AddShareHolders("Shell");
+                this.AddSubsidiary("Shell", "s123");
+                this.AddSubsidiary("Shell", "s567");
+
+                this.AddShareHolders("123");
+                this.AddSubsidiary("123", "c123");
+                this.AddSubsidiary("123", "c123");
+            }
+        }
         /// <summary>
         /// linked list of parents and their children. Companies are stored in cache. 
         /// </summary>
         /// <returns></returns>
-        public IDictionary<string, IList<string>> Companies
+        public ConcurrentDictionary<string, IList<string>> Companies
         {
             get
             {
-                IDictionary<string, IList<string>> list = InitializeCache();
+                ConcurrentDictionary<string, IList<string>> list = InitializeCache();
 
                 return list;
+            }
+            private set
+            {
+                var myRepository = MyCache<Object>.CacheManager;
+                if (myRepository != null)
+                {
+                    myRepository.Add(cShareHolder, value);
+                }
             }
         }
         /// <summary>
         /// See http://xlinux.nist.gov/dads//HTML/dictionary.html
         /// </summary>
         /// <returns></returns>
-        private static IDictionary<string, IList<string>> InitializeCache()
+        private static ConcurrentDictionary<string, IList<string>> InitializeCache()
         {
-            IDictionary<string, IList<string>> dictionary = null;
+            ConcurrentDictionary<string, IList<string>> dictionary = null;
             var myRepository = MyCache<Object>.CacheManager;
             if (myRepository != null)
             {
-                dictionary = myRepository.GetData(cShareHolder) as IDictionary<string, IList<string>>;
+                dictionary = myRepository.GetData(cShareHolder) as ConcurrentDictionary<string, IList<string>>;
                 if (dictionary == null)
                 {
                     //Initialize
-                    dictionary = new Dictionary<string, IList<string>>();
+                    dictionary = new ConcurrentDictionary<string, IList<string>>();
                     myRepository.Add(cShareHolder, dictionary);
                 }
             }
@@ -78,7 +111,7 @@ namespace Repository
         /// <param name="shareHolder"></param>
         public void AddShareHolders(string shareHolder)
         {
-            Companies.Add(shareHolder, new List<string>());
+            Companies.TryAdd(shareHolder, new List<string>());
         }
         public void AddSubsidiary(string shareHolder, string subsidiary)
         {
@@ -96,24 +129,52 @@ namespace Repository
         {
             Companies.Clear();
             string shareHolder = "Ahold";
-            //_listCompanies.Add(shareHolder, new List<string>());
-            //_listCompanies[shareHolder].Add("123");
-            //_listCompanies[shareHolder].Add("ah567");
-            this.AddShareHolders("Ahold");
-            this.AddSubsidiary("Ahold", "123");
-            this.AddSubsidiary("Ahold", "ah567");
+            //this.AddShareHolders("Ahold");
+            //this.AddSubsidiary("Ahold", "123");
+            //this.AddSubsidiary("Ahold", "ah567");
 
-            this.AddShareHolders("Unilever");
-            this.AddSubsidiary("Unilever", "123");
-            this.AddSubsidiary("Unilever", "u567");
+            //this.AddShareHolders("Unilever");
+            //this.AddSubsidiary("Unilever", "123");
+            //this.AddSubsidiary("Unilever", "u567");
 
-            this.AddShareHolders("Shell");
-            this.AddSubsidiary("Shell", "s123");
-            this.AddSubsidiary("Shell", "s567");
+            //this.AddShareHolders("Shell");
+            //this.AddSubsidiary("Shell", "s123");
+            //this.AddSubsidiary("Shell", "s567");
 
-            this.AddShareHolders("123");
-            this.AddSubsidiary("123", "c123");
-            this.AddSubsidiary("123", "c123");
+            //this.AddShareHolders("123");
+            //this.AddSubsidiary("123", "c123");
+            //this.AddSubsidiary("123", "c123");
+
+            var testTree = Tree<string>.CreateTestNaryTree();
+            CreateTestdictionary(testTree);
+        }
+
+        private void CreateTestdictionary(Tree<string> outerTree)
+        {
+            var nTree = outerTree.NTree;
+            if (nTree != null)
+            {
+                var children = from n in nTree
+                               where !string.IsNullOrEmpty(n.Data)
+                               select n.Data;
+                IList<string> list = null;
+                if ((Companies.TryGetValue(outerTree.Data, out list)))
+                    Companies.TryUpdate(outerTree.Data, children.ToList<string>(), null);
+                else
+                    Companies.TryAdd(outerTree.Data, children.ToList<string>());
+
+                foreach (var tree in nTree)
+                {
+                    CreateTestdictionary(tree);
+                }
+            }
+            else
+            {
+                IList<string> list = null;
+                if (!(Companies.TryGetValue(outerTree.Data, out list)))
+                    Companies.TryAdd(outerTree.Data, null);
+            }
+
         }
         public Tree<string> GetRoot(string company)
         {
@@ -144,6 +205,34 @@ namespace Repository
             }
 
             ;
+        }
+        /// <summary>
+        /// Creates an XML string representing an Organogram-ish: organotree. 
+        /// </summary>
+        /// <param name="companyPOV">The company's point of view in the organisation.</param>
+        /// <returns></returns>
+        public string CreateXMLOrganoTreeView(string companyPOV)
+        {
+            var shareHolders = Tree<string>.CreateNTree(companyPOV, Companies, Tree<string>.GetParents,
+                                                        Tree<string>.TransFormXSubTreeBottomUp);
+
+            var subsidiaries = Tree<string>.CreateNTree(companyPOV, Companies, Tree<string>.GetChildren,
+                                                        Tree<string>.TransFormXSubTreeTopDown);
+
+            IList<XElement> topDownTree;
+            IList<XElement> bottomUpTree;
+            XElement result = new XElement("Tree");
+            Tree<string>.StackNodes.TryPop(out topDownTree);
+            Tree<string>.StackNodes.TryPop(out bottomUpTree);
+
+            var targetXElts = (bottomUpTree.First().Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
+            foreach (var elts in targetXElts)
+            {
+                var childrenTarget = topDownTree.First().Elements();
+                elts.Add(childrenTarget);
+            }
+            result.Add(bottomUpTree);
+            return result.ToString();
         }
 
     }

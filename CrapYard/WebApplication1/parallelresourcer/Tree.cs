@@ -523,6 +523,56 @@ namespace ParallelResourcer
             return list;          
 
         }
+        
+        public static Tree<string> CreateTestNaryTree()
+        {
+            var testTree = new Tree<string>
+            {
+                Data = "root",
+                NTree = new Tree<string>[]
+                {
+                    new Tree<string>
+                    { 
+                        Data = "S11",
+                        NTree = new Tree<string>[]
+                        {
+                            new Tree<string>{ Data = "S211"},
+                            new Tree<string>{ Data = "S221"}
+                        }
+
+                    },
+                    new Tree<string>
+                    { 
+                        Data = "S211",
+                        NTree = new Tree<string>[]
+                        {
+                          new Tree<string>
+                          {
+                              Data = "S22",
+                              NTree = new Tree<string>[]
+                             {
+                                new Tree<string>{ Data = "S41"},
+                                new Tree<string>{ Data = "S42"}
+                             }
+                          }
+                        }
+                    },
+                    new Tree<string>
+                    { 
+                        Data = "S221",
+                        NTree = new Tree<string>[]
+                        {
+                            new Tree<string>{ Data = "S21"},
+                            new Tree<string>{ Data = "m1"},
+                            new Tree<string>{ Data = "Sp"},
+                        }
+                    },
+                    new Tree<string>{ Data = "S31"}
+                }
+            };
+
+            return testTree;
+        }
         /// <summary>
         /// Ambiguous
         /// </summary>

@@ -13,13 +13,11 @@ namespace WebApplication1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (IsPostBack)
             {
-                
-            }
-            else
-            { 
-
+                string xml = new ShareHolders().CreateXMLOrganoTreeView(RadTextBox1.Text);
+                RadTreeView1.LoadXml(xml);
+           
             }
          }   
     }
