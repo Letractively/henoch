@@ -202,6 +202,7 @@ namespace TestParallelPatterns
         [TestMethod]
         public void TestCreateNTree()
         {
+            string searchValue = "S211";
             var NTree = CreateTasksForNTree();
             CreateTestdictionary(NTree);
             Assert.AreEqual(11, _TestDictionary.Count);
@@ -215,9 +216,9 @@ namespace TestParallelPatterns
                 
             }
             );
-            shareHolders = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetParents, 
+            shareHolders = Tree<string>.CreateNTree(searchValue, _TestDictionary, Tree<string>.GetParents, 
                                                     Tree<string>.TransFormXSubTreeBottomUp);
-
+            
             Assert.AreEqual(11, _TestDictionary.Count);
             var t2 = Task.Factory.StartNew(() =>
             {
@@ -226,30 +227,31 @@ namespace TestParallelPatterns
             );
             Task.WaitAll(t1, t2);
 
-            subsidiaries = Tree<string>.CreateNTree("S211", _TestDictionary, Tree<string>.GetChildren,
+            subsidiaries = Tree<string>.CreateNTree(searchValue, _TestDictionary, Tree<string>.GetChildren,
                                                              Tree<string>.TransFormXSubTreeTopDown);
-            
-            IList<XElement> stackItem;
-            XElement result = new XElement("Tree");
-            Tree<string>.StackNodes.TryPop(out stackItem);
-            Tree<string>.StackNodes.TryPop(out stackItem);
-            Tree<string>.StackNodes.TryPop(out stackItem);
-            result.Add(stackItem);
 
-            while (Tree<string>.StackNodes.TryPop(out stackItem))
-            {
-                result.Descendants().First().Add(stackItem.Descendants().First());
-            }            
+            Assert.AreEqual(2, Tree<string>.StackNodes.Count(), "2 subtrees are expected: the bottomup tree and the topdown.");
+            IList<XElement> topDownTree;
+            IList<XElement> bottomUpTree;
+            XElement result = new XElement("Tree");
+            Tree<string>.StackNodes.TryPop(out topDownTree);
+            Tree<string>.StackNodes.TryPop(out bottomUpTree);
+
+            Console.WriteLine(topDownTree.First().ToString());
+
+            var target = bottomUpTree.First().Descendants().Where (d => d.Attribute("Text").Value == searchValue);
+            result.Add(bottomUpTree);
+        
             Tree<string>.XDoc.Add(result);
 
             Assert.AreEqual(2, shareHolders.NTree.Count);
-            Assert.AreEqual("S211", shareHolders.Key);
+            Assert.AreEqual(searchValue, shareHolders.Key);
             Assert.AreEqual("root", shareHolders.NTree[0].Key);
             Assert.AreEqual("S11", shareHolders.NTree[1].Key);
             Assert.AreEqual("root", shareHolders.NTree[1].NTree[0].Key);
 
             Assert.AreEqual(1, subsidiaries.NTree.Count);
-            Assert.AreEqual("S211", shareHolders.Key);
+            Assert.AreEqual(searchValue, shareHolders.Key);
             Assert.AreEqual("S22", subsidiaries.NTree[0].Key);
             Assert.AreEqual(2, subsidiaries.NTree[0].NTree.Count);
             Assert.AreEqual("S41", subsidiaries.NTree[0].NTree[0].Key);
