@@ -213,25 +213,30 @@ namespace Repository
         /// <returns></returns>
         public string CreateXMLOrganoTreeView(string companyPOV)
         {
-            var shareHolders = Tree<string>.CreateNTree(companyPOV, Companies, Tree<string>.GetParents,
-                                                        Tree<string>.TransFormXSubTreeBottomUp);
-
-            var subsidiaries = Tree<string>.CreateNTree(companyPOV, Companies, Tree<string>.GetChildren,
-                                                        Tree<string>.TransFormXSubTreeTopDown);
-
-            IList<XElement> topDownTree;
-            IList<XElement> bottomUpTree;
             XElement result = new XElement("Tree");
-            Tree<string>.StackNodes.TryPop(out topDownTree);
-            Tree<string>.StackNodes.TryPop(out bottomUpTree);
-
-            var targetXElts = (bottomUpTree.First().Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
-            foreach (var elts in targetXElts)
+            IList<string> subsidiariesPOV;
+            if (Companies.TryGetValue(companyPOV, out subsidiariesPOV))
             {
-                var childrenTarget = topDownTree.First().Elements();
-                elts.Add(childrenTarget);
+                var shareHolders = Tree<string>.CreateNTree(companyPOV, Companies, Tree<string>.GetParents,
+                                                            Tree<string>.TransFormXSubTreeBottomUp);
+
+                var subsidiaries = Tree<string>.CreateNTree(companyPOV, Companies, Tree<string>.GetChildren,
+                                                            Tree<string>.TransFormXSubTreeTopDown);
+
+                IList<XElement> topDownTree;
+                IList<XElement> bottomUpTree;
+
+                Tree<string>.StackNodes.TryPop(out topDownTree);
+                Tree<string>.StackNodes.TryPop(out bottomUpTree);
+
+                var targetXElts = (bottomUpTree.First().Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
+                foreach (var elts in targetXElts)
+                {
+                    var childrenTarget = topDownTree.First().Elements();
+                    elts.Add(childrenTarget);
+                }
+                result.Add(bottomUpTree);
             }
-            result.Add(bottomUpTree);
             return result.ToString();
         }
 
