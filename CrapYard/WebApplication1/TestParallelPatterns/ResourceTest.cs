@@ -213,19 +213,20 @@ namespace TestParallelPatterns
             //Tree<string>.WalkNaryTree(NTree, Console.WriteLine);   
             var t1 = Task.Factory.StartNew(() =>
             {
-                shareHolders = Tree<string>.CreateNTree(searchValue, _TestDictionary, Tree<string>.GetParents,
-                                                        Tree<string>.TransFormXSubTreeBottomUp);                
+                             
             }
             );
-            
+            shareHolders = Tree<string>.CreateNTree(searchValue, _TestDictionary, Tree<string>.GetParents,
+                                                        Tree<string>.TransFormXSubTreeBottomUp);   
             Assert.AreEqual(11, _TestDictionary.Count);
             var t2 = Task.Factory.StartNew(() =>
             {
-                subsidiaries = Tree<string>.CreateNTree(searchValue, _TestDictionary, Tree<string>.GetChildren,
-                                                                 Tree<string>.TransFormXSubTreeTopDown);               
+                     
             }
             );
             Task.WaitAll(t1, t2);
+            subsidiaries = Tree<string>.CreateNTree(searchValue, _TestDictionary, Tree<string>.GetChildren,
+                                                                Tree<string>.TransFormXSubTreeTopDown);         
 
             Assert.AreEqual(2, Tree<string>.StackNodes.Count(), "2 subtrees are expected: the bottomup tree and the topdown.");
             IList<XElement> topDownTree;
