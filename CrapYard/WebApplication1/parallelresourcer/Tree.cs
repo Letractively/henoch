@@ -323,7 +323,7 @@ namespace ParallelResourcer
 
                     TransFormXsubTree(rootValue, parent, parents);
                 }
-
+                CreateOneSubTree(parents.Count());
             }
             else
             {
@@ -339,11 +339,29 @@ namespace ParallelResourcer
             return nTree;
         }
         /// <summary>
+        /// The number of subtrees is equal to the number of the last stackitems pushed in current recursion depth.
+        /// </summary>
+        /// <param name="countParents"></param>
+        public static void CreateOneSubTree(int countParents)
+        {
+            IList<XElement> stackItem;            
+            Tree<string>.StackNodes.TryPop(out stackItem);
+            
+            for (int i = 0; i < (countParents - 1); i++)
+            {
+                IList<XElement> nextStackItem;
+                Tree<string>.StackNodes.TryPop(out nextStackItem);
+                stackItem.First().Add(nextStackItem.Descendants().First());
+            }
+            Tree<string>.StackNodes.Push(stackItem);
+        }
+
+        /// <summary>
         /// Expand each child's relationship in parent's subtree with the current relation of the parent  
         /// </summary>
-        /// <param name="rootValue"></param>
-        /// <param name="parents"></param>
-        /// <param name="parent"></param>
+        /// <param name="rootValue"> parent R rootValue </param>
+        /// <param name="parents">Collection of parents in any relation current tree depth</param>
+        /// <param name="parent" > parent R rootValue </param>
         public static void TransFormXSubTreeBottomUp(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
         {
             IList<XElement> listSubtreeParents;
@@ -367,6 +385,12 @@ namespace ParallelResourcer
             else
                 StackNodes.Push(childOfP1.ToList());
         }
+        /// <summary>
+        /// Every child of the rootValue gets the children of the child´s relation in its subtree.
+        /// </summary>
+        /// <param name="rootValue">rootValue R parent  </param>
+        /// <param name="parents">Collection of parents in any relation current tree depth</param>
+        /// <param name="parent" > rootValue R parent </param>
         public static void TransFormXSubTreeTopDown(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
         {
             IList<XElement> listSubtreeParents = new List<XElement>();
