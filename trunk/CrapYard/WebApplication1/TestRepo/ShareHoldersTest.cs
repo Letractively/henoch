@@ -70,8 +70,8 @@ namespace TestRepo
         [TestMethod()]
         public void AddShareHoldersTest()
         {
-            ShareHolders target = new ShareHolders(); 
-            target.Refresh();
+            ShareHolders target = new ShareHolders(true); 
+            
             Assert.AreEqual(2, target.GetSubsidiaries("Ahold").Count);
 
             Assert.AreEqual(2,target.GetShareHolders("123").Count);
