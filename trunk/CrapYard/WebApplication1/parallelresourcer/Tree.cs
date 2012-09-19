@@ -294,6 +294,52 @@ namespace ParallelResourcer
 
             return list;
         }
+        public static Tree<TKeyValue> CreateParellelNTree(TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
+                                            Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations,
+                                            Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormXsubTree)
+        {
+            var parents = GetRelations(rootValue, outerdictionary);
+
+            Tree<TKeyValue> nTree = new Tree<TKeyValue>();
+            nTree.Key = rootValue;
+            nTree.Data = rootValue;
+
+            int parentCount = parents.Count;
+
+            if (parentCount > 0)
+            {
+                // create subtrees
+                nTree.NTree = new List<Tree<TKeyValue>>();
+
+                int countNodes = parents.Count();               
+                var t1 = Task.Factory.StartNew(() => Parallel.For(0, countNodes,
+                    (i) =>
+                    {
+                        var t2 = Task.Factory.StartNew(() =>  
+                            nTree.NTree.Add(CreateParellelNTree(parents[i], outerdictionary, GetRelations, TransFormXsubTree)));
+
+                        Task.WaitAll(t2);
+
+                        TransFormXsubTree(rootValue, parents[i], parents);
+                    }
+                    )
+                );
+                Task.WaitAll(t1);
+                CreateOneSubTree(parents.Count());
+            }
+            else
+            {
+                //push LEAF on stack
+                StackNodes.Push(new List<XElement>() 
+                    {  
+                        new XElement("Node",
+                            new XAttribute("Text", rootValue.ToString()),
+                            new XAttribute("Expanded", "True"))
+                    });
+            }
+
+            return nTree;
+        }
         /// <summary>
         /// Creates  a N-ary tree. A node has a key-valued pair 
         /// </summary>
