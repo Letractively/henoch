@@ -238,10 +238,15 @@ namespace TestParallelPatterns
             Tree<string>.StackNodes.TryPop(out bottomUpTree);
 
             Console.WriteLine(topDownTree.First().ToString());
+            Console.WriteLine(bottomUpTree.First().ToString());
 
-            var target = bottomUpTree.First().Descendants().Where (d => d.Attribute("Text").Value == searchValue);
-            result.Add(bottomUpTree);
-        
+            var targetXElts = (bottomUpTree.First().Descendants().Where (d => d.Attribute("Text").Value == searchValue)).ToList();
+            foreach (var elts in targetXElts)
+            {
+                var childrenTarget = topDownTree.First().Elements();
+                elts.Add(childrenTarget);
+            }
+            result.Add(bottomUpTree);        
             Tree<string>.XDoc.Add(result);
 
             Assert.AreEqual(2, shareHolders.NTree.Count);
