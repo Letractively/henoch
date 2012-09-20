@@ -230,12 +230,24 @@ namespace Repository
                 Tree<string>.StackNodes.TryPop(out bottomUpTree);
 
                 var targetXElts = (bottomUpTree.First().Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
-                foreach (var elts in targetXElts)
+                var childrenTarget = topDownTree.First().Elements();
+
+                if (targetXElts.Count() == 0)
                 {
-                    var childrenTarget = topDownTree.First().Elements();
-                    elts.Add(childrenTarget);
+                    bottomUpTree.First().Add(childrenTarget);
+                    result.Add(bottomUpTree);
                 }
-                result.Add(bottomUpTree);
+                else
+                {
+                    foreach (var elts in targetXElts)
+                    {
+
+                        elts.Add(childrenTarget);
+                    }
+
+                    result.Add(bottomUpTree);
+                    //NOTE: 2 roots are possible, result.Add(topDownTree);
+                }
             }
             return result.ToString();
         }
