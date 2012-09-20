@@ -37,27 +37,27 @@ namespace ParallelResourcer
         /// <summary>
         /// Indicates whether the node is unique.
         /// </summary>
-        public bool IsUnique{ get; private set;}
+        public bool IsUnique { get; private set; }
         /// <summary>
         /// List of all nodes keyvalues.
         /// </summary>
-        public static ConcurrentDictionary<TKeyValue,TKeyValue> Nodes { get; private set; }
+        public static ConcurrentDictionary<TKeyValue, TKeyValue> Nodes { get; private set; }
 
         private TKeyValue _Key;
 
         /// <summary>
         /// The uniqueness of the key will be also set.
         /// </summary>
-        public TKeyValue Key 
-        { 
+        public TKeyValue Key
+        {
             get
             {
                 return _Key;
             }
-            set 
+            set
             {
                 _Key = value;
-               //if (Nodes == null) Nodes = new LinkedList<TKeyValue>();
+                //if (Nodes == null) Nodes = new LinkedList<TKeyValue>();
                 if (Nodes.TryAdd(_Key, _Key))
                     IsUnique = true;
                 else
@@ -76,8 +76,8 @@ namespace ParallelResourcer
 
                 return _UID;
             }
-        }   
-        
+        }
+
         public int Weight { get; set; }
 
         static Tree()
@@ -115,7 +115,7 @@ namespace ParallelResourcer
                 yield return i;
             }
         }
-        public static void WalkParallel<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action, bool waitAll=false)
+        public static void WalkParallel<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action, bool waitAll = false)
         {
             if (root == null) return;
             //LRW wandeling in parallel!
@@ -140,24 +140,24 @@ namespace ParallelResourcer
 
             if (root.NTree == null)
             {
-                var t0= Task.Factory.StartNew(() => action(root.Data)
+                var t0 = Task.Factory.StartNew(() => action(root.Data)
                         , TaskCreationOptions.AttachedToParent);
                 if (waitAll) Task.WaitAll(t0);
                 return;
             }
 
             int countNodes = root.NTree.Count;
-            Task[] tasks = new Task[countNodes +1 ];
+            Task[] tasks = new Task[countNodes + 1];
             tasks[countNodes] = Task.Factory.StartNew(() => action(root.Data)
                 , TaskCreationOptions.AttachedToParent);
 
-            Parallel.For(0, countNodes, 
-                (i) => 
+            Parallel.For(0, countNodes,
+                (i) =>
                 {
-                    tasks[i] = Task.Factory.StartNew(() => WalkParallelNTree(root.NTree[i], action,waitAll));
+                    tasks[i] = Task.Factory.StartNew(() => WalkParallelNTree(root.NTree[i], action, waitAll));
                 }
                 );
-           
+
             if (waitAll) Task.WaitAll(tasks);
         }
         /// <summary>
@@ -173,7 +173,7 @@ namespace ParallelResourcer
 
             if (root.NTree == null)
             {
-                var t0= Task.Factory.StartNew(() => action(root.Data, null)
+                var t0 = Task.Factory.StartNew(() => action(root.Data, null)
                         , TaskCreationOptions.AttachedToParent);
                 if (waitAll) Task.WaitAll(t0);
                 return;
@@ -181,16 +181,16 @@ namespace ParallelResourcer
 
             int countNodes = root.NTree.Count;
             Task[] tasks = new Task[countNodes];
-            IList<TKeyValue> children= new List<TKeyValue>();
+            IList<TKeyValue> children = new List<TKeyValue>();
 
-            Parallel.For(0, countNodes, 
-                (i) => 
+            Parallel.For(0, countNodes,
+                (i) =>
                 {
-                    tasks[i] = Task.Factory.StartNew(() => WalkParallelNTree(root.NTree[i], action,waitAll));
+                    tasks[i] = Task.Factory.StartNew(() => WalkParallelNTree(root.NTree[i], action, waitAll));
                     children.Add(root.NTree[i].Data);
                 }
                 );
-           
+
             if (waitAll) Task.WaitAll(tasks);
 
             var task = Task.Factory.StartNew(() => action(root.Data, children), TaskCreationOptions.AttachedToParent);
@@ -199,9 +199,9 @@ namespace ParallelResourcer
         }
         public static void WalkNaryTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue, IList<TKeyValue>> action)
         {
-            if (root == null) 
+            if (root == null)
                 return;
-            
+
             IList<TKeyValue> children = new List<TKeyValue>();
             if (root.NTree == null)
             {
@@ -209,7 +209,7 @@ namespace ParallelResourcer
                 return;
             }
             int countNodes = root.NTree.Count;
-           
+
             for (int i = 0; i < countNodes; i++)
             {
                 //travelsal of children.
@@ -242,8 +242,8 @@ namespace ParallelResourcer
         {
             if (root == null) return;
             //LRW wandeling!
-             WalkClassic(root.Left, action);
-             WalkClassic(root.Right, action);
+            WalkClassic(root.Left, action);
+            WalkClassic(root.Right, action);
             action(root.Data);
         }
         public static void WalkClassic<TKeyValue>(Tree<TKeyValue> root)
@@ -252,7 +252,7 @@ namespace ParallelResourcer
             //LRW wandeling!
             WalkClassic(root.Left);
             WalkClassic(root.Right);
-            _listOfHandlers(root.Data.ToString());            
+            _listOfHandlers(root.Data.ToString());
         }
         public static IList<TKeyValue> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
@@ -264,7 +264,7 @@ namespace ParallelResourcer
         }
 
         public static IList<TKeyValue> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary,
-                                                     Func<TKeyValue , IList<TKeyValue>, IList<XElement>> CreateXElements)
+                                                     Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXElements)
         {
             var parents = GetParents(node, dictionary);
 
@@ -281,7 +281,7 @@ namespace ParallelResourcer
             else
             {
                 defaultVar = node.ToString();
-                if (string.IsNullOrEmpty( defaultVar))
+                if (string.IsNullOrEmpty(defaultVar))
                     return null;
             }
             #endregion
@@ -311,11 +311,11 @@ namespace ParallelResourcer
                 // create subtrees
                 nTree.NTree = new List<Tree<TKeyValue>>();
 
-                int countNodes = parents.Count();               
+                int countNodes = parents.Count();
                 var t1 = Task.Factory.StartNew(() => Parallel.For(0, countNodes,
                     (i) =>
                     {
-                        var t2 = Task.Factory.StartNew(() =>  
+                        var t2 = Task.Factory.StartNew(() =>
                             nTree.NTree.Add(CreateParellelNTree(parents[i], outerdictionary, GetRelations, TransFormXsubTree)));
 
                         Task.WaitAll(t2);
@@ -386,24 +386,41 @@ namespace ParallelResourcer
         }
         /// <summary>
         /// The number of subtrees is equal to the number of the last stackitems pushed in current recursion depth.
+        /// Every subtree has a root which has one child (injection).
         /// </summary>
         /// <param name="countParents"></param>
         public static void CreateOneSubTree(int countParents)
         {
-            IList<XElement> stackItem;            
+            IList<XElement> stackItem;
+            IList<string> duplicateCandidates = new List<string>();
+
             Tree<string>.StackNodes.TryPop(out stackItem);
-            
+            duplicateCandidates.Add(stackItem.Elements().First().Attribute("Text").Value);
+
             for (int i = 0; i < (countParents - 1); i++)
             {
                 IList<XElement> nextStackItem;
                 Tree<string>.StackNodes.TryPop(out nextStackItem);
+                duplicateCandidates.Add(nextStackItem.Elements().First().Attribute("Text").Value);
                 stackItem.First().Add(nextStackItem.Descendants().First());
+            }
+
+            ///Try to disable the duplicates in any subtree
+            foreach (var candidate in duplicateCandidates)
+            {
+                var duplicates = stackItem.Elements().Descendants().Where(d => d.Attribute("Text").Value == candidate);
+
+                foreach (var duplicate in duplicates)
+                {
+                    duplicate.Attribute("Expanded").Value = "False";
+                }
             }
             Tree<string>.StackNodes.Push(stackItem);
         }
 
         /// <summary>
-        /// Expand each child's relationship in parent's subtree with the current relation of the parent  
+        /// Expand each child's relationship in parent's subtree with the current relation of the parent.
+        /// The node pushed on stack has only one child: injection.
         /// </summary>
         /// <param name="rootValue"> parent R rootValue </param>
         /// <param name="parents">Collection of parents in any relation current tree depth</param>
@@ -433,6 +450,7 @@ namespace ParallelResourcer
         }
         /// <summary>
         /// Every child of the rootValue gets the children of the child´s relation in its subtree.
+        /// The node pushed on stack has only one child: injection.
         /// </summary>
         /// <param name="rootValue">rootValue R parent  </param>
         /// <param name="parents">Collection of parents in any relation current tree depth</param>
@@ -453,10 +471,10 @@ namespace ParallelResourcer
             {
                 for (int i = 0; i < childrenOfP1InSubtree.Count(); i++)
                 {
-                    if(childrenOfP1InSubtree.FirstOrDefault() != null)
+                    if (childrenOfP1InSubtree.FirstOrDefault() != null)
                         childOfP1.First().Add(childrenOfP1InSubtree.ToList()[i].Elements());
                 };
-                var res = listCurDepthRelations.Where( elt => elt.Elements().Any(e => e.Attribute("Text").Value == parent.ToString()));
+                var res = listCurDepthRelations.Where(elt => elt.Elements().Any(e => e.Attribute("Text").Value == parent.ToString()));
                 StackNodes.Push(res.ToList());
             }
             else
@@ -471,7 +489,7 @@ namespace ParallelResourcer
             nodeParent.Add(new XAttribute("Expanded", "True"));
             var list = new List<XElement>();
 
-            if (children != null && children.Count>0)
+            if (children != null && children.Count > 0)
                 foreach (var child in children)
                 {
                     var nodeChild = new XElement("Node", "");
@@ -485,9 +503,9 @@ namespace ParallelResourcer
             else
             //StackNodes.Push(nodeParent);
             {
-                
+
                 list.Add(nodeParent);
-                
+
             }
             return list;
         }
@@ -520,15 +538,16 @@ namespace ParallelResourcer
                 list.Add(nodeParent);
 
             }
-            return list;          
+            return list;
 
         }
-        
+
         public static Tree<string> CreateTestNaryTree()
         {
             var testTree = new Tree<string>
             {
                 Data = "root",
+                #region subtree root
                 NTree = new Tree<string>[]
                 {
                     new Tree<string>
@@ -551,7 +570,12 @@ namespace ParallelResourcer
                               Data = "S22",
                               NTree = new Tree<string>[]
                              {
-                                new Tree<string>{ Data = "S41"},
+                                new Tree<string>{ Data = "S41",
+                                NTree = new Tree<string>[]
+                                {
+                                    new Tree<string>{ Data = "S51"},
+                                    new Tree<string>{ Data = "S52"}
+                                }},
                                 new Tree<string>{ Data = "S42"}
                              }
                           }
@@ -567,8 +591,9 @@ namespace ParallelResourcer
                             new Tree<string>{ Data = "Sp"},
                         }
                     },
-                    new Tree<string>{ Data = "S31"}
+                    new Tree<string>{ Data = "S41"}
                 }
+                #endregion
             };
 
             return testTree;
