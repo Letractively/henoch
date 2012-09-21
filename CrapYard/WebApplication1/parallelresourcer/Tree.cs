@@ -197,6 +197,7 @@ namespace ParallelResourcer
             Task.WaitAll(task);
 
         }
+
         public static void WalkNaryTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue, IList<TKeyValue>> action)
         {
             if (root == null)
@@ -217,6 +218,34 @@ namespace ParallelResourcer
                 children.Add(root.NTree[i].Data);
             }
             action(root.Data, children);
+        }
+
+        public static Tree<string> CreateParseTree(XElement parent, Action<XElement> action)
+        {
+            if (parent == null)
+                return null;
+
+            if (parent.Elements() != null && parent.Elements().Count() == 0)
+            {
+                action(parent);
+                Tree<string> leaf = new Tree<string>() { Data = parent.Attribute("Text").Value };
+                return leaf;
+            }
+            int countNodes = parent.Elements().Count();
+            Tree<string> parseTree = new Tree<string>() { Data = parent.Attribute("Text").Value};
+            // create subtrees
+            parseTree.NTree = new List<Tree<string>>();
+
+            for (int i = 0; i < countNodes; i++)
+            {
+                XElement child = parent.Elements().ToList()[i];
+                action(parent);
+                //travelsal of children.
+
+                parseTree.NTree.Add(CreateParseTree(child, action));
+            }
+
+            return parseTree;
         }
         public static void WalkNaryTree<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action)
         {

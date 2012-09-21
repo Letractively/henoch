@@ -146,10 +146,10 @@ namespace Repository
             //this.AddSubsidiary("123", "c123");
 
             var testTree = Tree<string>.CreateTestNaryTree();
-            CreateTestdictionary(testTree);
+            CreateTestdictionary(testTree,  Companies);
         }
 
-        private void CreateTestdictionary(Tree<string> outerTree)
+        private void CreateTestdictionary(Tree<string> outerTree,  ConcurrentDictionary<string,IList<string>> dictionary)
         {
             var nTree = outerTree.NTree;
             if (nTree != null)
@@ -158,21 +158,21 @@ namespace Repository
                                where !string.IsNullOrEmpty(n.Data)
                                select n.Data;
                 IList<string> list = null;
-                if ((Companies.TryGetValue(outerTree.Data, out list)))
-                    Companies.TryUpdate(outerTree.Data, children.ToList<string>(), null);
+                if ((dictionary.TryGetValue(outerTree.Data, out list)))
+                    dictionary.TryUpdate(outerTree.Data, children.ToList<string>(), null);
                 else
-                    Companies.TryAdd(outerTree.Data, children.ToList<string>());
+                    dictionary.TryAdd(outerTree.Data, children.ToList<string>());
 
                 foreach (var tree in nTree)
                 {
-                    CreateTestdictionary(tree);
+                    CreateTestdictionary(tree,  dictionary);
                 }
             }
             else
             {
                 IList<string> list = null;
-                if (!(Companies.TryGetValue(outerTree.Data, out list)))
-                    Companies.TryAdd(outerTree.Data, null);
+                if (!(dictionary.TryGetValue(outerTree.Data, out list)))
+                    dictionary.TryAdd(outerTree.Data, null);
             }
 
         }
@@ -246,11 +246,62 @@ namespace Repository
                     }
 
                     result.Add(bottomUpTree);
-                    //NOTE: 2 roots are possible, result.Add(topDownTree);
+                    CreateTestCorporate(result);
                 }
             }
             return result.ToString();
         }
+        /// <summary>
+        /// Only for testing.
+        /// </summary>
+        /// <param name="result"></param>
+        private void CreateTestCorporate(XElement result)
+        {
+            //NOTE: 2 roots are possible, result.Add(newTesttree);
+            XElement xml = XElement.Parse(@"
+                      <node Text='root2'>
+                        <node Text='Ahold'>
+                            <node Text='SuperMarkt1'>
+                            </node> 
+                            <node Text='SuperMarkt2'>
+                            </node> 
+                        </node>   
+                        <node Text='Shell'>
+                            <node Text='Q8'>
+                            </node>   
+                            <node Text='Esso'>
+                            </node>   
+                        </node>   
+                        <node Text='ING'>
+                            <node Text='Shell'>
+                            </node>   
+                            <node Text='Ahold'>
+                            </node>   
+                        </node>   
+                      </node>   
+                    ");
+            IList<XElement> testCorporate = CreateTestCorporateList(xml);
+            result.Add(testCorporate);
+        }
+
+        private IList<XElement> CreateTestCorporateList(XElement xml)
+        {
+            var testTree = Tree<string>.CreateParseTree(xml, CreateXElts);
+            ConcurrentDictionary<string, IList<string>> testCompanies = new ConcurrentDictionary<string, IList<string>>();
+            CreateTestdictionary(testTree, testCompanies);
+
+            var testSet = Tree<string>.CreateNTree(xml.Attribute("Text").Value, testCompanies, Tree<string>.GetChildren,
+                                                    Tree<string>.TransFormXSubTreeTopDown);
+            IList<XElement> testCorporate;
+            Tree<string>.StackNodes.TryPop(out testCorporate);
+            return testCorporate;
+        }
+
+        private void CreateXElts(XElement newTestTree)
+        {
+            //dummy;
+        }
+
 
     }
 }
