@@ -292,6 +292,20 @@ namespace ParallelResourcer
             return parents.ToList<TKeyValue>();
         }
 
+        public static TKeyValue GetRoot(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
+        {
+            TKeyValue parent = node;
+
+            var parents = GetParents(node, dictionary);
+            if (parents!= null && parents.Count>0)
+            {
+                parent = GetRoot(parents[0], dictionary);
+            }
+
+            return parent;
+        }
+
+
         public static IList<TKeyValue> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary,
                                                      Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXElements)
         {
