@@ -246,7 +246,13 @@ namespace Repository
                     }
 
                     result.Add(bottomUpTree);
+
+                    #region create test corporate
                     CreateTestCorporate(result);
+                    IList<XElement> testCorporate;
+                    Tree<string>.StackNodes.TryPop(out testCorporate);
+                    result.Add(testCorporate);
+                    #endregion
                 }
             }
             return result.ToString();
@@ -280,21 +286,22 @@ namespace Repository
                         </node>   
                       </node>   
                     ");
-            IList<XElement> testCorporate = CreateTestCorporateList(xml);
-            result.Add(testCorporate);
-        }
+            
+            CreateTestCorporateList(xml);
 
-        private IList<XElement> CreateTestCorporateList(XElement xml)
+        }
+        /// <summary>
+        /// Creates a new corporate on the stack of the Tree
+        /// </summary>
+        /// <param name="xml"></param>
+        private void CreateTestCorporateList(XElement xml)
         {
             var testTree = Tree<string>.CreateParseTree(xml, CreateXElts);
             ConcurrentDictionary<string, IList<string>> testCompanies = new ConcurrentDictionary<string, IList<string>>();
-            CreateTestdictionary(testTree, testCompanies);
+            CreateTestdictionary(testTree, Companies);
 
-            var testSet = Tree<string>.CreateNTree(xml.Attribute("Text").Value, testCompanies, Tree<string>.GetChildren,
+            var testSet = Tree<string>.CreateNTree(xml.Attribute("Text").Value, Companies, Tree<string>.GetChildren,
                                                     Tree<string>.TransFormXSubTreeTopDown);
-            IList<XElement> testCorporate;
-            Tree<string>.StackNodes.TryPop(out testCorporate);
-            return testCorporate;
         }
 
         private void CreateXElts(XElement newTestTree)
