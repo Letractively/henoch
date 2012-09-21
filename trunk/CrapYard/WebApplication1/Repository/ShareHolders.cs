@@ -213,55 +213,33 @@ namespace Repository
         /// <returns></returns>
         public string CreateXMLOrganoTreeView(string companyPOV)
         {
+
             XElement result = new XElement("Tree");
+            #region create test corporate
+            CreateTestCorporate();
+            #endregion
+
             IList<string> subsidiariesPOV;
             if (Companies.TryGetValue(companyPOV, out subsidiariesPOV))
             {
-                var shareHolders = Tree<string>.CreateNTree(companyPOV, Companies, Tree<string>.GetParents,
-                                                            Tree<string>.TransFormXSubTreeBottomUp);
 
-                var subsidiaries = Tree<string>.CreateNTree(companyPOV, Companies, Tree<string>.GetChildren,
+                string root = Tree<string>.GetRoot(companyPOV, Companies);
+                Tree<string>.CreateNTree(root, Companies, Tree<string>.GetChildren,
                                                             Tree<string>.TransFormXSubTreeTopDown);
 
                 IList<XElement> topDownTree;
-                IList<XElement> bottomUpTree;
 
                 Tree<string>.StackNodes.TryPop(out topDownTree);
-                Tree<string>.StackNodes.TryPop(out bottomUpTree);
 
-                var targetXElts = (bottomUpTree.First().Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
-                var childrenTarget = topDownTree.First().Elements();
-
-                if (targetXElts.Count() == 0)
-                {
-                    bottomUpTree.First().Add(childrenTarget);
-                    result.Add(bottomUpTree);
-                }
-                else
-                {
-                    foreach (var elts in targetXElts)
-                    {
-
-                        elts.Add(childrenTarget);
-                    }
-
-                    result.Add(bottomUpTree);
-
-                    #region create test corporate
-                    CreateTestCorporate(result);
-                    IList<XElement> testCorporate;
-                    Tree<string>.StackNodes.TryPop(out testCorporate);
-                    result.Add(testCorporate);
-                    #endregion
-                }
+                result.Add(topDownTree.First());
             }
             return result.ToString();
         }
         /// <summary>
-        /// Only for testing.
+        /// Only for testing. A dictionary will be extended with xml
         /// </summary>
         /// <param name="result"></param>
-        private void CreateTestCorporate(XElement result)
+        private void CreateTestCorporate()
         {
             //NOTE: 2 roots are possible, result.Add(newTesttree);
             XElement xml = XElement.Parse(@"
@@ -287,21 +265,19 @@ namespace Repository
                       </node>   
                     ");
             
-            CreateTestCorporateList(xml);
+            InsertTestCorporateIntoDictionary(xml);
 
         }
         /// <summary>
-        /// Creates a new corporate on the stack of the Tree
+        ///
         /// </summary>
         /// <param name="xml"></param>
-        private void CreateTestCorporateList(XElement xml)
+        private void InsertTestCorporateIntoDictionary(XElement xml)
         {
             var testTree = Tree<string>.CreateParseTree(xml, CreateXElts);
             ConcurrentDictionary<string, IList<string>> testCompanies = new ConcurrentDictionary<string, IList<string>>();
             CreateTestdictionary(testTree, Companies);
 
-            var testSet = Tree<string>.CreateNTree(xml.Attribute("Text").Value, Companies, Tree<string>.GetChildren,
-                                                    Tree<string>.TransFormXSubTreeTopDown);
         }
 
         private void CreateXElts(XElement newTestTree)
