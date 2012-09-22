@@ -216,16 +216,22 @@ namespace TestParallelPatterns
                              
             }
             );
-            shareHolders = Tree<string>.CreateNTree(searchValue, _TestDictionary, Tree<string>.GetParents,
+            IList<XElement> outerTrack = new List<XElement>() 
+                {  
+                    new XElement("Node",
+                            new XAttribute("Text","TrackRoot"),
+                            new XAttribute("Expanded", "True"))
+                };
+            shareHolders = new Tree<string>().CreateNTree(outerTrack, searchValue, _TestDictionary, Tree<string>.GetParents,
                                                         Tree<string>.TransFormXSubTreeBottomUp);   
             Assert.AreEqual(11, _TestDictionary.Count);
             var t2 = Task.Factory.StartNew(() =>
             {
-                     
+
             }
             );
             Task.WaitAll(t1, t2);
-            subsidiaries = Tree<string>.CreateNTree(searchValue, _TestDictionary, Tree<string>.GetChildren,
+            subsidiaries = new Tree<string>().CreateNTree(outerTrack, searchValue, _TestDictionary, Tree<string>.GetChildren,
                                                                 Tree<string>.TransFormXSubTreeTopDown);         
 
             Assert.AreEqual(2, Tree<string>.StackNodes.Count(), "2 subtrees are expected: the bottomup tree and the topdown.");

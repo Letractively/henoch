@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace ParallelResourcer
 {
@@ -82,6 +83,11 @@ namespace ParallelResourcer
 
         static Tree()
         {
+            InitializeObjects();
+        }
+
+        private static void InitializeObjects()
+        {
             Queue = new ConcurrentQueue<TKeyValue>();
             StackNodes = new ConcurrentStack<IList<XElement>>();
             QueueNodes = new ConcurrentQueue<XElement>();
@@ -91,6 +97,8 @@ namespace ParallelResourcer
         public Tree()
         {
             IsUnique = true;
+
+            Nodes = new ConcurrentDictionary<TKeyValue, TKeyValue>();
         }
         public static IEnumerable<Tree<TKeyValue>> Iterate(Tree<TKeyValue> head)
         {
@@ -292,7 +300,7 @@ namespace ParallelResourcer
             return parents.ToList<TKeyValue>();
         }
 
-        public static TKeyValue GetRoot(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
+        public TKeyValue GetRoot(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             TKeyValue parent = node;
 
@@ -306,14 +314,14 @@ namespace ParallelResourcer
         }
 
 
-        public static IList<TKeyValue> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary,
+        public static IList<XElement> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary,
                                                      Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXElements)
         {
-            var parents = GetParents(node, dictionary);
+            var parents = GetChildren (node, dictionary);
 
-            var list = CreateXmlElementsBottomUp(node, parents);
+            var list = CreateXmlElementsTopDown(node, parents);
 
-            return parents.ToList<TKeyValue>();
+            return list;
         }
         public static IList<TKeyValue> GetChildren(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
@@ -390,7 +398,7 @@ namespace ParallelResourcer
         /// <param name="dictionary"></param>
         /// <param name="GetRelations"></param>
         /// <returns></returns>
-        public static Tree<TKeyValue> CreateNTree(TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
+        public Tree<TKeyValue> CreateNTree(IList<XElement> outerTrack, TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
                                                     Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations,
                                                     Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormXsubTree)
         {
@@ -408,11 +416,45 @@ namespace ParallelResourcer
                 nTree.NTree = new List<Tree<TKeyValue>>();
                 foreach (var parent in parents)
                 {
-                    nTree.NTree.Add(CreateNTree(parent, outerdictionary, GetRelations, TransFormXsubTree));
 
-                    TransFormXsubTree(rootValue, parent, parents);
+                    var track = GetParents(rootValue, outerdictionary, CreateXmlElementsTopDown);
+                    var outerTrackEndNode = outerTrack.Descendants().Where(e => e.Attribute("Text").Value == rootValue.ToString());
+                    var descendants = track.Where(e => e.Descendants().Any(a => a.Attribute("Text").Value == parent.ToString()));
+                    
+                    bool isVisitedBefore = outerTrack.Descendants().Any(d => d.Attribute("Text").Value == parent.ToString());
+                    if (nTree.IsUnique && !isVisitedBefore)
+                    {
+                        outerTrackEndNode.First().Add(descendants.Descendants());
+                        nTree.NTree.Add(CreateNTree(outerTrack, parent, outerdictionary, GetRelations, TransFormXsubTree));
+
+                        TransFormXsubTree(rootValue, parent, parents);
+
+                        var subTreeTrack = outerTrack.Descendants().Where(d => d.Attribute("Text").Value == nTree.Key.ToString());
+                        subTreeTrack.First().Elements().Remove();
+
+                    }
+                    else
+                    {
+                        var parentXNode = new XElement("Node",
+                                new XAttribute("Text", parent.ToString()),
+                                new XAttribute("Expanded", "True"),
+                                new XAttribute("BackColor", "Red"));
+                        var childrenParent = GetChildren(parent, outerdictionary);
+
+                        foreach (var child in childrenParent)
+                        {
+                            parentXNode.Add(new XElement("Node",
+                                new XAttribute("Text", child.ToString()),
+                                new XAttribute("Expanded", "True"),
+                                new XAttribute("BackColor", "Red")));
+                        }
+                        //push node with LEAFs on stack
+                        StackNodes.Push(new List<XElement>() {parentXNode});
+                    }
+
+
                 }
-                CreateOneSubTree(parents.Count());
+                if (parentCount > 0)CreateOneSubTree(parentCount);
             }
             else
             {
@@ -444,8 +486,18 @@ namespace ParallelResourcer
             {
                 IList<XElement> nextStackItem;
                 Tree<string>.StackNodes.TryPop(out nextStackItem);
-                duplicateCandidates.Add(nextStackItem.Elements().First().Attribute("Text").Value);
-                stackItem.First().Add(nextStackItem.Descendants().First());
+
+                bool isLeaf = nextStackItem.Elements().Count() == 0;
+                if (!isLeaf)
+                {
+                    duplicateCandidates.Add(nextStackItem.Elements().First().Attribute("Text").Value);
+                    stackItem.First().Add(nextStackItem.Descendants().First());
+                }
+                else
+                {
+                    Debug.Assert(isLeaf);
+                    stackItem.Add(nextStackItem.First());
+                }
             }
 
             ///Try to disable the duplicates in any subtree
@@ -455,7 +507,8 @@ namespace ParallelResourcer
 
                 foreach (var duplicate in duplicates)
                 {
-                    duplicate.Attribute("Expanded").Value = "False";
+                    duplicate.Attribute("Expanded").Value = "False";//ForeColor="#FF8000" 
+                    duplicate.SetAttributeValue("BackColor", "Orange");//ForeColor="#FF8000" 
                 }
             }
             Tree<string>.StackNodes.Push(stackItem);
