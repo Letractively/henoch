@@ -230,8 +230,10 @@ namespace Repository
                     new XElement("Node",
                             new XAttribute("Text","TrackRoot" + Guid.NewGuid().ToString()),
                             new XAttribute("Expanded", "True"),
+                            new XAttribute("Font-Italic", "False"),
                             new XElement("Node",
                                 new XAttribute("Text", root),
+                                new XAttribute("Font-Italic", "False"),
                                 new XAttribute("Expanded", "True")))
                 };
                 new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
@@ -246,8 +248,9 @@ namespace Repository
 
                 for (int i = 0; i < foundList.Count; i++)
                 {
-                    XElement newNode = new XElement("Node",
+                    XElement newNode = new XElement("Node", 
                             new XAttribute("Text", companyPOV),
+                            new XAttribute("Font-Italic", "False"),
                             new XAttribute("Expanded", foundList[i].Attribute("Expanded").Value),
                             new XAttribute("BackColor", "Red"));
                     newNode.Add(foundList[i].Elements());
