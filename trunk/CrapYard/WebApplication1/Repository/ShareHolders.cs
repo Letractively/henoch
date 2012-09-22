@@ -223,8 +223,18 @@ namespace Repository
             if (Companies.TryGetValue(companyPOV, out subsidiariesPOV))
             {
 
-                string root = Tree<string>.GetRoot(companyPOV, Companies);
-                Tree<string>.CreateNTree(root, Companies, Tree<string>.GetChildren,
+                string root = new Tree<string>().GetRoot(companyPOV, Companies);
+
+                IList<XElement> outerTrack = new List<XElement>() 
+                {  
+                    new XElement("Node",
+                            new XAttribute("Text","TrackRoot" + Guid.NewGuid().ToString()),
+                            new XAttribute("Expanded", "True"),
+                            new XElement("Node",
+                                new XAttribute("Text", root),
+                                new XAttribute("Expanded", "True")))
+                };
+                new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
                                                             Tree<string>.TransFormXSubTreeTopDown);
 
                 IList<XElement> topDownTree;
@@ -245,7 +255,7 @@ namespace Repository
             XElement xml = XElement.Parse(@"
                       <node Text='root2'>
                         <node Text='Ahold'>
-                            <node Text='SuperMarkt1'>
+                            <node Text='ING'>
                             </node> 
                             <node Text='SuperMarkt2'>
                             </node> 
