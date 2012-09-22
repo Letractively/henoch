@@ -205,7 +205,7 @@ namespace TestParallelPatterns
             string searchValue = "S211";
             var NTree = CreateTasksForNTree();
             CreateTestdictionary(NTree);
-            Assert.AreEqual(11, _TestDictionary.Count);
+            Assert.AreEqual(12, _TestDictionary.Count);
 
             Tree<string> shareHolders = new Tree<string>();
             Tree<string> subsidiaries = new Tree<string>();
@@ -219,12 +219,15 @@ namespace TestParallelPatterns
             IList<XElement> outerTrack = new List<XElement>() 
                 {  
                     new XElement("Node",
-                            new XAttribute("Text","TrackRoot"),
-                            new XAttribute("Expanded", "True"))
+                            new XAttribute("Text","TrackRoot" + Guid.NewGuid().ToString()),
+                            new XAttribute("Expanded", "True"),
+                            new XElement("Node",
+                                new XAttribute("Text", searchValue),
+                                new XAttribute("Expanded", "True")))
                 };
             shareHolders = new Tree<string>().CreateNTree(outerTrack, searchValue, _TestDictionary, Tree<string>.GetParents,
                                                         Tree<string>.TransFormXSubTreeBottomUp);   
-            Assert.AreEqual(11, _TestDictionary.Count);
+            Assert.AreEqual(12, _TestDictionary.Count);
             var t2 = Task.Factory.StartNew(() =>
             {
 
