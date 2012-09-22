@@ -450,11 +450,14 @@ namespace ParallelResourcer
                         }
                         //push node with LEAFs on stack
                         StackNodes.Push(new List<XElement>() {parentXNode});
+
+                        TransFormXsubTree(rootValue, parent, parents);
                     }
 
 
                 }
-                if (parentCount > 0)CreateOneSubTree(parentCount);
+                if (parentCount > 0)
+                    CreateOneSubTree(parentCount);
             }
             else
             {
