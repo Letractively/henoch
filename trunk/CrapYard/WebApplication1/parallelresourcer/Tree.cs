@@ -439,15 +439,17 @@ namespace ParallelResourcer
                                 new XAttribute("Text", parent.ToString()),
                                 new XAttribute("Expanded", "True"),
                                 new XAttribute("BackColor", "Red"));
-                        var childrenParent = GetChildren(parent, outerdictionary);
+                        #region removed add children
+                        //var childrenParent = GetChildren(parent, outerdictionary);
 
-                        foreach (var child in childrenParent)
-                        {
-                            parentXNode.Add(new XElement("Node",
-                                new XAttribute("Text", child.ToString()),
-                                new XAttribute("Expanded", "True"),
-                                new XAttribute("BackColor", "Red")));
-                        }
+                        //foreach (var child in childrenParent)
+                        //{
+                        //    parentXNode.Add(new XElement("Node",
+                        //        new XAttribute("Text", child.ToString()),
+                        //        new XAttribute("Expanded", "True"),
+                        //        new XAttribute("BackColor", "Red")));
+                        //}
+                        #endregion
                         //push node with LEAFs on stack
                         StackNodes.Push(new List<XElement>() {parentXNode});
 
