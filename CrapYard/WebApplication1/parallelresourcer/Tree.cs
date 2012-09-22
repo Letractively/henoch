@@ -385,6 +385,7 @@ namespace ParallelResourcer
                     {  
                         new XElement("Node",
                             new XAttribute("Text", rootValue.ToString()),
+                            new XAttribute("Font-Italic", "False"),
                             new XAttribute("Expanded", "True"))
                     });
             }
@@ -414,7 +415,8 @@ namespace ParallelResourcer
             {
                 // create subtrees
                 nTree.NTree = new List<Tree<TKeyValue>>();
-                foreach (var parent in parents)
+                var sortedParents = parents.OrderByDescending(p => p.ToString());
+                foreach (var parent in sortedParents)
                 {
 
                     var track = GetParents(rootValue, outerdictionary, CreateXmlElementsTopDown);
@@ -437,6 +439,7 @@ namespace ParallelResourcer
                     {
                         var parentXNode = new XElement("Node",
                                 new XAttribute("Text", parent.ToString()),
+                                new XAttribute("Font-Italic", "False"),
                                 new XAttribute("Expanded", "True"),
                                 new XAttribute("BackColor", "Red"));
                         #region removed add children
@@ -446,6 +449,7 @@ namespace ParallelResourcer
                         //{
                         //    parentXNode.Add(new XElement("Node",
                         //        new XAttribute("Text", child.ToString()),
+                        //        new XAttribute("Font-Italic", "False"),
                         //        new XAttribute("Expanded", "True"),
                         //        new XAttribute("BackColor", "Red")));
                         //}
@@ -466,8 +470,9 @@ namespace ParallelResourcer
                 //push LEAF on stack
                 StackNodes.Push(new List<XElement>() 
                     {  
-                        new XElement("Node",
+                        new XElement("Node", 
                             new XAttribute("Text", rootValue.ToString()),
+                            new XAttribute("Font-Italic", "False"),
                             new XAttribute("Expanded", "True"))
                     });
             }
@@ -513,7 +518,7 @@ namespace ParallelResourcer
                 foreach (var duplicate in duplicates)
                 {
                     duplicate.Attribute("Expanded").Value = "False";//ForeColor="#FF8000" 
-                    //duplicate.SetAttributeValue("BackColor", "Orange");//ForeColor="#FF8000" 
+                    duplicate.Attribute("Font-Italic").Value = "True";//ForeColor="#FF8000" 
                 }
             }
             Tree<string>.StackNodes.Push(stackItem);
@@ -585,7 +590,8 @@ namespace ParallelResourcer
         public static IList<XElement> CreateXmlElementsBottomUp(TKeyValue parent, IList<TKeyValue> children)
         {
 
-            var nodeParent = new XElement("Node");
+            var nodeParent = new XElement("Node", 
+                new XAttribute("Font-Italic", "False"));
             nodeParent.Add(new XAttribute("Text", parent));
             nodeParent.Add(new XAttribute("Expanded", "True"));
             var list = new List<XElement>();
@@ -593,7 +599,7 @@ namespace ParallelResourcer
             if (children != null && children.Count > 0)
                 foreach (var child in children)
                 {
-                    var nodeChild = new XElement("Node", "");
+                    var nodeChild = new XElement("Node", new XAttribute("Font-Italic", "False"));
                     nodeChild.Add(new XAttribute("Text", child));
                     nodeChild.Add(new XAttribute("Expanded", "True"));
 
@@ -617,11 +623,11 @@ namespace ParallelResourcer
             if (children != null && children.Count > 0)
                 foreach (var child in children)
                 {
-                    var nodeParent = new XElement("Node");
+                    var nodeParent = new XElement("Node", new XAttribute("Font-Italic", "False"));
                     nodeParent.Add(new XAttribute("Text", parent));
                     nodeParent.Add(new XAttribute("Expanded", "True"));
 
-                    var nodeChild = new XElement("Node", "");
+                    var nodeChild = new XElement("Node", new XAttribute("Font-Italic", "False"));
                     nodeChild.Add(new XAttribute("Text", child));
                     nodeChild.Add(new XAttribute("Expanded", "True"));
 
@@ -632,7 +638,7 @@ namespace ParallelResourcer
             else
             //StackNodes.Push(nodeParent);
             {
-                var nodeParent = new XElement("Node");
+                var nodeParent = new XElement("Node", new XAttribute("Font-Italic", "False"));
                 nodeParent.Add(new XAttribute("Text", parent));
                 nodeParent.Add(new XAttribute("Expanded", "True"));
 

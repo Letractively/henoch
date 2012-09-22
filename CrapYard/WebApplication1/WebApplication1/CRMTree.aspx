@@ -23,7 +23,7 @@
                 <telerik:RadButton ID="RadButton1" runat="server" Text="RadButton">
         </telerik:RadButton>
     <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server">
-        <telerik:RadTreeView ID="RadTreeView1" Runat="server" Skin="Windows7">
+        <telerik:RadTreeView ID="RadTreeView1" Runat="server" Skin="Outlook">
         </telerik:RadTreeView>
         <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" 
             SelectMethod="GetSubsidiaries" TypeName="Repository.ShareHolders">
