@@ -250,9 +250,9 @@ namespace Repository
                 {
                     XElement newNode = new XElement("Node", 
                             new XAttribute("Text", companyPOV),
-                            new XAttribute("Font-Italic", "False"),
+                            new XAttribute("Font-Italic", "True"),
                             new XAttribute("Expanded", foundList[i].Attribute("Expanded").Value),
-                            new XAttribute("BackColor", "Red"));
+                            new XAttribute("BackColor", "Gold"));
                     newNode.Add(foundList[i].Elements());
                     foundList[i].ReplaceWith(newNode);
                 }
