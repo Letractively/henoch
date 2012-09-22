@@ -513,7 +513,7 @@ namespace ParallelResourcer
                 foreach (var duplicate in duplicates)
                 {
                     duplicate.Attribute("Expanded").Value = "False";//ForeColor="#FF8000" 
-                    duplicate.SetAttributeValue("BackColor", "Orange");//ForeColor="#FF8000" 
+                    //duplicate.SetAttributeValue("BackColor", "Orange");//ForeColor="#FF8000" 
                 }
             }
             Tree<string>.StackNodes.Push(stackItem);

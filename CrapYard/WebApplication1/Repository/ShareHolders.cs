@@ -241,7 +241,20 @@ namespace Repository
 
                 Tree<string>.StackNodes.TryPop(out topDownTree);
 
-                result.Add(topDownTree.First());
+                var xTree = topDownTree.First();
+                var foundList = (xTree.Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
+
+                for (int i = 0; i < foundList.Count; i++)
+                {
+                    XElement newNode = new XElement("Node",
+                            new XAttribute("Text", companyPOV),
+                            new XAttribute("Expanded", foundList[i].Attribute("Expanded").Value),
+                            new XAttribute("BackColor", "Red"));
+                    newNode.Add(foundList[i].Elements());
+                    foundList[i].ReplaceWith(newNode);
+                }
+
+                result.Add(xTree);
             }
             return result.ToString();
         }
