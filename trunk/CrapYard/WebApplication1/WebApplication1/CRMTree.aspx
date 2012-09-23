@@ -4,10 +4,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <link href="Styles/RadControls.css" rel="stylesheet" type="text/css" />
     <title></title>
 </head>
 <body>
+    
     <form id="form1" runat="server">
+        
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
         <Scripts>
             <%--Needed for JavaScript IntelliSense in VS2010--%>
@@ -19,11 +22,15 @@
     </telerik:RadScriptManager>
     <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" />
         <telerik:RadTextBox ID="RadTextBox1" Runat="server">
-        </telerik:RadTextBox>
+        </telerik:RadTextBox >
                 <telerik:RadButton ID="RadButton1" runat="server" Text="RadButton">
         </telerik:RadButton>
     <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server">
-        <telerik:RadTreeView ID="RadTreeView1" Runat="server" Skin="Outlook">
+        <telerik:RadTreeView ID="RadTreeView1" Runat="server" Skin="Outlook" >
+            
+            <%--<Nodes>
+                <telerik:RadTreeNode Text="dewd" ></telerik:RadTreeNode>
+            </Nodes>--%>
         </telerik:RadTreeView>
         <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" 
             SelectMethod="GetSubsidiaries" TypeName="Repository.ShareHolders">

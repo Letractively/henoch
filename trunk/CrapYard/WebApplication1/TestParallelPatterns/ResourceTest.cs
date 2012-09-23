@@ -221,6 +221,7 @@ namespace TestParallelPatterns
                     new XElement("Node",
                             new XAttribute("Text","TrackRoot" + Guid.NewGuid().ToString()),
                             new XAttribute("Expanded", "True"),
+                            new XAttribute("Font-Italic", "False"),
                             new XElement("Node",
                                 new XAttribute("Text", searchValue),
                                 new XAttribute("Expanded", "True")))

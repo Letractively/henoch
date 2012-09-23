@@ -100,6 +100,7 @@
     <Content Include="App_Data\RadCaptcha\Z.wav" />
     <Content Include="App_Data\TelerikVSX.mdf" />
     <Content Include="CRMTree.aspx" />
+    <Content Include="Styles\RadControls.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -218,7 +219,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
