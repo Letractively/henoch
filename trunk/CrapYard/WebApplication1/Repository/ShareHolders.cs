@@ -290,6 +290,8 @@ namespace Repository
                             </node>   
                             <node Text='Esso'>
                             </node>   
+                            <node Text='Stern Beheer B.V.'>
+                            </node> 
                         </node>   
                         <node Text='ING'>
                             <node Text='Shell'>
