@@ -220,6 +220,8 @@ namespace Repository
             #endregion
 
             IList<string> subsidiariesPOV;
+            string parsedSearchItem = ParseSearchString(companyPOV);
+            //TODO: ParseSearchString
             if (Companies.TryGetValue(companyPOV, out subsidiariesPOV))
             {
 
@@ -250,16 +252,23 @@ namespace Repository
                 {
                     XElement newNode = new XElement("Node", 
                             new XAttribute("Text", companyPOV),
-                            new XAttribute("CssClass", "found"),
+                            new XAttribute("CssClass", foundList[i].Attribute("CssClass").Value),
                             new XAttribute("Expanded", foundList[i].Attribute("Expanded").Value),
                             new XAttribute("BackColor", "Gold"));
                     newNode.Add(foundList[i].Elements());
                     foundList[i].ReplaceWith(newNode);
                 }
 
+                //try to find leafs that are duplicates
+               
                 result.Add(xTree);
             }
             return result.ToString();
+        }
+
+        private string ParseSearchString(string companyPOV)
+        {
+            return String.Empty;
         }
         /// <summary>
         /// Only for testing. A dictionary will be extended with xml
