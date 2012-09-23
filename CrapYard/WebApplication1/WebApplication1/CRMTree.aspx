@@ -20,12 +20,98 @@
             <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />
         </Scripts>
     </telerik:RadScriptManager>
-    <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" />
-        <telerik:RadTextBox ID="RadTextBox1" Runat="server">
-        </telerik:RadTextBox >
-                <telerik:RadButton ID="RadButton1" runat="server" Text="RadButton">
-        </telerik:RadButton>
+    <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" >
+
+        </telerik:RadAjaxLoadingPanel>
+
+
     <telerik:RadAjaxPanel ID="RadAjaxPanel1" runat="server">
+
+            <table >
+            <tr>
+                <td>        <telerik:RadTextBox ID="RadTextBox1" Runat="server" 
+            >
+        </telerik:RadTextBox ></td>
+                <td>
+                                    <telerik:RadButton ID="RadButton1" runat="server" Text="RadButton" style="top: 0px; left: 0px" 
+            >
+        </telerik:RadButton></td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <telerik:RadGrid ID="RadGrid1" runat="server" AllowPaging="True" 
+                        CellSpacing="0" DataSourceID="ZoekSqlDataSource" GridLines="None" Width="215px">
+                        <ClientSettings>
+                            <Selecting CellSelectionMode="None" />
+                        </ClientSettings>
+                        <MasterTableView AutoGenerateColumns="False" DataSourceID="ZoekSqlDataSource">
+                            <CommandItemSettings ExportToPdfText="Export to PDF" />
+                            <RowIndicatorColumn FilterControlAltText="Filter RowIndicator column" 
+                                Visible="True">
+                            </RowIndicatorColumn>
+                            <ExpandCollapseColumn FilterControlAltText="Filter ExpandColumn column" 
+                                Visible="True">
+                            </ExpandCollapseColumn>
+                            <Columns>
+                                <telerik:GridBoundColumn DataField="prio" 
+                                    FilterControlAltText="Filter prio column" HeaderText="prio" 
+                                    SortExpression="prio" UniqueName="prio">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="custname" 
+                                    FilterControlAltText="Filter custname column" HeaderText="custname" 
+                                    SortExpression="custname" UniqueName="custname">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Voornaam" 
+                                    FilterControlAltText="Filter Voornaam column" HeaderText="Voornaam" 
+                                    SortExpression="Voornaam" UniqueName="Voornaam">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="tussenvoegsel" 
+                                    FilterControlAltText="Filter tussenvoegsel column" HeaderText="tussenvoegsel" 
+                                    SortExpression="tussenvoegsel" UniqueName="tussenvoegsel">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="AchterNaam" 
+                                    FilterControlAltText="Filter AchterNaam column" HeaderText="AchterNaam" 
+                                    SortExpression="AchterNaam" UniqueName="AchterNaam">
+                                </telerik:GridBoundColumn>
+                            </Columns>
+                            <EditFormSettings>
+                                <EditColumn FilterControlAltText="Filter EditCommandColumn column">
+                                </EditColumn>
+                            </EditFormSettings>
+                        </MasterTableView>
+                        <FilterMenu EnableImageSprites="False">
+                        </FilterMenu>
+                    </telerik:RadGrid>
+                </td>
+                <td>
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+        </table>
+
+
+        <asp:SqlDataSource ID="ZoekSqlDataSource" runat="server" 
+            ConnectionString="<%$ ConnectionStrings:ConnectionStringSygnionDB %>" 
+            ProviderName="<%$ ConnectionStrings:ConnectionStringSygnionDB.ProviderName %>" 
+            SelectCommand="Zoek" SelectCommandType="StoredProcedure">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="RadTextBox1" Name="term" 
+                    PropertyName="Text" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+
+
         <telerik:RadTreeView ID="RadTreeView1" Runat="server" Skin="Outlook" >
             
             <%--<Nodes>
