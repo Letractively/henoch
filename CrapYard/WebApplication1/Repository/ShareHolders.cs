@@ -268,7 +268,7 @@ namespace Repository
 
         private string ParseSearchString(string companyPOV)
         {
-            return String.Empty;
+            return String.Empty;//
         }
         /// <summary>
         /// Only for testing. A dictionary will be extended with xml
