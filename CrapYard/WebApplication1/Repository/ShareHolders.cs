@@ -278,27 +278,38 @@ namespace Repository
         {
             //NOTE: 2 roots are possible, result.Add(newTesttree);
             XElement xml = XElement.Parse(@"
-                      <node Text='root2'>
-                        <node Text='Ahold'>
-                            <node Text='ING'>
+                      <node Text='Stern Groep N.V.'>
+                        
+                        <node Text='Stern Beheer B.V.'>
+                            
+                            <node Text='SternDealers N.V.'>
+                                 <node Text='Stern 1 B.V.'>
+                                    <node Text='Stern Auto B.V.'>
+                                    </node> 
+                                 </node> 
+                                 <node Text='Stern 2 B.V.'>
+                                 </node> 
+                                 <node Text='Stern 3 B.V.'>
+                                    <node Text='Ardea Auto B.V.'>
+                                        <node Text='Ardea Rotterdam-Noord'>
+                                        </node> 
+                                    </node> 
+                                 </node> 
+                                 <node Text='Stern 4 B.V.'>
+                                    <node Text='Arend Auto'>
+                                    </node> 
+                                 </node> 
                             </node> 
-                            <node Text='SuperMarkt2'>
+                   
+                            <node Text='SternUniverseel'>
+                                 <node Text='Stern Occassions'>
+                                    <node Text='Sternplaza B.V.'>
+                                    </node> 
+                                 </node> 
                             </node> 
+
                         </node>   
-                        <node Text='Shell'>
-                            <node Text='Q8'>
-                            </node>   
-                            <node Text='Esso'>
-                            </node>   
-                            <node Text='Stern Beheer B.V.'>
-                            </node> 
-                        </node>   
-                        <node Text='ING'>
-                            <node Text='Shell'>
-                            </node>   
-                            <node Text='Ahold'>
-                            </node>   
-                        </node>   
+
                       </node>   
                     ");
             
