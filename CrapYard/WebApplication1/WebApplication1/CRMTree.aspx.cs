@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Caching;
 using Repository;
+using Telerik.Web.UI;
 
 namespace WebApplication1
 {
@@ -15,10 +16,17 @@ namespace WebApplication1
         {
             if (IsPostBack)             
             {
-                string xml = new ShareHolders().CreateXMLOrganoTreeView(RadTextBox1.Text);
-                RadTreeView1.LoadXml(xml);
+
            
             }
-         }   
+         }
+
+        protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RadGrid control = (RadGrid)sender;
+
+            string xml = new ShareHolders().CreateXMLOrganoTreeView(control.SelectedValue.ToString());
+            RadTreeView1.LoadXml(xml);
+        }   
     }
 }

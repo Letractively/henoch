@@ -30,10 +30,11 @@
             <table >
             <tr>
                 <td>        <telerik:RadTextBox ID="RadTextBox1" Runat="server" 
+                        EnableSingleInputRendering="True" LabelWidth="64px" Text="zoekwoord" 
             >
         </telerik:RadTextBox ></td>
                 <td>
-                                    <telerik:RadButton ID="RadButton1" runat="server" Text="RadButton" style="top: 0px; left: 0px" 
+                                    <telerik:RadButton ID="RadButton1" runat="server" Text="Zoek" style="top: 0px; left: 0px" 
             >
         </telerik:RadButton></td>
                 <td>
@@ -42,11 +43,14 @@
             <tr>
                 <td>
                     <telerik:RadGrid ID="RadGrid1" runat="server" AllowPaging="True" 
-                        CellSpacing="0" DataSourceID="ZoekSqlDataSource" GridLines="None" Width="215px">
-                        <ClientSettings>
-                            <Selecting CellSelectionMode="None" />
+                        AllowSorting="True" CellSpacing="0" DataSourceID="ZoekSqlDataSource" 
+                        GridLines="None" onselectedindexchanged="RadGrid1_SelectedIndexChanged" 
+                        Skin="Black" Width="215px">
+                        <ClientSettings EnablePostBackOnRowClick="True">
+                            <Selecting AllowRowSelect="True" CellSelectionMode="None" />
                         </ClientSettings>
-                        <MasterTableView AutoGenerateColumns="False" DataSourceID="ZoekSqlDataSource">
+                        <MasterTableView AllowSorting="False" AutoGenerateColumns="False" 
+                            DataKeyNames="custname" DataSourceID="ZoekSqlDataSource">
                             <CommandItemSettings ExportToPdfText="Export to PDF" />
                             <RowIndicatorColumn FilterControlAltText="Filter RowIndicator column" 
                                 Visible="True">
