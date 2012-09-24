@@ -35,6 +35,7 @@
       <HintPath>Lib\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,8 +45,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheManager.cs" />
+    <Compile Include="ISmartDataReader.cs" />
+    <Compile Include="MyAccess.cs" />
+    <Compile Include="IMyAccess.cs" />
+    <Compile Include="Dictionary\Customer.cs" />
+    <Compile Include="Dictionary\BeheerContextEntity.cs" />
+    <Compile Include="Dictionary\IAlternateKey.cs" />
+    <Compile Include="Dictionary\IBeheerContextEntity.cs" />
+    <Compile Include="Dictionary\MyExtensions.cs" />
+    <Compile Include="Dictionary\ParentKeyEntity.cs" />
+    <Compile Include="Dictionary\IBusinessObject.cs" />
     <Compile Include="ShareHolders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SmartDataReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
