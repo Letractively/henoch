@@ -44,8 +44,10 @@
                 <td>
                     <telerik:RadGrid ID="RadGrid1" runat="server" AllowPaging="True" 
                         AllowSorting="True" CellSpacing="0" DataSourceID="ZoekSqlDataSource" 
-                        GridLines="None" onselectedindexchanged="RadGrid1_SelectedIndexChanged" 
-                        Skin="Black" Width="215px">
+                        GridLines="None" ondatabound="RadGrid1_DataBound" 
+                        onitemdatabound="RadGrid1_ItemDataBound" 
+                        onselectedindexchanged="RadGrid1_SelectedIndexChanged" Skin="Black" 
+                        Width="215px">
                         <ClientSettings EnablePostBackOnRowClick="True">
                             <Selecting AllowRowSelect="True" CellSelectionMode="None" />
                         </ClientSettings>

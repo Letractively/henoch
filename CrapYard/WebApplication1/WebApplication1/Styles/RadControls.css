@@ -6,6 +6,14 @@
 {
     font-style:italic;
 }
+
+.wordfound
+{
+    font-weight:bolder;
+    color:Yellow;
+    
+}
+
 .defaultNode
 {
     font-style:normal
