@@ -57,7 +57,6 @@ namespace WebApplication1
                 if ((e.Item.ItemType == GridItemType.Item) || (e.Item.ItemType == GridItemType.AlternatingItem))
                 {
                     GridDataItem dataItem = e.Item as GridDataItem;
-                    GridColumn column = RadGrid1.MasterTableView.GetColumn("custname");
 
                     foreach (TableCell cell in dataItem.Cells)
                     {
