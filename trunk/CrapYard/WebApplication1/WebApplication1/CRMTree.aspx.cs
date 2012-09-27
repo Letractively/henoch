@@ -8,6 +8,7 @@ using Caching;
 using Repository;
 using Telerik.Web.UI;
 using System.Text;
+using System.Diagnostics;
 
 namespace WebApplication1
 {
@@ -42,6 +43,13 @@ namespace WebApplication1
             ZoekString = control.SelectedValue.ToString();
             string xml = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
             RadTreeView1.LoadXml(xml);
+
+            var nodes = RadTreeView1.GetAllNodes();
+            foreach (var node in nodes)
+            {
+                if(!string.IsNullOrEmpty( node.Value))
+                    Debug.Assert (true);
+            }
         }
 
         protected void RadGrid1_DataBound(object sender, EventArgs e)

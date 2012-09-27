@@ -35,7 +35,10 @@
                         <asp:MenuItem NavigateUrl="~/TrotterOverview.aspx" Text="Trotter Overview" 
                             Value="Trotter Overview"></asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/CRMTree.aspx" Text="Corporate Structure" 
-                            Value="Corporate Structure"></asp:MenuItem>
+                            Value="Corporate Structure">
+                            <asp:MenuItem NavigateUrl="~/MaintainRelation.aspx" Text="Maintain Relation" 
+                                Value="Maintain Relation"></asp:MenuItem>
+                        </asp:MenuItem>
                         <asp:MenuItem NavigateUrl="~/About.aspx" Text="About"/>
                     </Items>
                 </asp:Menu>
