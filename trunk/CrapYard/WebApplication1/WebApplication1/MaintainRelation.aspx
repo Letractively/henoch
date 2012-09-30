@@ -13,9 +13,122 @@
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js" />
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js" />
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />
-                 <asp:ScriptReference Path="~/Scripts/Util.js" />
+
             </Scripts>
         </telerik:RadScriptManager>
+        <telerik:RadScriptBlock runat="Server" ID="RadScriptBlock1">
+
+            <script type="text/javascript">
+
+                function onNodeDragging(sender, args) {
+                    var target = args.get_htmlElement();
+
+                    if (!target) return;
+
+                    if (target.tagName == "INPUT") {
+                        target.style.cursor = "hand";
+                    }
+                }
+
+                function dropOnHtmlElement(args) {
+                    if (droppedOnInput(args))
+                        return;
+
+                    return;
+                }
+
+                function droppedOnInput(args) {
+                    var target = args.get_htmlElement();
+                    if (target.tagName == "INPUT") {
+                        target.style.cursor = "default";
+                        target.value = args.get_sourceNode().get_text();
+                        args.set_cancel(true);
+                        return true;
+                    }
+                }
+
+                function dropOnTree(args) {
+                    var text = "";
+
+                    if (args.get_sourceNodes().length) {
+                        var i;
+                        for (i = 0; i < args.get_sourceNodes().length; i++) {
+                            var node = args.get_sourceNodes()[i];
+                            text = text + ', ' + node.get_text();
+                        }
+                    }
+                }
+
+                function clientSideEdit(sender, args) {
+                    var destinationNode = args.get_destNode();
+
+                    if (destinationNode) {
+                        var firstTreeView = $find("<%=RadTreeView1.ClientID %>"); // $('.RadTreeView1');
+                        var secondTreeView = $find("<%=RadTreeView2.ClientID %>"); //$('.RadTreeView2');
+
+                        firstTreeView.trackChanges();
+                        secondTreeView.trackChanges();
+                        var sourceNodes = args.get_sourceNodes();
+                        var dropPosition = args.get_dropPosition();
+
+                        //Needed to preserve the order of the dragged items
+                        if (dropPosition == "below") {
+                            for (var i = sourceNodes.length - 1; i >= 0; i--) {
+                                var sourceNode = sourceNodes[i];
+                                sourceNode.get_parent().get_nodes().remove(sourceNode);
+
+                                insertAfter(destinationNode, sourceNode);
+                            }
+                        }
+                        else {
+                            for (var i = 0; i < sourceNodes.length; i++) {
+                                var sourceNode = sourceNodes[i];
+                                sourceNode.get_parent().get_nodes().remove(sourceNode);
+
+                                if (dropPosition == "over")
+                                    destinationNode.get_nodes().add(sourceNode);
+                                if (dropPosition == "above")
+                                    insertBefore(destinationNode, sourceNode);
+                            }
+                        }
+                        destinationNode.set_expanded(true);
+                        firstTreeView.commitChanges();
+                        secondTreeView.commitChanges();
+                    }
+                }
+
+                function insertBefore(destinationNode, sourceNode) {
+                    var destinationParent = destinationNode.get_parent();
+                    var index = destinationParent.get_nodes().indexOf(destinationNode);
+                    destinationParent.get_nodes().insert(index, sourceNode);
+                }
+
+                function insertAfter(destinationNode, sourceNode) {
+                    var destinationParent = destinationNode.get_parent();
+                    var index = destinationParent.get_nodes().indexOf(destinationNode);
+                    destinationParent.get_nodes().insert(index + 1, sourceNode);
+                }
+
+                function onNodeDropping(sender, args) {
+                    var dest = args.get_destNode();
+                    if (dest) {
+                        var clientSide = true; //document.getElementById('ChbClientSide').checked;
+
+                        if (clientSide) {
+                            clientSideEdit(sender, args);
+                            args.set_cancel(true);
+                            return;
+                        }
+
+                        dropOnTree(args);
+                    }
+                    else {
+                        dropOnHtmlElement(args);
+                    }
+                }
+
+            </script>
+        </telerik:RadScriptBlock>
 
         <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
             <AjaxSettings>
