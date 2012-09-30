@@ -49,12 +49,12 @@
                         GridLines="None" ondatabound="RadGrid1_DataBound" 
                         onitemdatabound="RadGrid1_ItemDataBound" 
                         onselectedindexchanged="RadGrid1_SelectedIndexChanged" Skin="Black" 
-                        Width="215px">
+                        Width="215px" DataSourceID="ZoekSqlDataSource">
                         <ClientSettings EnablePostBackOnRowClick="True">
                             <Selecting AllowRowSelect="True" CellSelectionMode="None" />
                         </ClientSettings>
                         <MasterTableView AllowSorting="False" AutoGenerateColumns="False" 
-                            DataKeyNames="custname">
+                            DataKeyNames="custname" DataSourceID="ZoekSqlDataSource">
                             <CommandItemSettings ExportToPdfText="Export to PDF" />
                             <RowIndicatorColumn FilterControlAltText="Filter RowIndicator column" 
                                 Visible="True">
