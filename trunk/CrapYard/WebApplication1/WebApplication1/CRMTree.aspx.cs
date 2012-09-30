@@ -9,6 +9,7 @@ using Repository;
 using Telerik.Web.UI;
 using System.Text;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace WebApplication1
 {
@@ -45,11 +46,13 @@ namespace WebApplication1
             RadTreeView1.LoadXml(xml);
 
             var nodes = RadTreeView1.GetAllNodes();
-            foreach (var node in nodes)
-            {
-                if(!string.IsNullOrEmpty( node.Value))
-                    Debug.Assert (true);
-            }
+            if (nodes[0].Text.Equals(ZoekString))
+                nodes[0].BackColor = Color.Gold;
+            //foreach (var node in nodes)
+            //{
+            //    //if(!string.IsNullOrEmpty( node.Value))
+            //        //Debug.Assert (true);
+            //}
         }
 
         protected void RadGrid1_DataBound(object sender, EventArgs e)
