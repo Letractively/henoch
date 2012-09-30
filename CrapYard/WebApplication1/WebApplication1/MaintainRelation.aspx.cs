@@ -7,11 +7,35 @@ using System.Web.UI.WebControls;
 using Telerik.QuickStart;
 using System.Data;
 using Telerik.Web.UI;
+using Repository;
+using System.Drawing;
 
 namespace WebApplication1
 {
     public partial class MaintainRelation : System.Web.UI.Page
     {
+        public string ZoekString
+        {
+            get
+            {
+                return Session["ZoekString"].ToString();
+            }
+            set
+            {
+                Session["ZoekString"] = value;
+            }
+        }
+        public string ZoekString2
+        {
+            get
+            {
+                return Session["ZoekString2"].ToString();
+            }
+            set
+            {
+                Session["ZoekString2"] = value;
+            }
+        }
         protected void RadTreeView1_HandleDrop(object sender, RadTreeNodeDragDropEventArgs e)
         {
             RadTreeNode sourceNode = e.SourceDragNode;
@@ -60,14 +84,6 @@ namespace WebApplication1
                 destNode.Expanded = true;
                 sourceNode.TreeView.UnselectAllNodes();
             }
-            else if (e.HtmlElementID == RadGrid1.ClientID)
-            {
-                DataTable dt = (DataTable)Session["DataTable"];
-                foreach (RadTreeNode node in e.DraggedNodes)
-                {
-                    AddRowToGrid(dt, node);
-                }
-            }
         }
 
         private void PopulateGrid()
@@ -83,8 +99,6 @@ namespace WebApplication1
             dt.Rows.Add(values);
             Session["DataTable"] = dt;
 
-            RadGrid1.DataSource = dt;
-            RadGrid1.DataBind();
         }
 
         private void AddRowToGrid(DataTable dt, RadTreeNode node)
@@ -92,8 +106,6 @@ namespace WebApplication1
             string[] values = { node.Text, node.Value };
             dt.Rows.Add(values);
 
-            RadGrid1.DataSource = dt;
-            RadGrid1.DataBind();
         }
 
         private static void PerformDragAndDrop(RadTreeViewDropPosition dropPosition, RadTreeNode sourceNode,
@@ -129,6 +141,33 @@ namespace WebApplication1
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            if (IsPostBack)
+            {
+
+
+
+
+            }
+        }
+
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            ZoekString = RadTextBox1.Text ;
+            string xml = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
+            RadTreeView1.LoadXml(xml);
+            var nodes = RadTreeView1.GetAllNodes();
+            if (nodes.Count()>0 && nodes[0].Text.Equals(ZoekString))
+                nodes[0].BackColor = Color.Gold;
+        }
+
+        protected void RadButton2_Click(object sender, EventArgs e)
+        {
+            ZoekString2 = RadTextBox2.Text;
+            string xml2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2);
+            RadTreeView2.LoadXml(xml2);
+            var nodes2 = RadTreeView2.GetAllNodes();
+            if ( nodes2.Count()>0 && nodes2[0].Text.Equals(ZoekString2))
+                nodes2[0].BackColor = Color.Gold;
         }
     }
 }
