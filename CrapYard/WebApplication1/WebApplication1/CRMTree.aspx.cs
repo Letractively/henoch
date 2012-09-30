@@ -10,12 +10,7 @@ using Telerik.Web.UI;
 using System.Text;
 using System.Diagnostics;
 using System.Drawing;
-<<<<<<< .mine
-using System.Drawing;
 using System.Data;
-=======
-using System.Drawing;
->>>>>>> .r247
 
 namespace WebApplication1
 {
