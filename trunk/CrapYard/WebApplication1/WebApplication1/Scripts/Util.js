@@ -1,4 +1,5 @@
-﻿/// <reference path="jquery-1.4.1.min.js" />
+﻿/// <reference path="jquery-1.7.1.js" />
+
 $(document).ready(function () {
     var loaded = 0;
     $.ajaxSetup({

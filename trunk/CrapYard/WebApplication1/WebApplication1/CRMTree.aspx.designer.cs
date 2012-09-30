@@ -85,6 +85,24 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.SqlDataSource ZoekSqlDataSource;
         
         /// <summary>
+        /// RadTextBox2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox RadTextBox2;
+        
+        /// <summary>
+        /// RadButton2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton2;
+        
+        /// <summary>
         /// RadTreeView1 control.
         /// </summary>
         /// <remarks>
@@ -92,6 +110,33 @@ namespace WebApplication1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTreeView RadTreeView1;
+        
+        /// <summary>
+        /// RadTextBox3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox RadTextBox3;
+        
+        /// <summary>
+        /// RadButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton3;
+        
+        /// <summary>
+        /// RadTreeView2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTreeView RadTreeView2;
         
         /// <summary>
         /// ObjectDataSource1 control.
