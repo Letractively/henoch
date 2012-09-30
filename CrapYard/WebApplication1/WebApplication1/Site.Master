@@ -10,16 +10,7 @@
 </head>
 <body>
     <form runat="server">
-        <telerik:RadScriptManager runat="server" ID="RadScriptManager1">
-            <Scripts>
-                <%--Needed for JavaScript IntelliSense in VS2010--%>
-                <%--For VS2008 replace RadScriptManager with ScriptManager--%>
-                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js" />
-                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js" />
-                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />
-                 <asp:ScriptReference Path="~/Scripts/Util.js" />
-            </Scripts>
-        </telerik:RadScriptManager>
+
     <div class="page">
         <div class="header">
             <div class="title">

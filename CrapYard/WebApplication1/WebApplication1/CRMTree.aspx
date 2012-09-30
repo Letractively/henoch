@@ -18,6 +18,7 @@
             <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js" />
             <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js" />
             <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />
+            <asp:ScriptReference Path="~/Scripts/Util.js" />
         </Scripts>
     </telerik:RadScriptManager>
     <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" >
@@ -29,8 +30,9 @@
 
             <table >
             <tr>
-                <td>        <telerik:RadTextBox ID="RadTextBox1" Runat="server" 
-                        EnableSingleInputRendering="True" LabelWidth="64px" Text="zoekwoord" 
+                <td>        
+                    <telerik:RadTextBox ID="RadTextBox1" Runat="server" 
+                        EnableSingleInputRendering="True" LabelWidth="64px" Text="zoekwoord" style="top: 0px; left: 0px" 
             >
         </telerik:RadTextBox ></td>
                 <td>
@@ -43,7 +45,7 @@
             <tr>
                 <td>
                     <telerik:RadGrid ID="RadGrid1" runat="server" AllowPaging="True" 
-                        AllowSorting="True" CellSpacing="0" DataSourceID="ZoekSqlDataSource" 
+                        AllowSorting="True" CellSpacing="0" 
                         GridLines="None" ondatabound="RadGrid1_DataBound" 
                         onitemdatabound="RadGrid1_ItemDataBound" 
                         onselectedindexchanged="RadGrid1_SelectedIndexChanged" Skin="Black" 
@@ -52,7 +54,7 @@
                             <Selecting AllowRowSelect="True" CellSelectionMode="None" />
                         </ClientSettings>
                         <MasterTableView AllowSorting="False" AutoGenerateColumns="False" 
-                            DataKeyNames="custname" DataSourceID="ZoekSqlDataSource">
+                            DataKeyNames="custname">
                             <CommandItemSettings ExportToPdfText="Export to PDF" />
                             <RowIndicatorColumn FilterControlAltText="Filter RowIndicator column" 
                                 Visible="True">
@@ -116,14 +118,70 @@
                     PropertyName="Text" Type="String" />
             </SelectParameters>
         </asp:SqlDataSource>
+<div style="background: url(Img/bg.gif) no-repeat; padding: 115px 0px 0px 15px;">
+                <div style="width: 180px; float: left;">
+                    <span class="label">Corporate Structure 1</span>
+                    <telerik:RadTextBox ID="RadTextBox2" runat="server" EnableSingleInputRendering="True"
+                        LabelWidth="64px" Text="zoekwoord" Style="top: 0px; left: 0px">
+                    </telerik:RadTextBox>
+                    <telerik:RadButton ID="RadButton2" runat="server" Text="Zoek" 
+                        Style="top: 0px; left: 0px" onclick="RadButton1_Click">
+                    </telerik:RadButton>
+                    <telerik:RadTreeView ID="RadTreeView1" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_HandleDrop"
+                        OnClientNodeDropping="onNodeDropping" 
+                        OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
+                        EnableDragAndDropBetweenNodes="true" Skin="Outlook">
+                    </telerik:RadTreeView>
+                </div>
+                <div style="width: 180px; float: left;">
+                    <span class="label">Corporate Structure 2</span>
+                    <telerik:RadTextBox ID="RadTextBox3" runat="server" EnableSingleInputRendering="True"
+                        LabelWidth="64px" Text="zoekwoord" Style="top: 0px; left: 0px">
+                    </telerik:RadTextBox>
+                    <telerik:RadButton ID="RadButton3" runat="server" Text="Zoek" 
+                        Style="top: 0px; left: 0px" onclick="RadButton2_Click">
+                    </telerik:RadButton>
+                    <telerik:RadTreeView ID="RadTreeView2" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_HandleDrop"
+                        OnClientNodeDropping="onNodeDropping" 
+                        OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
+                        EnableDragAndDropBetweenNodes="true" Skin="Outlook">
+                    </telerik:RadTreeView>
+                </div>
 
+                <div style="clear: both">
+                </div>
+            </div>
+<%--        <div style="background: url(Img/bg.gif) no-repeat; padding: 115px 0px 0px 15px;">
+            <div style="width: 180px; float: left;">
+                <span class="label">RadTreeView1</span>
+                <telerik:RadTreeView ID="RadTreeView1" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_HandleDrop"
+                    OnClientNodeDropping="onNodeDropping" 
+                    OnClientNodeDragging="onNodeDragging" MultipleSelect="true"
+                    EnableDragAndDropBetweenNodes="true" Skin="Outlook">
+                </telerik:RadTreeView>
+            </div>
+            <div style="width: 180px; float: left;">
+                <span class="label">RadTreeView2</span>
+                <telerik:RadTreeView ID="RadTreeView2" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_HandleDrop"
+                    OnClientNodeDropping="onNodeDropping" 
+                    OnClientNodeDragging="onNodeDragging" MultipleSelect="true"
+                    EnableDragAndDropBetweenNodes="true" Skin="Outlook">
+                </telerik:RadTreeView>
+            </div>
+            <div style="width: 110px; float: left">
+                <span class="label">TextBox</span>
+                <asp:TextBox runat="server" ID="NodeText" Style="width: 82px;"></asp:TextBox>
+            </div>
+            <div style="float: left">
+                <span class="label">RadGrid</span>
+                <telerik:RadGrid runat="server" ID="RadGrid2" Width="220px">
+                </telerik:RadGrid>
+                <asp:Label CssClass="textr" runat="server" ID="Label1"></asp:Label>
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>--%>
 
-        <telerik:RadTreeView ID="RadTreeView1" Runat="server" Skin="Outlook" >
-            
-            <%--<Nodes>
-                <telerik:RadTreeNode Text="dewd" ></telerik:RadTreeNode>
-            </Nodes>--%>
-        </telerik:RadTreeView>
         <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" 
             SelectMethod="GetSubsidiaries" TypeName="Repository.ShareHolders">
             <SelectParameters>
@@ -135,6 +193,8 @@
         </asp:LinqDataSource>
     </telerik:RadAjaxPanel>
 
+    <div id="msg">
+    </div>
     </form>
 </body>
 </html>
