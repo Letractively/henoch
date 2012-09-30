@@ -101,6 +101,10 @@
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
     <Content Include="App_Data\TelerikVSX.mdf" />
+    <Content Include="App_Data\TelerikVSX_log.ldf">
+      <DependentUpon>TelerikVSX.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\zoek_alles.sql" />
     <Content Include="CRMTree.aspx" />
     <Content Include="MaintainRelation.aspx" />
     <Content Include="Styles\RadControls.css" />
@@ -268,7 +272,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1043</DevelopmentServerPort>
+          <DevelopmentServerPort>5250</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
