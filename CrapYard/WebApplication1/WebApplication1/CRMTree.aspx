@@ -128,6 +128,7 @@
                         Style="top: 0px; left: 0px" onclick="RadButton1_Click">
                     </telerik:RadButton>
                     <telerik:RadTreeView ID="RadTreeView1" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_HandleDrop"
+                        CssClass ="RadTreeView1"
                         OnClientNodeDropping="onNodeDropping" 
                         OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
                         EnableDragAndDropBetweenNodes="true" Skin="Outlook">
@@ -142,6 +143,7 @@
                         Style="top: 0px; left: 0px" onclick="RadButton2_Click">
                     </telerik:RadButton>
                     <telerik:RadTreeView ID="RadTreeView2" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_HandleDrop"
+                        CssClass ="RadTreeView2"
                         OnClientNodeDropping="onNodeDropping" 
                         OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
                         EnableDragAndDropBetweenNodes="true" Skin="Outlook">
