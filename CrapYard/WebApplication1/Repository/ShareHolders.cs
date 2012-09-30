@@ -225,6 +225,7 @@ namespace Repository
             if (Companies.TryGetValue(companyPOV, out subsidiariesPOV))
             {
 
+                //TODO: create GetRoots!!
                 string root = new Tree<string>().GetRoot(companyPOV, Companies);
 
                 IList<XElement> outerTrack = new List<XElement>() 
@@ -297,6 +298,8 @@ namespace Repository
                                  </node> 
                                  <node Text='Stern 4 B.V.'>
                                     <node Text='Arend Auto'>
+                                    </node> 
+                                    <node Text='S42'>
                                     </node> 
                                  </node> 
                             </node> 
