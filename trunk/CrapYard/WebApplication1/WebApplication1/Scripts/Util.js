@@ -249,8 +249,8 @@ function clientSideEdit(sender, args) {
     var destinationNode = args.get_destNode();
 
     if (destinationNode) {
-        var firstTreeView = $find('RadTreeView1');
-        var secondTreeView = $find('RadTreeView2');
+        var firstTreeView = $('.RadTreeView1');
+        var secondTreeView = $('.RadTreeView2');
 
         firstTreeView.trackChanges();
         secondTreeView.trackChanges();
