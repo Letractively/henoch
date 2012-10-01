@@ -18,7 +18,7 @@ namespace WebApplication1
         {
             get
             {
-                return Session["ZoekString"].ToString();
+                return (string.IsNullOrEmpty(Session["ZoekString"] as string) ? string.Empty : Session["ZoekString"].ToString());
             }
             set
             {
@@ -29,14 +29,40 @@ namespace WebApplication1
         {
             get
             {
-                return Session["ZoekString2"].ToString();
+                return (string.IsNullOrEmpty(Session["ZoekString2"] as string) ? string.Empty : Session["ZoekString2"].ToString());
             }
             set
             {
                 Session["ZoekString2"] = value;
             }
         }
-        protected void RadTreeView1_HandleDrop(object sender, RadTreeNodeDragDropEventArgs e)
+        public string XMLTreeView1
+        {
+            get
+            {
+                return Session["XMLTreeView1"].ToString();
+            }
+            set
+            {
+                Session["XMLTreeView1"] = value;
+            }
+        }
+        public string XMLTreeView2
+        {
+            get
+            {
+                return Session["XMLTreeView2"].ToString();
+            }
+            set
+            {
+                Session["XMLTreeView2"] = value;
+            }
+        }
+        protected void RadTreeView2_NodeDrop(object sender, RadTreeNodeDragDropEventArgs e)
+        {
+            RadTreeView1_NodeDrop(sender, e);
+        }
+        protected void RadTreeView1_NodeDrop(object sender, RadTreeNodeDragDropEventArgs e)
         {
             RadTreeNode sourceNode = e.SourceDragNode;
             RadTreeNode destNode = e.DestDragNode;
@@ -44,7 +70,8 @@ namespace WebApplication1
 
             if (destNode != null) //drag&drop is performed between trees
             {
-                if (false) //dropped node will at the same level as a destination node
+                bool betweenNodes = false;
+                if (betweenNodes) //dropped node will at the same level as a destination node
                 {
                     if (sourceNode.TreeView.SelectedNodes.Count <= 1)
                     {
@@ -64,7 +91,7 @@ namespace WebApplication1
                     {
                         if (!sourceNode.IsAncestorOf(destNode))
                         {
-                            sourceNode.Owner.Nodes.Remove(sourceNode);
+                            //sourceNode.Owner.Nodes.Remove(sourceNode);
                             destNode.Nodes.Add(sourceNode);
                         }
                     }
@@ -115,7 +142,7 @@ namespace WebApplication1
             {
                 return;
             }
-            sourceNode.Owner.Nodes.Remove(sourceNode);
+            //sourceNode.Owner.Nodes.Remove(sourceNode);
 
             switch (dropPosition)
             {
@@ -149,12 +176,37 @@ namespace WebApplication1
 
             }
         }
+        protected void RadTreeView1_Load(object sender, EventArgs e)
+        {
+            RadTreeView treeView = (RadTreeView)sender;
+            if (IsPostBack && !string.IsNullOrEmpty(ZoekString))
+            { 
+                //XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
+                //treeView.LoadXml(XMLTreeView1);
+                //var nodes = RadTreeView1.GetAllNodes();
+                //if (nodes.Count() > 0 && nodes[0].Text.Equals(ZoekString))
+                //    nodes[0].BackColor = Color.Gold;
+            }
+        }
+
+        protected void RadTreeView2_Load(object sender, EventArgs e)
+        {
+            RadTreeView treeView = (RadTreeView)sender;
+            if (IsPostBack && !string.IsNullOrEmpty(ZoekString2))
+            {
+                XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView("Stern Beheer B.V.");
+                //treeView.LoadXml(XMLTreeView2);
+                //var nodes2 = RadTreeView2.GetAllNodes();
+                //if (nodes2.Count() > 0 && nodes2[0].Text.Equals("Stern Beheer B.V."))
+                //    nodes2[0].BackColor = Color.Gold;
+            }
+        }
 
         protected void RadButton1_Click(object sender, EventArgs e)
         {
             ZoekString = RadTextBox1.Text ;
-            string xml = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
-            RadTreeView1.LoadXml(xml);
+            XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
+            RadTreeView1.LoadXml(XMLTreeView1);
             var nodes = RadTreeView1.GetAllNodes();
             if (nodes.Count()>0 && nodes[0].Text.Equals(ZoekString))
                 nodes[0].BackColor = Color.Gold;
@@ -163,8 +215,8 @@ namespace WebApplication1
         protected void RadButton2_Click(object sender, EventArgs e)
         {
             ZoekString2 = RadTextBox2.Text;
-            string xml2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2);
-            RadTreeView2.LoadXml(xml2);
+            XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2);
+            RadTreeView2.LoadXml(XMLTreeView2);
             var nodes2 = RadTreeView2.GetAllNodes();
             if ( nodes2.Count()>0 && nodes2[0].Text.Equals(ZoekString2))
                 nodes2[0].BackColor = Color.Gold;

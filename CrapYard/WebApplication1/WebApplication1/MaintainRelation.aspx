@@ -284,7 +284,7 @@
                 function onNodeDropping(sender, args) {
                     var dest = args.get_destNode();
                     if (dest) {
-                        var clientSide = true; //document.getElementById('ChbClientSide').checked;
+                        var clientSide = false;// true; //document.getElementById('ChbClientSide').checked;
 
                         if (clientSide) {
                             clientSideEdit(sender, args);
@@ -319,7 +319,8 @@
             </AjaxSettings>
         </telerik:RadAjaxManager>
         <telerik:RadAjaxLoadingPanel runat="server" ID="RadAjaxLoadingPanel1" />
-            <telerik:RadAjaxPanel ID="Panel1" runat="server">
+            <telerik:RadAjaxPanel ID="Panel1" runat="server" HorizontalAlign="NotSet" 
+            LoadingPanelID="RadAjaxLoadingPanel1">
 
             <div style="background: url(Img/bg.gif) no-repeat; padding: 115px 0px 0px 15px;">
                 <div style="width: 180px; float: left;">
@@ -330,11 +331,12 @@
                     <telerik:RadButton ID="RadButton1" runat="server" Text="Zoek" 
                         Style="top: 0px; left: 0px" onclick="RadButton1_Click">
                     </telerik:RadButton>
-                    <telerik:RadTreeView ID="RadTreeView1" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_HandleDrop"
+                    <telerik:RadTreeView ID="RadTreeView1" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_NodeDrop"
                         CssClass ="RadTreeView1"
                         OnClientNodeDropping="onNodeDropping" 
                         OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
-                        EnableDragAndDropBetweenNodes="true" Skin="Outlook">
+                        EnableDragAndDropBetweenNodes="true" Skin="Outlook" 
+                        onload="RadTreeView1_Load">
                     </telerik:RadTreeView>
                 </div>
                 <div style="width: 180px; float: left;">
@@ -345,11 +347,12 @@
                     <telerik:RadButton ID="RadButton2" runat="server" Text="Zoek" 
                         Style="top: 0px; left: 0px" onclick="RadButton2_Click">
                     </telerik:RadButton>
-                    <telerik:RadTreeView ID="RadTreeView2" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_HandleDrop"
+                    <telerik:RadTreeView ID="RadTreeView2" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView2_NodeDrop"
                         CssClass ="RadTreeView2"
                         OnClientNodeDropping="onNodeDropping" 
                         OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
-                        EnableDragAndDropBetweenNodes="true" Skin="Outlook">
+                        EnableDragAndDropBetweenNodes="true" Skin="Outlook" 
+                        onload="RadTreeView2_Load">
                     </telerik:RadTreeView>
                 </div>
 
