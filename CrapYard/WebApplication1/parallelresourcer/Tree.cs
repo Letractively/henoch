@@ -327,6 +327,8 @@ namespace ParallelResourcer
                     candidates.TryAdd(candidateRoot, candidateRoot);
                 }
             }
+            else
+                candidates.TryAdd(node, node);
             
             return candidates.Select( c => c.Key).Distinct().ToList();
         }
