@@ -312,7 +312,24 @@ namespace ParallelResourcer
 
             return parent;
         }
+        public IList<TKeyValue> GetRoots(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
+        {
+            //TKeyValue parent = node;
+            ConcurrentDictionary<TKeyValue, TKeyValue> candidates = new ConcurrentDictionary<TKeyValue, TKeyValue>();
 
+            var parents = GetParents(node, dictionary);
+            if (parents != null && parents.Count > 0)
+            {
+                
+                foreach (var parent in parents)
+                {
+                    var candidateRoot = GetRoot(parent, dictionary);
+                    candidates.TryAdd(candidateRoot, candidateRoot);
+                }
+            }
+            
+            return candidates.Select( c => c.Key).Distinct().ToList();
+        }
 
         public static IList<XElement> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary,
                                                      Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXElements)
