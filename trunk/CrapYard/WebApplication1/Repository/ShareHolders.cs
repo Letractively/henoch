@@ -224,11 +224,24 @@ namespace Repository
             //TODO: ParseSearchString
             if (Companies.TryGetValue(companyPOV, out subsidiariesPOV))
             {
+                
+                IList<string> roots = new Tree<string>().GetRoots(companyPOV, Companies);
 
-                //TODO: create GetRoots!!
-                string root = new Tree<string>().GetRoot(companyPOV, Companies);
+                foreach (var root in roots)
+                {
+                    XElement xTree = CreateXMLCorporate(companyPOV, root);
 
-                IList<XElement> outerTrack = new List<XElement>() 
+                    result.Add(xTree);
+                }
+
+            }
+            return result.ToString();
+        }
+
+        private XElement CreateXMLCorporate(string companyPOV, string root)
+        {
+
+            IList<XElement> outerTrack = new List<XElement>() 
                 {  
                     new XElement("Node",
                             new XAttribute("Text","TrackRoot" + Guid.NewGuid().ToString()),
@@ -239,32 +252,27 @@ namespace Repository
                                 new XAttribute("CssClass", "defaultNode"),
                                 new XAttribute("Expanded", "True")))
                 };
-                new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
-                                                            Tree<string>.TransFormXSubTreeTopDown);
+            new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
+                                                        Tree<string>.TransFormXSubTreeTopDown);
 
-                IList<XElement> topDownTree;
+            IList<XElement> topDownTree;
 
-                Tree<string>.StackNodes.TryPop(out topDownTree);
+            Tree<string>.StackNodes.TryPop(out topDownTree);
 
-                var xTree = topDownTree.First();
-                var foundList = (xTree.Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
+            XElement xTree = topDownTree.First();
+            var foundList = (xTree.Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
 
-                for (int i = 0; i < foundList.Count; i++)
-                {
-                    XElement newNode = new XElement("Node", 
-                            new XAttribute("Text", companyPOV),
-                            new XAttribute("CssClass", foundList[i].Attribute("CssClass").Value),
-                            new XAttribute("Expanded", foundList[i].Attribute("Expanded").Value),
-                            new XAttribute("BackColor", "Gold"));
-                    newNode.Add(foundList[i].Elements());
-                    foundList[i].ReplaceWith(newNode);
-                }
-
-                //try to find leafs that are duplicates
-               
-                result.Add(xTree);
+            for (int i = 0; i < foundList.Count; i++)
+            {
+                XElement newNode = new XElement("Node",
+                        new XAttribute("Text", companyPOV),
+                        new XAttribute("CssClass", foundList[i].Attribute("CssClass").Value),
+                        new XAttribute("Expanded", foundList[i].Attribute("Expanded").Value),
+                        new XAttribute("BackColor", "Gold"));
+                newNode.Add(foundList[i].Elements());
+                foundList[i].ReplaceWith(newNode);
             }
-            return result.ToString();
+            return xTree;
         }
 
         private string ParseSearchString(string companyPOV)
