@@ -281,7 +281,7 @@ namespace WebApplication1
             var treeViewTarget = RadTreeView2;
             var treeViewSource = (RadTreeView)sender;
 
-            DisableNodesTarget(treeViewTarget, treeViewSource);
+            //DisableNodesTarget(treeViewTarget, treeViewSource);
 
         }
 
@@ -290,7 +290,7 @@ namespace WebApplication1
             var treeViewTarget = RadTreeView1;
             var treeViewSource = (RadTreeView)sender;
 
-            DisableNodesTarget(treeViewTarget, treeViewSource);
+            //DisableNodesTarget(treeViewTarget, treeViewSource);
         }
 
         private static void DisableNodesTarget(RadTreeView treeViewTarget, RadTreeView sourceTreeView)
