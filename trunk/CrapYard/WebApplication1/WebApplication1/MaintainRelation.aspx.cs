@@ -12,7 +12,7 @@ using System.Drawing;
 
 namespace WebApplication1
 {
-    public partial class MaintainRelation : System.Web.UI.Page
+    public partial class MaintainRelation : Page
     {
         public string ZoekString
         {
@@ -70,7 +70,7 @@ namespace WebApplication1
 
             if (destNode != null) //drag&drop is performed between trees
             {
-                bool betweenNodes = false;
+                bool betweenNodes = true;
                 if (betweenNodes) //dropped node will at the same level as a destination node
                 {
                     if (sourceNode.TreeView.SelectedNodes.Count <= 1)
@@ -91,7 +91,7 @@ namespace WebApplication1
                     {
                         if (!sourceNode.IsAncestorOf(destNode))
                         {
-                            //sourceNode.Owner.Nodes.Remove(sourceNode);
+                            sourceNode.Owner.Nodes.Remove(sourceNode);
                             destNode.Nodes.Add(sourceNode);
                         }
                     }
@@ -142,8 +142,8 @@ namespace WebApplication1
             {
                 return;
             }
-            //sourceNode.Owner.Nodes.Remove(sourceNode);
-
+            sourceNode.Owner.Nodes.Remove(sourceNode);
+           
             switch (dropPosition)
             {
                 case RadTreeViewDropPosition.Over:
@@ -152,19 +152,48 @@ namespace WebApplication1
                     {
                         destNode.Nodes.Add(sourceNode);
                     }
+
+                    UpdateRelation(destNode, sourceNode);
+
                     break;
 
                 case RadTreeViewDropPosition.Above:
                     // sibling - above					
                     destNode.InsertBefore(sourceNode);
+
+                    var parentNode = destNode.ParentNode;
+                    UpdateRelation(parentNode, sourceNode);
+                    
                     break;
 
                 case RadTreeViewDropPosition.Below:
                     // sibling - below
                     destNode.InsertAfter(sourceNode);
+
+                    UpdateRelation(destNode, sourceNode);
                     break;
             }
         }
+
+        private static void UpdateRelation( RadTreeNode parentNode, RadTreeNode childNode)
+        {
+            string parent = parentNode.Text;
+            string child = childNode.Text;
+
+            var shareHolders = new ShareHolders();
+
+            var list0 = new ShareHolders().Companies[parent];
+            var newList = list0;
+            if (newList == null)
+            {
+                newList = new List<string>();
+            }
+
+            newList.Add(childNode.Text);
+
+            shareHolders.Companies.TryUpdate(parent,newList,list0);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -174,6 +203,16 @@ namespace WebApplication1
 
 
 
+            }
+        }
+        protected void Page_PreRenderComplete(object sender, EventArgs e)
+        {
+
+            if (IsPostBack)
+            {
+                ///update treeviews
+                RadButton1_Click(null, null);
+                RadButton2_Click(null, null);
             }
         }
         protected void RadTreeView1_Load(object sender, EventArgs e)
@@ -221,5 +260,6 @@ namespace WebApplication1
             if ( nodes2.Count()>0 && nodes2[0].Text.Equals(ZoekString2))
                 nodes2[0].BackColor = Color.Gold;
         }
+
     }
 }
