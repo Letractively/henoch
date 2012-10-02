@@ -68,7 +68,9 @@ namespace WebApplication1
             RadTreeNode sourceNode = e.SourceDragNode;
             RadTreeNode destNode = e.DestDragNode;
             RadTreeViewDropPosition dropPosition = e.DropPosition;
-
+            if (sourceNode.Text.Equals(destNode.Text))
+                return;
+            
             if (destNode != null) //drag&drop is performed between trees
             {
                 bool betweenNodes = true;
