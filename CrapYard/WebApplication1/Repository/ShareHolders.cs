@@ -73,6 +73,7 @@ namespace Repository
             }
         }
         /// <summary>
+        /// Returns the dictionary from cache.
         /// See http://xlinux.nist.gov/dads//HTML/dictionary.html
         /// </summary>
         /// <returns></returns>
@@ -127,7 +128,17 @@ namespace Repository
         /// </summary>
         public void Refresh()
         {
-            Companies.Clear();
+            var myRepository = MyCache<Object>.CacheManager;
+            if (myRepository != null)
+            {
+                var dictionary = myRepository.GetData(cShareHolder) as ConcurrentDictionary<string, IList<string>>;
+                if (dictionary != null)
+                {
+                    //Initialize
+                    dictionary = new ConcurrentDictionary<string, IList<string>>();
+                    myRepository.Add(cShareHolder, dictionary);
+                }
+            }
             string shareHolder = "Ahold";
             //this.AddShareHolders("Ahold");
             //this.AddSubsidiary("Ahold", "123");
