@@ -336,7 +336,7 @@
                         OnClientNodeDropping="onNodeDropping" 
                         OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
                         EnableDragAndDropBetweenNodes="true" Skin="Outlook" 
-                        onload="RadTreeView1_Load">
+                        onload="RadTreeView1_Load" onnodeclick="RadTreeView1_NodeClick">
                     </telerik:RadTreeView>
                 </div>
                 <div style="width: 180px; float: left;">
@@ -352,7 +352,7 @@
                         OnClientNodeDropping="onNodeDropping" 
                         OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
                         EnableDragAndDropBetweenNodes="true" Skin="Outlook" 
-                        onload="RadTreeView2_Load">
+                        onload="RadTreeView2_Load" onnodeclick="RadTreeView2_NodeClick">
                     </telerik:RadTreeView>
                 </div>
 

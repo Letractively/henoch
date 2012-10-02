@@ -14,6 +14,7 @@ namespace WebApplication1
 {
     public partial class MaintainRelation : Page
     {
+        static bool _IsUpdated;
         public string ZoekString
         {
             get
@@ -192,6 +193,7 @@ namespace WebApplication1
             newList.Add(childNode.Text);
 
             shareHolders.Companies.TryUpdate(parent,newList,list0);
+            _IsUpdated = true;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -208,11 +210,12 @@ namespace WebApplication1
         protected void Page_PreRenderComplete(object sender, EventArgs e)
         {
 
-            if (IsPostBack)
+            if (IsPostBack && _IsUpdated)
             {
                 ///update treeviews
-                RadButton1_Click(null, null);
-                RadButton2_Click(null, null);
+                BuildTreeView1();
+                BuildTreeView2();
+                _IsUpdated = false;
             }
         }
         protected void RadTreeView1_Load(object sender, EventArgs e)
@@ -243,23 +246,75 @@ namespace WebApplication1
 
         protected void RadButton1_Click(object sender, EventArgs e)
         {
-            ZoekString = RadTextBox1.Text ;
+            BuildTreeView1();
+        }
+
+        private void BuildTreeView1()
+        {
+            ZoekString = RadTextBox1.Text;
             XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
             RadTreeView1.LoadXml(XMLTreeView1);
             var nodes = RadTreeView1.GetAllNodes();
-            if (nodes.Count()>0 && nodes[0].Text.Equals(ZoekString))
+            if (nodes.Count() > 0 && nodes[0].Text.Equals(ZoekString))
                 nodes[0].BackColor = Color.Gold;
         }
 
         protected void RadButton2_Click(object sender, EventArgs e)
         {
+            BuildTreeView2();
+        }
+
+        private void BuildTreeView2()
+        {
             ZoekString2 = RadTextBox2.Text;
             XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2);
             RadTreeView2.LoadXml(XMLTreeView2);
             var nodes2 = RadTreeView2.GetAllNodes();
-            if ( nodes2.Count()>0 && nodes2[0].Text.Equals(ZoekString2))
+            if (nodes2.Count() > 0 && nodes2[0].Text.Equals(ZoekString2))
                 nodes2[0].BackColor = Color.Gold;
         }
+
+        protected void RadTreeView1_NodeClick(object sender, RadTreeNodeEventArgs e)
+        {
+            var treeViewTarget = RadTreeView2;
+            var treeViewSource = (RadTreeView)sender;
+
+            DisableNodesTarget(treeViewTarget, treeViewSource);
+
+        }
+
+        protected void RadTreeView2_NodeClick(object sender, RadTreeNodeEventArgs e)
+        {
+            var treeViewTarget = RadTreeView1;
+            var treeViewSource = (RadTreeView)sender;
+
+            DisableNodesTarget(treeViewTarget, treeViewSource);
+        }
+
+        private static void DisableNodesTarget(RadTreeView treeViewTarget, RadTreeView sourceTreeView)
+        {
+            var nodeTreeView = sourceTreeView.SelectedNode;
+            var nodesTarget = treeViewTarget.GetAllNodes().Where(n => n.Text.Equals(nodeTreeView.Text));
+            var nodesDisabled = treeViewTarget.GetAllNodes().Where(n => n.Enabled == false);
+
+            if (nodesDisabled.Count() > 0)
+            {
+                foreach (var node in nodesDisabled)
+                {
+                    node.Enabled = true;
+                }
+
+            }
+            if (nodesTarget.Count() > 0)
+            {
+                foreach (var node in nodesTarget)
+                {
+                    node.Enabled = false;
+                }
+
+            }
+        }
+
 
     }
 }
