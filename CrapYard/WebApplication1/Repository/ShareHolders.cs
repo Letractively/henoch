@@ -226,8 +226,10 @@ namespace Repository
         {
 
             XElement result = new XElement("Tree");
-            #region create test corporate
+            #region create test corporates
             CreateTestCorporate();
+            CreateTestCorporate2();
+            CreateTestCorporate3();
             #endregion
 
             IList<string> subsidiariesPOV;
@@ -298,6 +300,7 @@ namespace Repository
         {
             //NOTE: 2 roots are possible, result.Add(newTesttree);
             XElement xml = XElement.Parse(@"
+                                    
                       <node Text='Stern Groep N.V.'>
                         
                         <node Text='Stern Beheer B.V.'>
@@ -335,6 +338,34 @@ namespace Repository
                       </node>   
                     ");
             
+            InsertTestCorporateIntoDictionary(xml);
+
+        }
+        private void CreateTestCorporate2()
+        {
+            //NOTE: 2 roots are possible, result.Add(newTesttree);
+            XElement xml = XElement.Parse(@"
+                                    
+                      <node Text='Root1'>
+                        
+                       
+                      </node>   
+                    ");
+
+            InsertTestCorporateIntoDictionary(xml);
+
+        }
+        private void CreateTestCorporate3()
+        {
+            //NOTE: 2 roots are possible, result.Add(newTesttree);
+            XElement xml = XElement.Parse(@"
+                                    
+                      <node Text='Root2'>
+                        
+                       
+                      </node>   
+                    ");
+
             InsertTestCorporateIntoDictionary(xml);
 
         }
