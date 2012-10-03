@@ -190,8 +190,10 @@
                 ///////////////////////////////////////////////////////////////////////////////////////////
                 // END Region Jquery Setup
                 ///////////////////////////////////////////////////////////////////////////////////////////
-                
-                
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                // Region treeview
+                ///////////////////////////////////////////////////////////////////////////////////////////
                 function onNodeDragging(sender, args) {
                     var target = args.get_htmlElement();
 
@@ -298,6 +300,76 @@
                         dropOnHtmlElement(args);
                     }
                 }
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                // END Region treeview
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                // Region Context Menu
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                function onClientContextMenuShowing(sender, args) {
+                    var treeNode = args.get_node();
+                    treeNode.set_selected(true);
+                    //enable/disable menu items
+                    setMenuItemsState(args.get_menu().get_items(), treeNode);
+                }
+
+                function onClientContextMenuItemClicking(sender, args) {
+                    var menuItem = args.get_menuItem();
+                    var treeNode = args.get_node();
+                    menuItem.get_menu().hide();
+
+                    switch (menuItem.get_value()) {
+                        case "NewFolder":
+                            break;
+                        case "Verwijder":
+                            var result = confirm("Weet u het zeker dat dit wilt verwijderen: " + treeNode.get_text());
+                            args.set_cancel(!result);
+                            break;
+                    }
+                }
+
+                //this method disables the appropriate context menu items
+                function setMenuItemsState(menuItems, treeNode) {
+                    for (var i = 0; i < menuItems.get_count(); i++) {
+                        var menuItem = menuItems.getItem(i);
+                        switch (menuItem.get_value()) {
+                            case "Verwijder":
+                                formatMenuItem(menuItem, treeNode, 'Verwijder "{0}"');
+                                break; 
+                            case "NewRelation":
+                                if (treeNode.get_parent() == treeNode.get_treeView()) {
+                                    menuItem.set_enabled(false);
+                                }
+                                else {
+                                    menuItem.set_enabled(true);
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                //formats the Text of the menu item
+                function formatMenuItem(menuItem, treeNode, formatString) {
+                    var nodeValue = treeNode.get_value();
+                    if (nodeValue && nodeValue.indexOf("_Private_") == 0) {
+                        menuItem.set_enabled(false);
+                    }
+                    else {
+                        menuItem.set_enabled(true);
+                    }
+                    var newText = String.format(formatString, extractTitleWithoutMails(treeNode));
+                    menuItem.set_text(newText);
+                }
+
+                //checks if the text contains (digit)
+                function hasNodeMails(treeNode) {
+                    return treeNode.get_text().match(/\([\d]+\)/ig);
+                }
+
+                //removes the brackets with the numbers,e.g. Inbox (30)
+                function extractTitleWithoutMails(treeNode) {
+                    return treeNode.get_text().replace(/\s*\([\d]+\)\s*/ig, "");
+                } 
 
             </script>
         </telerik:RadScriptBlock>
@@ -331,18 +403,36 @@
                     <telerik:RadButton ID="RadButton1" runat="server" Text="Zoek" 
                         Style="top: 0px; left: 0px" onclick="RadButton1_Click">
                     </telerik:RadButton>
-                    <telerik:RadTreeView ID="RadTreeView1" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView1_NodeDrop"
+                    <telerik:RadTreeView ID="RadTreeView1" runat="server" EnableDragAndDrop="True" 
+                        OnNodeDrop="RadTreeView1_NodeDrop"
                         CssClass ="RadTreeView1"
                         OnClientNodeDropping="onNodeDropping" 
-                        OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
-                        EnableDragAndDropBetweenNodes="true" Skin="Outlook" 
-                        onload="RadTreeView1_Load" onnodeclick="RadTreeView1_NodeClick">
+                        OnClientNodeDragging="onNodeDragging" 
+                        MultipleSelect="true" 
+                        EnableDragAndDropBetweenNodes="true" 
+                        Skin="Outlook" 
+                        onload="RadTreeView1_Load" onnodeclick="RadTreeView1_NodeClick"
+                        AllowNodeEditing="true"
+                        OnContextMenuItemClick="RadTreeView1_ContextMenuItemClick" 
+                        OnClientContextMenuItemClicking="onClientContextMenuItemClicking"
+                        OnClientContextMenuShowing="onClientContextMenuShowing" 
+                        OnNodeEdit="RadTreeView1_NodeEdit">
+                        <ContextMenus>
+                            <telerik:RadTreeViewContextMenu  Skin="Outlook" >
+                                <Items>
+                                    <telerik:RadMenuItem Value="Verwijder" Text="Verwijder Relatie" ImageUrl="Img/7.gif">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                                <CollapseAnimation Type="none" />
+                            </telerik:RadTreeViewContextMenu>
+                        </ContextMenus>
                     </telerik:RadTreeView>
                 </div>
                 <div style="width: 180px; float: left;">
                     <span class="label">Corporate Structure 2</span>
                     <telerik:RadTextBox ID="RadTextBox2" runat="server" EnableSingleInputRendering="True"
-                        LabelWidth="64px" Text="zoekwoord" Style="top: 0px; left: 0px">
+                        LabelWidth="64px" Text="zoekwoord" 
+                        Style="top: 0px; left: 0px; right: 131px;">
                     </telerik:RadTextBox>
                     <telerik:RadButton ID="RadButton2" runat="server" Text="Zoek" 
                         Style="top: 0px; left: 0px" onclick="RadButton2_Click">

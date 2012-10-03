@@ -9,11 +9,13 @@ using System.Data;
 using Telerik.Web.UI;
 using Repository;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace WebApplication1
 {
     public partial class MaintainRelation : Page
     {
+        #region Session properties
         static bool _IsUpdated;
         public string ZoekString
         {
@@ -59,6 +61,9 @@ namespace WebApplication1
                 Session["XMLTreeView2"] = value;
             }
         }
+        #endregion Seeion properties
+
+        #region Treeview
         protected void RadTreeView2_NodeDrop(object sender, RadTreeNodeDragDropEventArgs e)
         {
             RadTreeView1_NodeDrop(sender, e);
@@ -199,7 +204,84 @@ namespace WebApplication1
             shareHolders.Companies.TryUpdate(parent,newList,list0);
             _IsUpdated = true;
         }
+        #endregion Treeview
 
+        #region ContextMenu
+        protected const string unreadPattern = @"\(\d+\)";
+protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewContextMenuEventArgs e)
+        {
+            RadTreeNode clickedNode = e.Node;
+
+            switch (e.MenuItem.Value)
+            {
+                case "NewRelation":
+                    RadTreeNode newRelation = new RadTreeNode(string.Format("Nieuwe Relatie {0}", clickedNode.Nodes.Count + 1));
+                    newRelation.Selected = true;
+                    newRelation.ImageUrl = clickedNode.ImageUrl;
+                    clickedNode.Nodes.Add(newRelation);
+                    clickedNode.Expanded = true;
+                    //update the number in the brackets
+                    if (Regex.IsMatch(clickedNode.Text, unreadPattern))
+                        clickedNode.Text = Regex.Replace(clickedNode.Text, unreadPattern, "(" + clickedNode.Nodes.Count.ToString() + ")");
+                    else
+                        clickedNode.Text += string.Format(" ({0})", clickedNode.Nodes.Count);
+                    clickedNode.Font.Bold = true;
+                    //set node's value so we can find it in startNodeInEditMode
+                    newRelation.Value = newRelation.GetFullPath("/");
+                    startNodeInEditMode(newRelation.Value);
+                    break;
+                case "Verwijder":                                                            
+
+                    new ShareHolders().RemoveSubsidiary(clickedNode.ParentNode.Text,clickedNode.Text);
+                    clickedNode.Remove();
+                    _IsUpdated = true;
+                    break;
+            }
+        }
+
+        private void startNodeInEditMode(string nodeValue)
+        {
+            //find the node by its Value and edit it when page loads
+            string js = "Sys.Application.add_load(editNode); function editNode(){ ";
+            js += "var tree = $find(\"" + RadTreeView1.ClientID + "\");";
+            js += "var node = tree.findNodeByValue('" + nodeValue + "');";
+            js += "if (node) node.startEdit();";
+            js += "Sys.Application.remove_load(editNode);};";
+
+            RadScriptManager.RegisterStartupScript(Page, Page.GetType(), "nodeEdit", js, true);
+        }
+
+        protected void RadTreeView1_NodeEdit(object sender, RadTreeNodeEditEventArgs e)
+        {
+            e.Node.Text = e.Text;
+        }
+
+        //this method is used by Mark All as Read and Empty this folder 
+        protected void emptyFolder(RadTreeNode node, bool removeChildNodes)
+        {
+            node.Font.Bold = false;
+            node.Text = Regex.Replace(node.Text, unreadPattern, "");
+
+            if (removeChildNodes)
+            {
+                //Empty this folder is clicked
+                for (int i = node.Nodes.Count - 1; i >= 0; i--)
+                {
+                    node.Nodes.RemoveAt(i);
+                }
+            }
+            else
+            {
+                //Mark all as read is clicked
+                foreach (RadTreeNode child in node.Nodes)
+                {
+                    emptyFolder(child, removeChildNodes);
+                }
+            }
+        }    
+
+        #endregion ContextMenu
+        
         protected void Page_Load(object sender, EventArgs e)
         {
 
