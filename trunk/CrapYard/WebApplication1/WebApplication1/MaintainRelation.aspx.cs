@@ -216,26 +216,29 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
             switch (e.MenuItem.Value)
             {
                 case "NewRelation":
-                    RadTreeNode newRelation = new RadTreeNode(string.Format("Nieuwe Relatie {0}", clickedNode.Nodes.Count + 1));
-                    newRelation.Selected = true;
-                    newRelation.ImageUrl = clickedNode.ImageUrl;
-                    clickedNode.Nodes.Add(newRelation);
-                    clickedNode.Expanded = true;
-                    //update the number in the brackets
-                    if (Regex.IsMatch(clickedNode.Text, unreadPattern))
-                        clickedNode.Text = Regex.Replace(clickedNode.Text, unreadPattern, "(" + clickedNode.Nodes.Count.ToString() + ")");
-                    else
-                        clickedNode.Text += string.Format(" ({0})", clickedNode.Nodes.Count);
-                    clickedNode.Font.Bold = true;
-                    //set node's value so we can find it in startNodeInEditMode
-                    newRelation.Value = newRelation.GetFullPath("/");
-                    startNodeInEditMode(newRelation.Value);
+                    //RadTreeNode newRelation = new RadTreeNode(string.Format("Nieuwe Relatie {0}", clickedNode.Nodes.Count + 1));
+                    //newRelation.Selected = true;
+                    //newRelation.ImageUrl = clickedNode.ImageUrl;
+                    //clickedNode.Nodes.Add(newRelation);
+                    //clickedNode.Expanded = true;
+                    ////update the number in the brackets
+                    ////if (Regex.IsMatch(clickedNode.Text, unreadPattern))
+                    ////    clickedNode.Text = Regex.Replace(clickedNode.Text, unreadPattern, "(" + clickedNode.Nodes.Count.ToString() + ")");
+                    ////else
+                    ////    clickedNode.Text += string.Format(" ({0})", clickedNode.Nodes.Count);
+                    ////clickedNode.Font.Bold = true;
+                    ////set node's value so we can find it in startNodeInEditMode
+                    //newRelation.Value = newRelation.GetFullPath("/");
+                    //startNodeInEditMode(newRelation.Value);
                     break;
-                case "Verwijder":                                                            
+                case "Verwijder":
 
-                    new ShareHolders().RemoveSubsidiary(clickedNode.ParentNode.Text,clickedNode.Text);
-                    clickedNode.Remove();
-                    _IsUpdated = true;
+                    if (clickedNode.ParentNode != null)
+                    {
+                        new ShareHolders().RemoveSubsidiary(clickedNode.ParentNode.Text, clickedNode.Text);
+                        clickedNode.Remove();
+                        _IsUpdated = true;
+                    }
                     break;
             }
         }

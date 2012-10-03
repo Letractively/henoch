@@ -105,8 +105,10 @@
       <DependentUpon>TelerikVSX.mdf</DependentUpon>
     </Content>
     <Content Include="App_Data\zoek_alles.sql" />
+    <Content Include="Companies.aspx" />
     <Content Include="CRMTree.aspx" />
     <Content Include="Img\7.gif" />
+    <Content Include="Img\9.gif" />
     <Content Include="MaintainRelation.aspx" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\Util.js" />
@@ -207,6 +209,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="App_Code\QuickStart\TreeNavigation.cs" />
+    <Compile Include="Companies.aspx.cs">
+      <DependentUpon>Companies.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Companies.aspx.designer.cs">
+      <DependentUpon>Companies.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CRMTree.aspx.cs">
       <DependentUpon>CRMTree.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
