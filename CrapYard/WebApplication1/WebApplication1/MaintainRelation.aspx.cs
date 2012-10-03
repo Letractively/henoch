@@ -68,7 +68,9 @@ namespace WebApplication1
             RadTreeNode sourceNode = e.SourceDragNode;
             RadTreeNode destNode = e.DestDragNode;
             RadTreeViewDropPosition dropPosition = e.DropPosition;
-            if (sourceNode.Text.Equals(destNode.Text))
+            if (sourceNode.Text.Equals(destNode.Text)
+                || sourceNode.Text.Equals(ShareHolders.VirtualRoot)
+                || destNode.Text.Equals(ShareHolders.VirtualRoot))
                 return;
             
             if (destNode != null) //drag&drop is performed between trees
@@ -238,7 +240,7 @@ namespace WebApplication1
             RadTreeView treeView = (RadTreeView)sender;
             if (IsPostBack && !string.IsNullOrEmpty(ZoekString2))
             {
-                XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView("Stern Beheer B.V.");
+                //XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView("Stern Beheer B.V.");
                 //treeView.LoadXml(XMLTreeView2);
                 //var nodes2 = RadTreeView2.GetAllNodes();
                 //if (nodes2.Count() > 0 && nodes2[0].Text.Equals("Stern Beheer B.V."))
