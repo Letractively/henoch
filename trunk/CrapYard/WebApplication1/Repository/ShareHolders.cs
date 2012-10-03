@@ -16,6 +16,12 @@ namespace Repository
     public class ShareHolders
     {
         private const string cShareHolder ="shareholders";
+        public static string VirtualRoot 
+        { get
+            {
+                return "VirtualRoot";
+            }
+        }
         /// <summary>
         /// linked list of parents and their children
         /// </summary>
@@ -26,30 +32,53 @@ namespace Repository
         public ShareHolders()
         {
             InitializeCache();
+
+            CreateVirtualRoot();
+        }
+
+        private void CreateVirtualRoot()
+        {
+            #region introduce Virtual Root (NOT to be showed in treeView) to prevent a maximum cycle
+            var roots = Companies.Where(c => GetShareHolders(c.Key).Count == 0).Select(c => c.Key);
+            if (Companies.Count()>0 && Companies.Where(c => c.Key.Equals(VirtualRoot)).Count() == 0)
+            {
+                Companies.TryAdd(VirtualRoot, roots.ToList());
+            }
+            #endregion
         }
 
         public ShareHolders(bool isTest)
         {
             if (isTest)
             {
-                Companies.Clear();
-                string shareHolder = "Ahold";
-                this.AddShareHolders("Ahold");
-                this.AddSubsidiary("Ahold", "123");
-                this.AddSubsidiary("Ahold", "ah567");
-
-                this.AddShareHolders("Unilever");
-                this.AddSubsidiary("Unilever", "123");
-                this.AddSubsidiary("Unilever", "u567");
-
-                this.AddShareHolders("Shell");
-                this.AddSubsidiary("Shell", "s123");
-                this.AddSubsidiary("Shell", "s567");
-
-                this.AddShareHolders("123");
-                this.AddSubsidiary("123", "c123");
-                this.AddSubsidiary("123", "c123");
+                CreateTestData();
             }
+        }
+
+        private void CreateTestData()
+        {
+
+            //var myRepository = MyCache<Object>.CacheManager;
+            //if (myRepository != null)
+            //{
+            //    var dictionary = myRepository.GetData(cShareHolder) as ConcurrentDictionary<string, IList<string>>;
+            //    if (dictionary != null)
+            //    {
+            //        //Initialize
+            //        dictionary = new ConcurrentDictionary<string, IList<string>>();
+            //        myRepository.Add(cShareHolder, dictionary);
+            //    }
+            //}
+
+            #region create test corporates
+            CreateTestCorporate();
+            CreateTestCorporate2();
+            CreateTestCorporate3();
+            #endregion
+
+            var testTree = Tree<string>.CreateTestNaryTree();
+            CreateTestdictionary(testTree, Companies);
+
         }
         /// <summary>
         /// linked list of parents and their children. Companies are stored in cache. 
@@ -128,36 +157,10 @@ namespace Repository
         /// </summary>
         public void Refresh()
         {
-            var myRepository = MyCache<Object>.CacheManager;
-            if (myRepository != null)
-            {
-                var dictionary = myRepository.GetData(cShareHolder) as ConcurrentDictionary<string, IList<string>>;
-                if (dictionary != null)
-                {
-                    //Initialize
-                    dictionary = new ConcurrentDictionary<string, IList<string>>();
-                    myRepository.Add(cShareHolder, dictionary);
-                }
-            }
-            string shareHolder = "Ahold";
-            //this.AddShareHolders("Ahold");
-            //this.AddSubsidiary("Ahold", "123");
-            //this.AddSubsidiary("Ahold", "ah567");
+            CreateTestData();
+            CreateVirtualRoot();
 
-            //this.AddShareHolders("Unilever");
-            //this.AddSubsidiary("Unilever", "123");
-            //this.AddSubsidiary("Unilever", "u567");
-
-            //this.AddShareHolders("Shell");
-            //this.AddSubsidiary("Shell", "s123");
-            //this.AddSubsidiary("Shell", "s567");
-
-            //this.AddShareHolders("123");
-            //this.AddSubsidiary("123", "c123");
-            //this.AddSubsidiary("123", "c123");
-
-            var testTree = Tree<string>.CreateTestNaryTree();
-            CreateTestdictionary(testTree,  Companies);
+            //TODO: make refresh
         }
 
         private void CreateTestdictionary(Tree<string> outerTree,  ConcurrentDictionary<string,IList<string>> dictionary)
@@ -226,11 +229,6 @@ namespace Repository
         {
 
             XElement result = new XElement("Tree");
-            #region create test corporates
-            CreateTestCorporate();
-            CreateTestCorporate2();
-            CreateTestCorporate3();
-            #endregion
 
             IList<string> subsidiariesPOV;
             string parsedSearchItem = ParseSearchString(companyPOV);
@@ -238,7 +236,7 @@ namespace Repository
             if (Companies.TryGetValue(companyPOV, out subsidiariesPOV))
             {
                 
-                IList<string> roots = new Tree<string>().GetRoots(companyPOV, Companies);
+                IList<string> roots = new Tree<string>().GetRoots(VirtualRoot, companyPOV, Companies);
 
                 foreach (var root in roots)
                 {

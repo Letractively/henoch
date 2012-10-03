@@ -291,40 +291,61 @@ namespace ParallelResourcer
             WalkClassic(root.Right);
             _listOfHandlers(root.Data.ToString());
         }
-        public static IList<TKeyValue> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
+        public static IList<TKeyValue> GetParents(TKeyValue childNode, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             var parents = from pair in dictionary
-                          where pair.Value != null && pair.Value.Where(val => val.Equals(node)).FirstOrDefault() != null
+                          where pair.Value != null && pair.Value.Where(val => val.Equals(childNode)).FirstOrDefault() != null
                           select pair.Key;
 
             return parents.ToList<TKeyValue>();
         }
 
-        public TKeyValue GetRoot(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
+        public TKeyValue GetRoot(TKeyValue virtualRoot, TKeyValue node,
+                                    IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             TKeyValue parent = node;
 
             var parents = GetParents(node, dictionary);
-            if (parents!= null && parents.Count>0)
+            //foreach (var item in dictionary)
+            //{
+            //    if (item.Value != null && item.Value.Count > 0)
+            //    {
+            //        foreach (var p in parents)
+            //        {
+            //            item.Value.Remove(p);
+            //        }
+            //    }
+            //}
+
+            if (parents != null && parents.Count > 0 && !parents[0].Equals(virtualRoot))
             {
-                parent = GetRoot(parents[0], dictionary);
+                parent = GetRoot(virtualRoot, parents[0], dictionary);
             }
 
             return parent;
         }
-        public IList<TKeyValue> GetRoots(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
+        public IList<TKeyValue> GetRoots(TKeyValue virtualRoot, TKeyValue node, 
+                IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             //TKeyValue parent = node;
             ConcurrentDictionary<TKeyValue, TKeyValue> candidates = new ConcurrentDictionary<TKeyValue, TKeyValue>();
+            //IDictionary<TKeyValue, IList<TKeyValue>> copyDictionary = new Dictionary<TKeyValue, IList<TKeyValue>>();
 
+            //foreach (var item in dictionary)
+            //{
+            //    copyDictionary.Add(item.Key, item.Value);
+            //}
             var parents = GetParents(node, dictionary);
-            if (parents != null && parents.Count > 0)
+            if (parents != null && parents.Count()>1)
             {
-                
-                foreach (var parent in parents)
+
+                foreach (TKeyValue parent in parents)
                 {
-                    var candidateRoot = GetRoot(parent, dictionary);
-                    candidates.TryAdd(candidateRoot, candidateRoot);
+                    if (!parent.Equals(virtualRoot))
+                    {
+                        TKeyValue candidateRoot = GetRoot(virtualRoot, parent, dictionary);
+                        candidates.TryAdd(candidateRoot, candidateRoot);
+                    }
                 }
             }
             else
