@@ -202,7 +202,7 @@ namespace WebApplication1
             newList.Add(childNode.Text);
 
             shareHolders.Companies.TryUpdate(parent,newList,list0);
-            //new ShareHolders().RemoveSubsidiary(ShareHolders.VirtualRoot, childNode.Text);
+            new ShareHolders().RemoveSubsidiary(ShareHolders.VirtualRoot, childNode.Text);
             _IsUpdated = true;
         }
         #endregion Treeview

@@ -154,14 +154,26 @@ namespace Repository
         /// <param name="subsidiary"></param>
         public void RemoveSubsidiary(string shareHolder, string subsidiary)
         {
-            bool succeeded = Companies[shareHolder].Remove(subsidiary);
-            if (succeeded && !shareHolder.Equals(VirtualRoot))
+            if (shareHolder.Equals(VirtualRoot))
             {
+                //clean up the virtual root: the virtual root should have only roots as children.
                 var roots = GetSubsidiaries(VirtualRoot);
-                bool isRootAlready = roots.Where(r => r.Equals(subsidiary)).Count() > 0;
-                if (!isRootAlready)
-                    Companies[VirtualRoot].Add(subsidiary);
+                var commonRoots = Tree<string>.GetParents(subsidiary, Companies);
+                if(commonRoots.Count() > 1) //then subsidiary is not a root!
+                    Companies[VirtualRoot].Remove(subsidiary);
             }
+            else
+            {
+                bool succeeded = Companies[shareHolder].Remove(subsidiary);
+                if (succeeded && !shareHolder.Equals(VirtualRoot))
+                {
+                    var roots = GetSubsidiaries(VirtualRoot);
+                    bool isRootAlready = roots.Where(r => r.Equals(subsidiary)).Count() > 0;
+                    if (!isRootAlready)
+                        Companies[VirtualRoot].Add(subsidiary);
+                }
+            }
+            
         }
         /// <summary>
         /// Reloads cache from dataresources.
