@@ -319,7 +319,8 @@
                     menuItem.get_menu().hide();
 
                     switch (menuItem.get_value()) {
-                        case "NewFolder":
+                        case "NewRelation":
+                            openWin(); return false;
                             break;
                         case "Verwijder":
                             var result = confirm("Weet u het zeker dat dit wilt verwijderen: " + treeNode.get_text());
@@ -369,7 +370,33 @@
                 //removes the brackets with the numbers,e.g. Inbox (30)
                 function extractTitleWithoutMails(treeNode) {
                     return treeNode.get_text().replace(/\s*\([\d]+\)\s*/ig, "");
-                } 
+                }
+
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                // END Region Context Menu
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                // Region Windows
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                function openWin() {
+                    var oWnd = radopen("Companies.aspx", "RadWindow1");
+                }
+
+                function OnClientClose(oWnd, args) {
+                    //get the transferred arguments
+                    var arg = args.get_argument();
+                    if (arg) {
+                    }
+                }
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                // END Region Windows
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                // Region 
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                // END Region 
+                ///////////////////////////////////////////////////////////////////////////////////////////
 
             </script>
         </telerik:RadScriptBlock>
@@ -390,9 +417,21 @@
                 </telerik:AjaxSetting>
             </AjaxSettings>
         </telerik:RadAjaxManager>
+
+                    <telerik:RadWindowManager ID="RadWindowManager1" ShowContentDuringLoad="false" VisibleStatusbar="false"
+                ReloadOnShow="true" runat="server" Skin="Sunset" EnableShadow="true">
+                <Windows>
+                    <telerik:RadWindow ID="RadWindow1" runat="server" Behaviors="Close" OnClientClose="OnClientClose"
+                        NavigateUrl="Companies.aspx">
+                    </telerik:RadWindow>
+                </Windows>
+            </telerik:RadWindowManager>
+
         <telerik:RadAjaxLoadingPanel runat="server" ID="RadAjaxLoadingPanel1" />
             <telerik:RadAjaxPanel ID="Panel1" runat="server" HorizontalAlign="NotSet" 
             LoadingPanelID="RadAjaxLoadingPanel1">
+
+
 
             <div style="background: url(Img/bg.gif) no-repeat; padding: 115px 0px 0px 15px;">
                 <div style="width: 180px; float: left;">
@@ -420,6 +459,8 @@
                         <ContextMenus>
                             <telerik:RadTreeViewContextMenu  Skin="Outlook" >
                                 <Items>
+                                    <telerik:RadMenuItem Value="NewRelation" Text="Voeg een nieuwe Relatie toe" ImageUrl="Img/9.gif">
+                                    </telerik:RadMenuItem>
                                     <telerik:RadMenuItem Value="Verwijder" Text="Verwijder Relatie" ImageUrl="Img/7.gif">
                                     </telerik:RadMenuItem>
                                 </Items>
