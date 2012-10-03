@@ -336,7 +336,7 @@ namespace ParallelResourcer
             //    copyDictionary.Add(item.Key, item.Value);
             //}
             var parents = GetParents(node, dictionary);
-            if (parents != null && parents.Count()>1)
+            if (parents != null && parents.Count() > 1)
             {
 
                 foreach (TKeyValue parent in parents)
@@ -349,7 +349,12 @@ namespace ParallelResourcer
                 }
             }
             else
-                candidates.TryAdd(node, node);
+            { 
+                if (parents != null && parents.Count() ==1 && !parents[0].Equals(virtualRoot))
+                    candidates.TryAdd(parents[0], parents[0]);
+                else
+                    candidates.TryAdd(node, node);
+            }
             
             return candidates.Select( c => c.Key).Distinct().ToList();
         }
