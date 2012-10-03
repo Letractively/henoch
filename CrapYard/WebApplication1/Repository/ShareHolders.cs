@@ -147,10 +147,21 @@ namespace Repository
         {
             Companies[shareHolder].Add(subsidiary);
         }
+        /// <summary>
+        /// A root has only 1 parent : its virtual root.
+        /// </summary>
+        /// <param name="shareHolder"></param>
+        /// <param name="subsidiary"></param>
         public void RemoveSubsidiary(string shareHolder, string subsidiary)
         {
-            Companies[shareHolder].Remove(subsidiary);
-            Companies[VirtualRoot].Add(subsidiary);
+            bool succeeded = Companies[shareHolder].Remove(subsidiary);
+            if (succeeded && !shareHolder.Equals(VirtualRoot))
+            {
+                var roots = GetSubsidiaries(VirtualRoot);
+                bool isRootAlready = roots.Where(r => r.Equals(subsidiary)).Count() > 0;
+                if (!isRootAlready)
+                    Companies[VirtualRoot].Add(subsidiary);
+            }
         }
         /// <summary>
         /// Reloads cache from dataresources.
@@ -282,6 +293,16 @@ namespace Repository
                         new XAttribute("BackColor", "Gold"));
                 newNode.Add(foundList[i].Elements());
                 foundList[i].ReplaceWith(newNode);
+            }
+
+            if (companyPOV.Equals(ShareHolders.VirtualRoot))
+            { 
+                //collapse its children, if the root is equals to virtualroot
+                var children = xTree.Elements().ToList();
+                foreach (var child in children)
+                {
+                    child.Attribute("Expanded").Value = "False";
+                }
             }
             return xTree;
         }
