@@ -150,7 +150,7 @@ namespace Repository
         public void RemoveSubsidiary(string shareHolder, string subsidiary)
         {
             Companies[shareHolder].Remove(subsidiary);
-
+            Companies[VirtualRoot].Add(subsidiary);
         }
         /// <summary>
         /// Reloads cache from dataresources.
