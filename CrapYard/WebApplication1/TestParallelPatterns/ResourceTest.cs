@@ -221,13 +221,15 @@ namespace TestParallelPatterns
                     new XElement("Node",
                             new XAttribute("Text","TrackRoot" + Guid.NewGuid().ToString()),
                             new XAttribute("Expanded", "True"),
-                            new XAttribute("Font-Italic", "False"),
+                            new XAttribute("CssClass", "defaultNode"),
                             new XElement("Node",
                                 new XAttribute("Text", searchValue),
+                                new XAttribute("CssClass", "defaultNode"),
                                 new XAttribute("Expanded", "True")))
                 };
             shareHolders = new Tree<string>().CreateNTree(outerTrack, searchValue, _TestDictionary, Tree<string>.GetParents,
-                                                        Tree<string>.TransFormXSubTreeBottomUp);   
+                                                        Tree<string>.TransFormXSubTreeBottomUp,
+                                                        Tree<string>.CreateXmlElementsBottomUp);   
             Assert.AreEqual(12, _TestDictionary.Count);
             var t2 = Task.Factory.StartNew(() =>
             {
@@ -236,7 +238,8 @@ namespace TestParallelPatterns
             );
             Task.WaitAll(t1, t2);
             subsidiaries = new Tree<string>().CreateNTree(outerTrack, searchValue, _TestDictionary, Tree<string>.GetChildren,
-                                                                Tree<string>.TransFormXSubTreeTopDown);         
+                                                                Tree<string>.TransFormXSubTreeTopDown,
+                                                                Tree<string>.CreateXmlElementsTopDown);         
 
             Assert.AreEqual(2, Tree<string>.StackNodes.Count(), "2 subtrees are expected: the bottomup tree and the topdown.");
             IList<XElement> topDownTree;
