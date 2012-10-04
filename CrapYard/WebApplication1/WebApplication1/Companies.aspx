@@ -91,8 +91,44 @@
         }
     </script>
     <div style="width: 268px; height: 193px;">
-        <telerik:RadGrid ID="RadGrid1" runat="server" Skin="Black">
+        <telerik:RadGrid ID="RadGrid1" runat="server" CellSpacing="0" 
+            DataSourceID="ObjectDataSource1" GridLines="None" AllowPaging="True">
+<ClientSettings>
+<Selecting CellSelectionMode="None" AllowRowSelect="True" 
+        EnableDragToSelectRows="False"></Selecting>
+</ClientSettings>
+
+<MasterTableView DataSourceID="ObjectDataSource1" AutoGenerateColumns="False" 
+                AllowPaging="False" DataKeyNames="DataKeyValue">
+<CommandItemSettings ExportToPdfText="Export to PDF"></CommandItemSettings>
+
+<RowIndicatorColumn Visible="True" FilterControlAltText="Filter RowIndicator column">
+</RowIndicatorColumn>
+
+<ExpandCollapseColumn Visible="True" FilterControlAltText="Filter ExpandColumn column">
+</ExpandCollapseColumn>
+
+    <Columns>
+        <telerik:GridBoundColumn DataField="DataKeyValue" 
+            FilterControlAltText="Filter DataKeyValue column" HeaderText="Company" 
+            SortExpression="DataKeyValue" UniqueName="DataKeyValue">
+        </telerik:GridBoundColumn>
+    </Columns>
+
+<EditFormSettings>
+<EditColumn FilterControlAltText="Filter EditCommandColumn column"></EditColumn>
+</EditFormSettings>
+</MasterTableView>
+
+<FilterMenu EnableImageSprites="False"></FilterMenu>
         </telerik:RadGrid>
+        <asp:ObjectDataSource 
+            ID="ObjectDataSource1" 
+            runat="server" 
+            TypeName="Repository.ShareHolders"
+            SelectMethod="GetCompanies">
+            
+        </asp:ObjectDataSource>
         <div style="margin-top: 4px; text-align: right;">
             <button title="Submit" id="close" onclick="returnToParent(); return false;">
                 Submit</button>

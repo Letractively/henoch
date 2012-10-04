@@ -7,12 +7,16 @@ using Microsoft.Practices.EnterpriseLibrary.Caching;
 using ParallelResourcer;
 using System.Collections.Concurrent;
 using System.Xml.Linq;
+using System.ComponentModel;
+using Dictionary.BusinessObjects;
 
 namespace Repository
 {
     /// <summary>
     /// Focusses on shareholders and their relations. The data is cached.
     /// </summary>
+    [Serializable]
+    [DataObjectAttribute]
     public class ShareHolders
     {
         private const string cShareHolder ="shareholders";
@@ -79,6 +83,21 @@ namespace Repository
             var testTree = Tree<string>.CreateTestNaryTree();
             CreateTestdictionary(testTree, Companies);
 
+        }
+        [DataObjectMethodAttribute(DataObjectMethodType.Select, true)]
+        public IList<BeheerContextEntity> GetCompanies()
+        {
+            IList<string> list = Companies.Select(c => c.Key).ToList();
+            IList<BeheerContextEntity> res = new List<BeheerContextEntity>();
+            foreach (var item in list)
+            {
+                BeheerContextEntity entity = new BeheerContextEntity()
+                {
+                    DataKeyValue = item
+                };
+                res.Add(entity);
+            }
+            return res;
         }
         /// <summary>
         /// linked list of parents and their children. Companies are stored in cache. 
