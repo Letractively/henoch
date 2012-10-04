@@ -359,13 +359,6 @@ namespace ParallelResourcer
             return candidates.Select( c => c.Key).Distinct().ToList();
         }
 
-        public static IList<XElement> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary,
-                                                     Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXElements)
-        {
-
-
-            return null;
-        }
         public static IList<TKeyValue> GetChildren(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             #region return null for root values : null, empty
