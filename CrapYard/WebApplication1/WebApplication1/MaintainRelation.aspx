@@ -478,12 +478,33 @@
                     <telerik:RadButton ID="RadButton2" runat="server" Text="Zoek" 
                         Style="top: 0px; left: 0px" onclick="RadButton2_Click">
                     </telerik:RadButton>
-                    <telerik:RadTreeView ID="RadTreeView2" runat="server" EnableDragAndDrop="True" OnNodeDrop="RadTreeView2_NodeDrop"
+                    <telerik:RadTreeView ID="RadTreeView2" runat="server" 
+                        EnableDragAndDrop="True" 
+                        OnNodeDrop="RadTreeView2_NodeDrop"
                         CssClass ="RadTreeView2"
                         OnClientNodeDropping="onNodeDropping" 
-                        OnClientNodeDragging="onNodeDragging" MultipleSelect="true" 
-                        EnableDragAndDropBetweenNodes="true" Skin="Outlook" 
-                        onload="RadTreeView2_Load" onnodeclick="RadTreeView2_NodeClick">
+                        OnClientNodeDragging="onNodeDragging" 
+                        MultipleSelect="true" 
+                        EnableDragAndDropBetweenNodes="true" 
+                        Skin="Outlook" 
+                        onload="RadTreeView2_Load" 
+                        onnodeclick="RadTreeView2_NodeClick"
+                        AllowNodeEditing="true"
+                        OnContextMenuItemClick="RadTreeView1_ContextMenuItemClick" 
+                        OnClientContextMenuItemClicking="onClientContextMenuItemClicking"
+                        OnClientContextMenuShowing="onClientContextMenuShowing" 
+                        OnNodeEdit="RadTreeView1_NodeEdit">
+                        <ContextMenus>
+                            <telerik:RadTreeViewContextMenu Skin="Outlook">
+                                <Items>
+                                    <telerik:RadMenuItem Value="NewRelation" Text="Voeg een nieuwe Relatie toe" ImageUrl="Img/9.gif">
+                                    </telerik:RadMenuItem>
+                                    <telerik:RadMenuItem Value="Verwijder" Text="Verwijder Relatie" ImageUrl="Img/7.gif">
+                                    </telerik:RadMenuItem>
+                                </Items>
+                                <CollapseAnimation Type="none" />
+                            </telerik:RadTreeViewContextMenu>
+                        </ContextMenus>
                     </telerik:RadTreeView>
                 </div>
 
