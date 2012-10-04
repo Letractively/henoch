@@ -242,39 +242,7 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
                     break;
             }
         }
-protected void RadTreeView2_ContextMenuItemClick(object sender, RadTreeViewContextMenuEventArgs e)
-{
-    RadTreeNode clickedNode = e.Node;
 
-    switch (e.MenuItem.Value)
-    {
-        case "NewRelation":
-            //RadTreeNode newRelation = new RadTreeNode(string.Format("Nieuwe Relatie {0}", clickedNode.Nodes.Count + 1));
-            //newRelation.Selected = true;
-            //newRelation.ImageUrl = clickedNode.ImageUrl;
-            //clickedNode.Nodes.Add(newRelation);
-            //clickedNode.Expanded = true;
-            ////update the number in the brackets
-            ////if (Regex.IsMatch(clickedNode.Text, unreadPattern))
-            ////    clickedNode.Text = Regex.Replace(clickedNode.Text, unreadPattern, "(" + clickedNode.Nodes.Count.ToString() + ")");
-            ////else
-            ////    clickedNode.Text += string.Format(" ({0})", clickedNode.Nodes.Count);
-            ////clickedNode.Font.Bold = true;
-            ////set node's value so we can find it in startNodeInEditMode
-            //newRelation.Value = newRelation.GetFullPath("/");
-            //startNodeInEditMode(newRelation.Value);
-            break;
-        case "Verwijder":
-
-            if (clickedNode.ParentNode != null)
-            {
-                new ShareHolders().RemoveSubsidiary(clickedNode.ParentNode.Text, clickedNode.Text);
-                clickedNode.Remove();
-                _IsUpdated = true;
-            }
-            break;
-    }
-}
         private void startNodeInEditMode(string nodeValue)
         {
             //find the node by its Value and edit it when page loads
@@ -288,10 +256,6 @@ protected void RadTreeView2_ContextMenuItemClick(object sender, RadTreeViewConte
         }
 
         protected void RadTreeView1_NodeEdit(object sender, RadTreeNodeEditEventArgs e)
-        {
-            e.Node.Text = e.Text;
-        }
-        protected void RadTreeView2_NodeEdit(object sender, RadTreeNodeEditEventArgs e)
         {
             e.Node.Text = e.Text;
         }

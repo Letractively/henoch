@@ -362,11 +362,9 @@ namespace ParallelResourcer
         public static IList<XElement> GetParents(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary,
                                                      Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXElements)
         {
-            var parents = GetChildren (node, dictionary);
 
-            var list = CreateXmlElementsTopDown(node, parents);
 
-            return list;
+            return null;
         }
         public static IList<TKeyValue> GetChildren(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
@@ -446,35 +444,35 @@ namespace ParallelResourcer
         /// <returns></returns>
         public Tree<TKeyValue> CreateNTree(IList<XElement> outerTrack, TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
                                                     Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations,
-                                                    Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormXsubTree)
+                                                    Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormXsubTree,
+                                                    Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXML)
         {
-            var parents = GetRelations(rootValue, outerdictionary);
+            var relations = GetRelations(rootValue, outerdictionary);
 
             Tree<TKeyValue> nTree = new Tree<TKeyValue>();
             nTree.Key = rootValue;
             nTree.Data = rootValue;
 
-            int parentCount = parents.Count;
+            int parentCount = relations.Count;
 
             if (parentCount > 0)
             {
                 // create subtrees
                 nTree.NTree = new List<Tree<TKeyValue>>();
-                var sortedParents = parents.OrderByDescending(p => p.ToString());
-                foreach (var parent in sortedParents)
+                var sortedRelations = relations.OrderByDescending(p => p.ToString());
+                foreach (var relation in sortedRelations)
                 {
-
-                    var track = GetParents(rootValue, outerdictionary, CreateXmlElementsTopDown);
+                    var track = CreateXML(rootValue, relations);
                     var outerTrackEndNode = outerTrack.Descendants().Where(e => e.Attribute("Text").Value == rootValue.ToString());
-                    var descendants = track.Where(e => e.Descendants().Any(a => a.Attribute("Text").Value == parent.ToString()));
+                    IList<XElement> descendants = track.Where(e => e.Descendants().Any(a => a.Attribute("Text").Value == relation.ToString())).ToList();
                     
-                    bool isVisitedBefore = outerTrack.Descendants().Any(d => d.Attribute("Text").Value == parent.ToString());
+                    bool isVisitedBefore = outerTrack.Descendants().Any(d => d.Attribute("Text").Value == relation.ToString());
                     if (nTree.IsUnique && !isVisitedBefore)
                     {
                         outerTrackEndNode.First().Add(descendants.Descendants());
-                        nTree.NTree.Add(CreateNTree(outerTrack, parent, outerdictionary, GetRelations, TransFormXsubTree));
+                        nTree.NTree.Add(CreateNTree(outerTrack, relation, outerdictionary, GetRelations, TransFormXsubTree, CreateXML));
 
-                        TransFormXsubTree(rootValue, parent, parents);
+                        TransFormXsubTree(rootValue, relation, relations);
 
                         var subTreeTrack = outerTrack.Descendants().Where(d => d.Attribute("Text").Value == nTree.Key.ToString());
                         subTreeTrack.First().Elements().Remove();
@@ -483,7 +481,7 @@ namespace ParallelResourcer
                     else
                     {
                         var parentXNode = new XElement("Node",
-                                new XAttribute("Text", parent.ToString()),
+                                new XAttribute("Text", relation.ToString()),
                                 new XAttribute("CssClass", "defaultNode"),
                                 new XAttribute("Expanded", "True"),
                                 new XAttribute("BackColor", "Red"));
@@ -502,7 +500,7 @@ namespace ParallelResourcer
                         //push node with LEAFs on stack
                         StackNodes.Push(new List<XElement>() {parentXNode});
 
-                        TransFormXsubTree(rootValue, parent, parents);
+                        TransFormXsubTree(rootValue, relation, relations);
                     }
 
 

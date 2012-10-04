@@ -74,9 +74,6 @@
             //get the city's name 
             //oArg.cityName = document.getElementById("cityName").value;
 
-            //get the selected date from RadDatePicker
-            //var datePicker = $find("<%= Datepicker1.ClientID %>");
-
 
             //get a reference to the current RadWindow
             var oWnd = GetRadWindow();

@@ -287,7 +287,8 @@ namespace Repository
                                 new XAttribute("Expanded", "True")))
                 };
             new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
-                                                        Tree<string>.TransFormXSubTreeTopDown);
+                                                        Tree<string>.TransFormXSubTreeTopDown,
+                                                        Tree<string>.CreateXmlElementsTopDown);
 
             IList<XElement> topDownTree;
 
