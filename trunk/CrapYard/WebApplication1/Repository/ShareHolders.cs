@@ -40,7 +40,7 @@ namespace Repository
         {
             #region introduce Virtual Root (NOT to be showed in treeView) to prevent a maximum cycle
             var roots = Companies.Where(c => GetShareHolders(c.Key).Count == 0).Select(c => c.Key);
-            if (Companies.Count()>0 && Companies.Where(c => c.Key.Equals(VirtualRoot)).Count() == 0)
+            if (Companies.Count() > 0 && Companies.Where(c => c.Key.Equals(VirtualRoot)).Count() == 0)
             {
                 Companies.TryAdd(VirtualRoot, roots.ToList());
             }
@@ -289,7 +289,9 @@ namespace Repository
             new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
                                                         Tree<string>.TransFormXSubTreeTopDown,
                                                         Tree<string>.CreateXmlElementsTopDown);
-
+            //new Tree<string>().CreateNTree(outerTrack, companyPOV, Companies, Tree<string>.GetParents,
+            //                                Tree<string>.TransFormXSubTreeBottomUp,
+            //                                Tree<string>.CreateXmlElementsBottomUp);
             IList<XElement> topDownTree;
 
             Tree<string>.StackNodes.TryPop(out topDownTree);
