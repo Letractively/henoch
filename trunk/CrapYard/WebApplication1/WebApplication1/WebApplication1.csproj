@@ -100,6 +100,9 @@
     <Content Include="App_Data\RadCaptcha\X.wav" />
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
+    <Content Include="App_Data\Stern.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\TelerikVSX.mdf" />
     <Content Include="App_Data\TelerikVSX_log.ldf">
       <DependentUpon>TelerikVSX.mdf</DependentUpon>
