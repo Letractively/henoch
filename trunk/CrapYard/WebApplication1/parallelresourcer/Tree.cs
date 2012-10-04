@@ -469,13 +469,14 @@ namespace ParallelResourcer
                     bool isVisitedBefore = outerTrack.Descendants().Any(d => d.Attribute("Text").Value == relation.ToString());
                     if (nTree.IsUnique && !isVisitedBefore)
                     {
-                        outerTrackEndNode.First().Add(descendants.Descendants());
+                        if(descendants.Count()>0) outerTrackEndNode.First().Add(descendants.Descendants());
                         nTree.NTree.Add(CreateNTree(outerTrack, relation, outerdictionary, GetRelations, TransFormXsubTree, CreateXML));
 
                         TransFormXsubTree(rootValue, relation, relations);
 
                         var subTreeTrack = outerTrack.Descendants().Where(d => d.Attribute("Text").Value == nTree.Key.ToString());
-                        subTreeTrack.First().Elements().Remove();
+                        if(subTreeTrack.Count()>0)
+                            subTreeTrack.First().Elements().Remove();
 
                     }
                     else
