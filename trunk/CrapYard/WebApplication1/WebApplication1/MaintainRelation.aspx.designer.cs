@@ -76,13 +76,13 @@ namespace WebApplication1 {
         protected global::Telerik.Web.UI.RadAjaxPanel Panel1;
         
         /// <summary>
-        /// RadTextBox1 control.
+        /// RadComboBox1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox1;
+        protected global::Telerik.Web.UI.RadComboBox RadComboBox1;
         
         /// <summary>
         /// RadButton1 control.
@@ -103,13 +103,13 @@ namespace WebApplication1 {
         protected global::Telerik.Web.UI.RadTreeView RadTreeView1;
         
         /// <summary>
-        /// RadTextBox2 control.
+        /// RadComboBox2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox2;
+        protected global::Telerik.Web.UI.RadComboBox RadComboBox2;
         
         /// <summary>
         /// RadButton2 control.
@@ -128,5 +128,14 @@ namespace WebApplication1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTreeView RadTreeView2;
+        
+        /// <summary>
+        /// ObjectDataSource1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSource1;
     }
 }

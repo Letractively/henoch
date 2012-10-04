@@ -436,9 +436,10 @@
             <div style="background: url(Img/bg.gif) no-repeat; padding: 115px 0px 0px 15px;">
                 <div style="width: 180px; float: left;">
                     <span class="label">Corporate Structure 1</span>
-                    <telerik:RadTextBox ID="RadTextBox1" runat="server" EnableSingleInputRendering="True"
-                        LabelWidth="64px" Text="zoekwoord" Style="top: 0px; left: 0px">
-                    </telerik:RadTextBox>
+                    <telerik:RadComboBox ID="RadComboBox1" runat="server" 
+                        DataSourceID="ObjectDataSource1" DataTextField="DataKeyValue" 
+                        DataValueField="DataKeyValue" Skin="Default">
+                    </telerik:RadComboBox>
                     <telerik:RadButton ID="RadButton1" runat="server" Text="Zoek" 
                         Style="top: 0px; left: 0px" onclick="RadButton1_Click">
                     </telerik:RadButton>
@@ -471,10 +472,10 @@
                 </div>
                 <div style="width: 180px; float: left;">
                     <span class="label">Corporate Structure 2</span>
-                    <telerik:RadTextBox ID="RadTextBox2" runat="server" EnableSingleInputRendering="True"
-                        LabelWidth="64px" Text="zoekwoord" 
-                        Style="top: 0px; left: 0px; right: 131px;">
-                    </telerik:RadTextBox>
+                    <telerik:RadComboBox ID="RadComboBox2" runat="server" 
+                        DataSourceID="ObjectDataSource1" DataTextField="DataKeyValue" 
+                        DataValueField="DataKeyValue" Skin="Default">
+                    </telerik:RadComboBox>
                     <telerik:RadButton ID="RadButton2" runat="server" Text="Zoek" 
                         Style="top: 0px; left: 0px" onclick="RadButton2_Click">
                     </telerik:RadButton>
@@ -514,5 +515,11 @@
             <div id="msg">
             </div>
         </telerik:RadAjaxPanel>
-
+        <asp:ObjectDataSource 
+            ID="ObjectDataSource1" 
+            runat="server" 
+            TypeName="Repository.ShareHolders"
+            SelectMethod="GetCompanies">
+            
+        </asp:ObjectDataSource>
 </asp:Content>

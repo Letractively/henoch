@@ -277,7 +277,8 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
         
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            RadComboBox1.Filter = RadComboBoxFilter.Contains;
+            RadComboBox2.Filter = RadComboBoxFilter.Contains;
             if (IsPostBack)
             {
 
@@ -330,7 +331,7 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
 
         private void BuildTreeView1()
         {
-            ZoekString = RadTextBox1.Text;
+            ZoekString = RadComboBox1.SelectedValue;
             XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
             RadTreeView1.LoadXml(XMLTreeView1);
             var nodes = RadTreeView1.GetAllNodes();
@@ -345,7 +346,7 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
 
         private void BuildTreeView2()
         {
-            ZoekString2 = RadTextBox2.Text;
+            ZoekString2 = RadComboBox2.SelectedValue;
             XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2);
             RadTreeView2.LoadXml(XMLTreeView2);
             var nodes2 = RadTreeView2.GetAllNodes();

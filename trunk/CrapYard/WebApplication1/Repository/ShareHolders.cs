@@ -87,7 +87,7 @@ namespace Repository
         [DataObjectMethodAttribute(DataObjectMethodType.Select, true)]
         public IList<BeheerContextEntity> GetCompanies()
         {
-            IList<string> list = Companies.Select(c => c.Key).ToList();
+            IList<string> list = Companies.Select(c => c.Key).OrderBy( e => e.ToString()).ToList();
             IList<BeheerContextEntity> res = new List<BeheerContextEntity>();
             foreach (var item in list)
             {
