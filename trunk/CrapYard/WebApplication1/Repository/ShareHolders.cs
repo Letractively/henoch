@@ -84,7 +84,7 @@ namespace Repository
         /// linked list of parents and their children. Companies are stored in cache. 
         /// </summary>
         /// <returns></returns>
-        public ConcurrentDictionary<string, IList<string>> Companies
+        public static ConcurrentDictionary<string, IList<string>> Companies
         {
             get
             {
@@ -143,9 +143,55 @@ namespace Repository
         {
             Companies.TryAdd(shareHolder, new List<string>());
         }
-        public void AddSubsidiary(string shareHolder, string subsidiary)
+        /// <summary>
+        /// Adds subsidiary under the contraints of the rules
+        /// </summary>
+        /// <param name="shareHolder"></param>
+        /// <param name="subsidiary"></param>
+        /// <returns></returns>
+        public bool AddSubsidiary(string shareHolder, string subsidiary)
         {
-            Companies[shareHolder].Add(subsidiary);
+            bool validation = true;
+
+            try
+            {
+                ///business rules
+                if (!ValidateAPriori(shareHolder,subsidiary))
+                    return false;
+                var candidates = Companies[shareHolder].Where(subs => subs.Equals(subsidiary));
+                ///No duplicates are allowed.
+                if (candidates.Count() > 0)
+                    return false;
+
+                Companies[shareHolder].Add(subsidiary);
+
+                //remove from virtual root if needed
+                RemoveSubsidiary(ShareHolders.VirtualRoot, subsidiary);
+            }
+            catch
+            {
+                validation = false;
+            }
+
+            return validation;
+        }
+        /// <summary>
+        /// Virtual root cannot be changed by the viewer.
+        /// 
+        /// </summary>
+        /// <param name="shareHolder"></param>
+        /// <param name="subsidiary"></param>
+        /// <returns></returns>
+        public static bool ValidateAPriori(string shareHolder, string subsidiary)
+        {
+            //business rule
+            if (shareHolder.Equals(VirtualRoot))
+                return false;
+            if (subsidiary.Equals(VirtualRoot))
+                return false;
+            if (subsidiary.Equals(shareHolder))
+                return false;
+            return true;
         }
         /// <summary>
         /// A root has only 1 parent : its virtual root.
@@ -196,7 +242,7 @@ namespace Repository
                                select n.Data;
                 IList<string> list = null;
                 if ((dictionary.TryGetValue(outerTree.Data, out list)))
-                    dictionary.TryUpdate(outerTree.Data, children.ToList<string>(), null);
+                    dictionary.TryUpdate(outerTree.Data, children.ToList<string>(), list);
                 else
                     dictionary.TryAdd(outerTree.Data, children.ToList<string>());
 
@@ -209,7 +255,7 @@ namespace Repository
             {
                 IList<string> list = null;
                 if (!(dictionary.TryGetValue(outerTree.Data, out list)))
-                    dictionary.TryAdd(outerTree.Data, null);
+                    dictionary.TryAdd(outerTree.Data, new List<string>());
             }
 
         }
@@ -326,6 +372,7 @@ namespace Repository
         {
             return String.Empty;//
         }
+
         /// <summary>
         /// Only for testing. A dictionary will be extended with xml
         /// </summary>
