@@ -262,16 +262,15 @@ namespace TestParallelPatterns
 
             Assert.AreEqual(2, shareHolders.NTree.Count);
             Assert.AreEqual(searchValue, shareHolders.Key);
-            Assert.AreEqual("root", shareHolders.NTree[0].Key);
-            Assert.AreEqual("S11", shareHolders.NTree[1].Key);
-            Assert.AreEqual("root", shareHolders.NTree[1].NTree[0].Key);
+            Assert.AreEqual("S11", shareHolders.NTree[0].Key);
+            Assert.AreEqual("root", shareHolders.NTree[1].Key);           
 
             Assert.AreEqual(1, subsidiaries.NTree.Count);
             Assert.AreEqual(searchValue, shareHolders.Key);
             Assert.AreEqual("S22", subsidiaries.NTree[0].Key);
             Assert.AreEqual(2, subsidiaries.NTree[0].NTree.Count);
-            Assert.AreEqual("S41", subsidiaries.NTree[0].NTree[0].Key);
-            Assert.AreEqual("S42", subsidiaries.NTree[0].NTree[1].Key);
+            Assert.AreEqual("S42", subsidiaries.NTree[0].NTree[0].Key);
+            Assert.AreEqual("S41", subsidiaries.NTree[0].NTree[1].Key);
 
             string tempPath = Path.Combine(Path.GetTempPath(), "test.xml");
             Console.WriteLine();
