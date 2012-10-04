@@ -73,11 +73,11 @@ namespace WebApplication1
             RadTreeNode sourceNode = e.SourceDragNode;
             RadTreeNode destNode = e.DestDragNode;
             RadTreeViewDropPosition dropPosition = e.DropPosition;
-            if (sourceNode.Text.Equals(destNode.Text)
-                || sourceNode.Text.Equals(ShareHolders.VirtualRoot)
-                || destNode.Text.Equals(ShareHolders.VirtualRoot))
+            if(!ShareHolders.ValidateAPriori(sourceNode.Text, destNode.Text))
+            {
                 return;
-            
+            }
+
             if (destNode != null) //drag&drop is performed between trees
             {
                 bool betweenNodes = true;
@@ -117,7 +117,6 @@ namespace WebApplication1
                         }
                     }
                 }
-
                 destNode.Expanded = true;
                 sourceNode.TreeView.UnselectAllNodes();
             }
@@ -152,59 +151,50 @@ namespace WebApplication1
             {
                 return;
             }
-            sourceNode.Owner.Nodes.Remove(sourceNode);
-           
+            //Do not remove relation here.
+            //sourceNode.Owner.Nodes.Remove(sourceNode);
+
+            var shareHolders = new ShareHolders();
+            bool validation = false;
             switch (dropPosition)
             {
-                case RadTreeViewDropPosition.Over:
+                case RadTreeViewDropPosition.Over:                    
+
+                    validation = shareHolders.AddSubsidiary(destNode.Text, sourceNode.Text);    
                     // child
-                    if (!sourceNode.IsAncestorOf(destNode))
+                    if (!sourceNode.IsAncestorOf(destNode) && validation==true)
                     {
                         destNode.Nodes.Add(sourceNode);
                     }
 
-                    UpdateRelation(destNode, sourceNode);
-
+                    _IsUpdated = validation;
                     break;
 
                 case RadTreeViewDropPosition.Above:
-                    // sibling - above					
-                    destNode.InsertBefore(sourceNode);
 
-                    var parentNode = destNode.ParentNode;
-                    UpdateRelation(parentNode, sourceNode);
-                    
+                    validation = shareHolders.AddSubsidiary(destNode.ParentNode.Text, sourceNode.Text);    
+                    // sibling - above	
+                    if (validation == true)
+                    {
+                        destNode.InsertBefore(sourceNode);
+                    }
+                    _IsUpdated = validation;
                     break;
 
                 case RadTreeViewDropPosition.Below:
-                    // sibling - below
-                    destNode.InsertAfter(sourceNode);
 
-                    UpdateRelation(destNode, sourceNode);
+                    validation = shareHolders.AddSubsidiary(destNode.Text, sourceNode.Text);   
+                    // sibling - below
+                    if (validation == true)
+                    {
+                        destNode.InsertAfter(sourceNode);
+                    }
+
+                    _IsUpdated = validation;
                     break;
             }
         }
 
-        private static void UpdateRelation( RadTreeNode parentNode, RadTreeNode childNode)
-        {
-            string parent = parentNode.Text;
-            string child = childNode.Text;
-
-            var shareHolders = new ShareHolders();
-
-            var list0 = new ShareHolders().Companies[parent];
-            var newList = list0;
-            if (newList == null)
-            {
-                newList = new List<string>();
-            }
-
-            newList.Add(childNode.Text);
-
-            shareHolders.Companies.TryUpdate(parent,newList,list0);
-            new ShareHolders().RemoveSubsidiary(ShareHolders.VirtualRoot, childNode.Text);
-            _IsUpdated = true;
-        }
         #endregion Treeview
 
         #region ContextMenu
