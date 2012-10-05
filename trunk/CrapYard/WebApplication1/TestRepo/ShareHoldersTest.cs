@@ -68,7 +68,7 @@ namespace TestRepo
         /// <summary>
         ///A test for AddShareHolders
         ///</summary>
-        [TestMethod()]
+        [Ignore()]
         public void AddShareHoldersTest()
         {
             ShareHolders target = new ShareHolders(true); 

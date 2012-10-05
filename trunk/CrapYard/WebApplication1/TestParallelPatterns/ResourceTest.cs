@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
+using Dictionary.System;
 
 namespace TestParallelPatterns
 {
@@ -197,7 +198,7 @@ namespace TestParallelPatterns
            
             Task.WaitAll(t1);
 
-            Assert.AreEqual(13, Tree<TaskInfo>.Queue.Count);
+            Assert.AreEqual(15, Tree<TaskInfo>.Queue.Count);
         }
         [TestMethod]
         public void TestCreateNTree()
@@ -228,7 +229,7 @@ namespace TestParallelPatterns
                                 new XAttribute("Expanded", "True")))
                 };
             shareHolders = new Tree<string>().CreateNTree(outerTrack, searchValue, _TestDictionary, Tree<string>.GetParents,
-                                                        Tree<string>.TransFormXSubTreeBottomUp,
+                                                        new Tree<string>().TransFormXSubTreeBottomUp,
                                                         Tree<string>.CreateXmlElementsBottomUp);   
             Assert.AreEqual(12, _TestDictionary.Count);
             var t2 = Task.Factory.StartNew(() =>
@@ -238,15 +239,15 @@ namespace TestParallelPatterns
             );
             Task.WaitAll(t1, t2);
             subsidiaries = new Tree<string>().CreateNTree(outerTrack, searchValue, _TestDictionary, Tree<string>.GetChildren,
-                                                                Tree<string>.TransFormXSubTreeTopDown,
-                                                                Tree<string>.CreateXmlElementsTopDown);         
+                                                                new Tree<string>().TransFormXSubTreeTopDown,
+                                                                Tree<string>.CreateXmlElementsTopDown);
 
-            Assert.AreEqual(2, Tree<string>.StackNodes.Count(), "2 subtrees are expected: the bottomup tree and the topdown.");
+            Assert.AreEqual(2, shareHolders.StackNodes.Count(), "2 subtrees are expected: the bottomup tree and the topdown.");
             IList<XElement> topDownTree;
             IList<XElement> bottomUpTree;
             XElement result = new XElement("Tree");
-            Tree<string>.StackNodes.TryPop(out topDownTree);
-            Tree<string>.StackNodes.TryPop(out bottomUpTree);
+            subsidiaries.StackNodes.TryPop(out topDownTree);
+            shareHolders.StackNodes.TryPop(out bottomUpTree);
 
             Console.WriteLine(topDownTree.First().ToString());
             Console.WriteLine(bottomUpTree.First().ToString());

@@ -8,6 +8,7 @@ using ParallelResourcer;
 using System.Collections.Concurrent;
 using System.Xml.Linq;
 using System.ComponentModel;
+using Dictionary.System;
 
 namespace Dictionary.BusinessObjects
 {
@@ -61,6 +62,7 @@ namespace Dictionary.BusinessObjects
             {
                 CreateTestData();
             }
+            CreateVirtualRoot();
         }
 
         private void CreateTestData()
@@ -122,6 +124,32 @@ namespace Dictionary.BusinessObjects
                 {
                     myRepository.Add(cShareHolder, value);
                 }
+            }
+        }
+        /// <summary>
+        /// Gets relations from cache
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static Tree<string> GetRelations (string root)
+        {
+            Tree<string> tree = null;
+
+            var myRepository = MyCache<object>.CacheManager;
+            if (myRepository != null)
+            {
+                tree = myRepository.GetData(root) as Tree<string>;
+            }
+
+            return tree;
+        }
+
+        public static void SetRelations(string rootKey, Tree<string> treeValue)
+        {
+            var myRepository = MyCache<object>.CacheManager;
+            if (myRepository != null)
+            {
+                myRepository.Add(rootKey, treeValue);
             }
         }
         /// <summary>
@@ -327,14 +355,27 @@ namespace Dictionary.BusinessObjects
             //TODO: ParseSearchString
             if (Companies.TryGetValue(companyPOV, out subsidiariesPOV))
             {
-                
-                IList<string> roots = new Tree<string>().GetRoots(VirtualRoot, companyPOV, Companies);
-
-                foreach (var root in roots)
+                XElement xTree;
+                switch (view)
                 {
-                    XElement xTree = CreateXMLCorporate(companyPOV, root, view);
+                    case RelationView.Overview:
+                        IList<string> roots = new Tree<string>().GetRoots(VirtualRoot, companyPOV, Companies);
 
-                    result.Add(xTree);
+                        foreach (var root in roots)
+                        {
+                            xTree = CreateXMLCorporate(companyPOV, root, view);
+
+                            result.Add(xTree);
+                        }
+                        break;
+                    case RelationView.Dependencies:
+                            xTree = CreateXMLCorporate(companyPOV, "n.a.", view);
+
+                            result.Add(xTree);
+                        break;
+                    default:
+                        throw new NotImplementedException("Relation not defined yet.");
+                        break;
                 }
 
             }
@@ -356,25 +397,29 @@ namespace Dictionary.BusinessObjects
                                 new XAttribute("Expanded", "True")))
                 };
 
+            Tree<string> tree = GetRelations(root);
+
             switch (view)
             {
                 case RelationView.Overview:
-                    new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
-                                            Tree<string>.TransFormXSubTreeTopDown,
+                    tree = new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
+                                            new Tree<string>().TransFormXSubTreeTopDown,
                                             Tree<string>.CreateXmlElementsTopDown);
                     break;
                 case RelationView.Dependencies:
-                    new Tree<string>().CreateNTree(outerTrack, companyPOV, Companies, Tree<string>.GetParents,
-                                                    Tree<string>.TransFormXSubTreeBottomUp,
+                    tree = new Tree<string>().CreateNTree(outerTrack, companyPOV, Companies, Tree<string>.GetParents,
+                                                    new Tree<string>().TransFormXSubTreeBottomUp,
                                                     Tree<string>.CreateXmlElementsBottomUp);
                     break;
                 default:
                     break;
             }
 
+            SetRelations(root, tree);
+
             IList<XElement> topDownTree;
 
-            Tree<string>.StackNodes.TryPop(out topDownTree);
+            tree.StackNodes.TryPop(out topDownTree);
 
             XElement xTree = topDownTree.First();
             var foundList = (xTree.Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
@@ -399,6 +444,9 @@ namespace Dictionary.BusinessObjects
                     child.Attribute("Expanded").Value = "False";
                 }
             }
+
+            tree.StackNodes.Push(topDownTree);
+            SetRelations(root, tree);
             return xTree;
         }
 
