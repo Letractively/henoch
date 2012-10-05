@@ -11,6 +11,11 @@ using System.ComponentModel;
 
 namespace Dictionary.BusinessObjects
 {
+    public enum RelationView
+    {
+        Overview = 0,
+        Dependencies = 1
+    }
     /// <summary>
     /// Focusses on shareholders and their relations. The data is cached.
     /// </summary>
@@ -312,7 +317,7 @@ namespace Dictionary.BusinessObjects
         /// </summary>
         /// <param name="companyPOV">The company's point of view in the organisation.</param>
         /// <returns></returns>
-        public string CreateXMLOrganoTreeView(string companyPOV)
+        public string CreateXMLOrganoTreeView(string companyPOV, RelationView view)
         {
 
             XElement result = new XElement("Tree");
@@ -327,7 +332,7 @@ namespace Dictionary.BusinessObjects
 
                 foreach (var root in roots)
                 {
-                    XElement xTree = CreateXMLCorporate(companyPOV, root);
+                    XElement xTree = CreateXMLCorporate(companyPOV, root, view);
 
                     result.Add(xTree);
                 }
@@ -336,7 +341,7 @@ namespace Dictionary.BusinessObjects
             return result.ToString();
         }
 
-        private XElement CreateXMLCorporate(string companyPOV, string root)
+        private XElement CreateXMLCorporate(string companyPOV, string root,RelationView view)
         {
 
             IList<XElement> outerTrack = new List<XElement>() 
@@ -350,12 +355,23 @@ namespace Dictionary.BusinessObjects
                                 new XAttribute("CssClass", "defaultNode"),
                                 new XAttribute("Expanded", "True")))
                 };
-            new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
-                                                        Tree<string>.TransFormXSubTreeTopDown,
-                                                        Tree<string>.CreateXmlElementsTopDown);
-            //new Tree<string>().CreateNTree(outerTrack, companyPOV, Companies, Tree<string>.GetParents,
-            //                                Tree<string>.TransFormXSubTreeBottomUp,
-            //                                Tree<string>.CreateXmlElementsBottomUp);
+
+            switch (view)
+            {
+                case RelationView.Overview:
+                    new Tree<string>().CreateNTree(outerTrack, root, Companies, Tree<string>.GetChildren,
+                                            Tree<string>.TransFormXSubTreeTopDown,
+                                            Tree<string>.CreateXmlElementsTopDown);
+                    break;
+                case RelationView.Dependencies:
+                    new Tree<string>().CreateNTree(outerTrack, companyPOV, Companies, Tree<string>.GetParents,
+                                                    Tree<string>.TransFormXSubTreeBottomUp,
+                                                    Tree<string>.CreateXmlElementsBottomUp);
+                    break;
+                default:
+                    break;
+            }
+
             IList<XElement> topDownTree;
 
             Tree<string>.StackNodes.TryPop(out topDownTree);

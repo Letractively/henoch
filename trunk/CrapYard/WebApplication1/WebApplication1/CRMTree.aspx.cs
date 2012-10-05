@@ -170,7 +170,8 @@ namespace WebApplication1
             RadGrid control = (RadGrid)sender;
 
             ZoekString = control.SelectedValue.ToString();
-            string xml = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
+            
+            string xml = new ShareHolders().CreateXMLOrganoTreeView(ZoekString, RelationView.Overview);
             RadTreeView1.LoadXml(xml);
             RadTreeView2.LoadXml(xml);
 
@@ -218,7 +219,7 @@ namespace WebApplication1
         protected void RadButton1_Click(object sender, EventArgs e)
         {
             ZoekString = RadTextBox2.Text;
-            string xml = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
+            string xml = new ShareHolders().CreateXMLOrganoTreeView(ZoekString, RelationView.Overview);
             RadTreeView1.LoadXml(xml);
             var nodes = RadTreeView1.GetAllNodes();
             if (nodes.Count() > 0 && nodes[0].Text.Equals(ZoekString))
@@ -228,7 +229,7 @@ namespace WebApplication1
         protected void RadButton2_Click(object sender, EventArgs e)
         {
             ZoekString2 = RadTextBox3.Text;
-            string xml2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2);
+            string xml2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2, RelationView.Overview);
             RadTreeView2.LoadXml(xml2);
             var nodes2 = RadTreeView2.GetAllNodes();
             if (nodes2.Count() > 0 && nodes2[0].Text.Equals(ZoekString2))
