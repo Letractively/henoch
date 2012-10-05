@@ -61,3 +61,62 @@ span.label
     clear: both;
     height: 110px;
 }
+.clockSession
+{
+    width: 409px;
+    height: 174px;
+    margin: auto;
+    background: url(Img/clockSession.jpg) no-repeat;
+}
+        
+.contSession
+{
+    width: 270px;
+    float: right;
+    text-align: center;
+    margin: 20px 20px 0 0 ;
+}
+        
+.sessionExpire
+{
+    color: #3366ff;
+    padding-top: 30px;
+}
+        
+.showNotification
+{
+    padding-top: 15px;
+    color: #666;
+}
+        
+.timeRemain
+{
+    padding-top: 5px; 
+    color: #000;
+}
+        
+.timeSeconds
+{
+    font-size: 30px;
+}
+        
+.infoIcon, .notificationContent
+{
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+}
+        
+.infoIcon
+{
+    width: 32px;
+    height: 32px;
+    margin: 0 10px ;
+    vertical-align: top;
+}
+        
+.notificationContent
+{
+    width: 160px;
+    vertical-align: bottom;
+}
