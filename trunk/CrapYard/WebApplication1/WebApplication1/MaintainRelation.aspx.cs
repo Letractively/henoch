@@ -280,10 +280,8 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
         {
             RadComboBox1.Filter = RadComboBoxFilter.Contains;
             RadComboBox2.Filter = RadComboBoxFilter.Contains;
-            if (IsPostBack)
+            if (!IsPostBack)
             {
-
-
 
 
             }
@@ -327,7 +325,19 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
 
         protected void RadButton1_Click(object sender, EventArgs e)
         {
-            BuildTreeView1();
+            try
+            {
+                BuildTreeView1();
+            }
+            catch (Exception ex)
+            {
+                //set the expire timeout for the session 
+                Session.Timeout = 2;
+                //configure the notification to automatically show 1 min before session expiration
+                RadNotification1.ShowInterval = (Session.Timeout - 1) * 1000;
+                //set the redirect url as a value for an easier and faster extraction in on the client
+                //RadNotification1.Value = Page.ResolveClientUrl("Notification.aspx");
+            }
         }
 
         private void BuildTreeView1()
@@ -345,7 +355,19 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
 
         protected void RadButton2_Click(object sender, EventArgs e)
         {
-            BuildTreeView2();
+            try
+            {
+                BuildTreeView2();
+            }
+            catch (Exception ex)
+            {
+                //set the expire timeout for the session 
+                Session.Timeout = 2;
+                //configure the notification to automatically show 1 min before session expiration
+                RadNotification1.ShowInterval = (Session.Timeout - 1) * 1000;
+                //set the redirect url as a value for an easier and faster extraction in on the client
+                RadNotification1.Value = Page.ResolveClientUrl("Notification.aspx");
+            }
         }
 
         private void BuildTreeView2()
@@ -397,6 +419,11 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
                 }
 
             }
+        }
+
+        protected void OnCallbackUpdate(object sender, RadNotificationEventArgs e)
+        {
+            e.Value = "hello";
         }
 
 

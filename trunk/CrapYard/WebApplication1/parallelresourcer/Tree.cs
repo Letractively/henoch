@@ -317,11 +317,21 @@ namespace Dictionary.System
         }
         public static IList<TKeyValue> GetParents(TKeyValue childNode, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
-            var parents = from pair in dictionary
-                          where pair.Value != null && pair.Value.Where(val => val.Equals(childNode)).FirstOrDefault() != null
-                          select pair.Key;
+            IList<TKeyValue> list;
+            try
+            {
+                var parents = from pair in dictionary
+                              where pair.Value != null && pair.Value.Where(val => val.Equals(childNode)).FirstOrDefault() != null
+                              select pair.Key;
+                list = parents.ToList<TKeyValue>();
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
 
-            return parents.ToList<TKeyValue>();
+            return list;
         }
 
         public TKeyValue GetRoot(TKeyValue virtualRoot, TKeyValue node,
@@ -464,80 +474,88 @@ namespace Dictionary.System
                                                     Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormXsubTree,
                                                     Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXML)
         {
-            var relations = GetRelations(rootValue, outerdictionary);
-
             Tree<TKeyValue> nTree = new Tree<TKeyValue>(Nodes);
-            nTree.Key = rootValue;
-            nTree.Data = rootValue;
 
-            int parentCount = relations.Count;
-
-            if (parentCount > 0)
+            try
             {
-                // create subtrees
-                nTree.NTree = new List<Tree<TKeyValue>>();
-                var sortedRelations = relations.OrderByDescending(p => p.ToString());
-                foreach (var relation in sortedRelations)
-                {
-                    var track = CreateXML(rootValue, relations);
-                    var outerTrackEndNode = outerTrack.Descendants().Where(e => e.Attribute("Text").Value == rootValue.ToString());
-                    IList<XElement> descendants = track.Where(e => e.Descendants().Any(a => a.Attribute("Text").Value == relation.ToString())).ToList();
-                    
-                    bool isVisitedBefore = outerTrack.Descendants().Any(d => d.Attribute("Text").Value == relation.ToString());
-                    if (nTree.IsUnique && !isVisitedBefore)
-                    {
-                        if(descendants.Count()>0) outerTrackEndNode.First().Add(descendants.Descendants());
-                        nTree.NTree.Add(CreateNTree(outerTrack, relation, outerdictionary, GetRelations, TransFormXsubTree, CreateXML));
+                var relations = GetRelations(rootValue, outerdictionary);
+                nTree.Key = rootValue;
+                nTree.Data = rootValue;
 
-                        TransFormXsubTree(rootValue, relation, relations);
+                int parentCount = relations.Count;
 
-                        var subTreeTrack = outerTrack.Descendants().Where(d => d.Attribute("Text").Value == nTree.Key.ToString());
-                        if(subTreeTrack.Count()>0)
-                            subTreeTrack.First().Elements().Remove();
-
-                    }
-                    else
-                    {
-                        var parentXNode = new XElement("Node",
-                                new XAttribute("Text", relation.ToString()),
-                                new XAttribute("CssClass", "defaultNode"),
-                                new XAttribute("Expanded", "True"),
-                                new XAttribute("BackColor", "Red"));
-                        #region removed add children
-                        //var childrenParent = GetChildren(parent, outerdictionary);
-
-                        //foreach (var child in childrenParent)
-                        //{
-                        //    parentXNode.Add(new XElement("Node",
-                        //        new XAttribute("Text", child.ToString()),
-                        //        new XAttribute("CssClass", "defaultNode"),
-                        //        new XAttribute("Expanded", "True"),
-                        //        new XAttribute("BackColor", "Red")));
-                        //}
-                        #endregion
-                        //push node with LEAFs on stack
-                        StackNodes.Push(new List<XElement>() {parentXNode});
-
-                        TransFormXsubTree(rootValue, relation, relations);
-                    }
-
-
-                }
                 if (parentCount > 0)
-                    CreateOneSubTree(parentCount);
-            }
-            else
-            {
-                //push LEAF on stack
-                StackNodes.Push(new List<XElement>() 
+                {
+                    // create subtrees
+                    nTree.NTree = new List<Tree<TKeyValue>>();
+                    var sortedRelations = relations.OrderByDescending(p => p.ToString());
+                    foreach (var relation in sortedRelations)
+                    {
+                        var track = CreateXML(rootValue, relations);
+                        var outerTrackEndNode = outerTrack.Descendants().Where(e => e.Attribute("Text").Value == rootValue.ToString());
+                        IList<XElement> descendants = track.Where(e => e.Descendants().Any(a => a.Attribute("Text").Value == relation.ToString())).ToList();
+
+                        bool isVisitedBefore = outerTrack.Descendants().Any(d => d.Attribute("Text").Value == relation.ToString());
+                        if (nTree.IsUnique && !isVisitedBefore)
+                        {
+                            if (descendants.Count() > 0) outerTrackEndNode.First().Add(descendants.Descendants());
+                            nTree.NTree.Add(CreateNTree(outerTrack, relation, outerdictionary, GetRelations, TransFormXsubTree, CreateXML));
+
+                            TransFormXsubTree(rootValue, relation, relations);
+
+                            var subTreeTrack = outerTrack.Descendants().Where(d => d.Attribute("Text").Value == nTree.Key.ToString());
+                            if (subTreeTrack.Count() > 0)
+                                subTreeTrack.First().Elements().Remove();
+
+                        }
+                        else
+                        {
+                            var parentXNode = new XElement("Node",
+                                    new XAttribute("Text", relation.ToString()),
+                                    new XAttribute("CssClass", "defaultNode"),
+                                    new XAttribute("Expanded", "True"),
+                                    new XAttribute("BackColor", "Red"));
+                            #region removed add children
+                            //var childrenParent = GetChildren(parent, outerdictionary);
+
+                            //foreach (var child in childrenParent)
+                            //{
+                            //    parentXNode.Add(new XElement("Node",
+                            //        new XAttribute("Text", child.ToString()),
+                            //        new XAttribute("CssClass", "defaultNode"),
+                            //        new XAttribute("Expanded", "True"),
+                            //        new XAttribute("BackColor", "Red")));
+                            //}
+                            #endregion
+                            //push node with LEAFs on stack
+                            StackNodes.Push(new List<XElement>() { parentXNode });
+
+                            TransFormXsubTree(rootValue, relation, relations);
+                        }
+
+
+                    }
+                    if (parentCount > 0)
+                        CreateOneSubTree(parentCount);
+                }
+                else
+                {
+                    //push LEAF on stack
+                    StackNodes.Push(new List<XElement>() 
                     {  
                         new XElement("Node", 
                             new XAttribute("Text", rootValue.ToString()),
                             new XAttribute("CssClass", "defaultNode"),
                             new XAttribute("Expanded", "True"))
                     });
-            }
+                }
 
+            }
+            catch (Exception ex)
+            {
+                
+                throw new ApplicationException(ex.Message);
+            }
             return nTree;
         }
         /// <summary>
