@@ -125,7 +125,7 @@
         <asp:ObjectDataSource 
             ID="ObjectDataSource1" 
             runat="server" 
-            TypeName="Repository.ShareHolders"
+            TypeName="Dictionary.BusinessObjects.ShareHolders"
             SelectMethod="GetCompanies">
             
         </asp:ObjectDataSource>

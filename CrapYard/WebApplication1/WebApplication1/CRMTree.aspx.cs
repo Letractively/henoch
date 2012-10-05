@@ -11,6 +11,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Drawing;
 using System.Data;
+using Dictionary.BusinessObjects;
 
 namespace WebApplication1
 {

@@ -76,6 +76,15 @@ namespace WebApplication1 {
         protected global::Telerik.Web.UI.RadAjaxPanel Panel1;
         
         /// <summary>
+        /// btnToggle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnToggle;
+        
+        /// <summary>
         /// RadComboBox1 control.
         /// </summary>
         /// <remarks>

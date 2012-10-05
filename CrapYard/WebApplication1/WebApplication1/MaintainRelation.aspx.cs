@@ -10,6 +10,7 @@ using Telerik.Web.UI;
 using Repository;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using Dictionary.BusinessObjects;
 
 namespace WebApplication1
 {
