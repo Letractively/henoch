@@ -333,7 +333,10 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
         private void BuildTreeView1()
         {
             ZoekString = RadComboBox1.SelectedValue;
-            XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString);
+            if(!btnToggle.Checked)
+                XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString, RelationView.Overview);
+            else
+                XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString, RelationView.Dependencies);
             RadTreeView1.LoadXml(XMLTreeView1);
             var nodes = RadTreeView1.GetAllNodes();
             if (nodes.Count() > 0 && nodes[0].Text.Equals(ZoekString))
@@ -348,7 +351,7 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
         private void BuildTreeView2()
         {
             ZoekString2 = RadComboBox2.SelectedValue;
-            XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2);
+            XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2, RelationView.Overview);
             RadTreeView2.LoadXml(XMLTreeView2);
             var nodes2 = RadTreeView2.GetAllNodes();
             if (nodes2.Count() > 0 && nodes2[0].Text.Equals(ZoekString2))
