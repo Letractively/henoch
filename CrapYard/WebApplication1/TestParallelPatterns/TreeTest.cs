@@ -1,6 +1,7 @@
 ﻿using ParallelResourcer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Dictionary.System;
 
 namespace TestParallelPatterns
 {

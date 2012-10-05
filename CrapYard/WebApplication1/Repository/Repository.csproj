@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheManager.cs" />
+    <Compile Include="Dictionary\Singleton.cs" />
     <Compile Include="ISmartDataReader.cs" />
     <Compile Include="MyAccess.cs" />
     <Compile Include="IMyAccess.cs" />

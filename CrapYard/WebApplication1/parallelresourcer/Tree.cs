@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Diagnostics;
 
-namespace ParallelResourcer
+namespace Dictionary.System
 {
-    public class Tree<TKeyValue> : IEnumerable
+    public class Tree<TKeyValue> : IEnumerable, ITree<TKeyValue>
     {
 
         // 1) Define a delegate type.
@@ -29,7 +29,14 @@ namespace ParallelResourcer
 
         public static XDocument XDoc;
         public static ConcurrentQueue<TKeyValue> Queue;
-        public static ConcurrentStack<IList<XElement>> StackNodes;
+        private ConcurrentStack<IList<XElement>> _StackNodes = Singleton <ConcurrentStack<IList<XElement>>>.UniqueInstance;
+        public ConcurrentStack<IList<XElement>> StackNodes  
+        { 
+            get
+            {
+                return _StackNodes;
+            }
+        }
         public static ConcurrentQueue<XElement> QueueNodes;
         public Tree<TKeyValue> Left, Right;
         public IList<Tree<TKeyValue>> NTree;
@@ -39,10 +46,21 @@ namespace ParallelResourcer
         /// Indicates whether the node is unique.
         /// </summary>
         public bool IsUnique { get; private set; }
+        private ConcurrentDictionary<TKeyValue, TKeyValue> _Nodes = Singleton<ConcurrentDictionary<TKeyValue, TKeyValue>>.UniqueInstance;
         /// <summary>
         /// List of all nodes keyvalues.
         /// </summary>
-        public static ConcurrentDictionary<TKeyValue, TKeyValue> Nodes { get; private set; }
+        public ConcurrentDictionary<TKeyValue, TKeyValue> Nodes
+        {
+            get
+            {
+                return _Nodes;
+            }
+            private set
+            {
+                _Nodes = value; 
+            }
+        }
 
         private TKeyValue _Key;
 
@@ -89,16 +107,22 @@ namespace ParallelResourcer
         private static void InitializeObjects()
         {
             Queue = new ConcurrentQueue<TKeyValue>();
-            StackNodes = new ConcurrentStack<IList<XElement>>();
+            
             QueueNodes = new ConcurrentQueue<XElement>();
-            Nodes = new ConcurrentDictionary<TKeyValue, TKeyValue>();
+            
             XDoc = new XDocument();
         }
         public Tree()
         {
             IsUnique = true;
-
+            //StackNodes = new ConcurrentStack<IList<XElement>>();
             Nodes = new ConcurrentDictionary<TKeyValue, TKeyValue>();
+        }
+        public Tree(ConcurrentDictionary<TKeyValue, TKeyValue> nodes)
+        {
+            IsUnique = true;
+            //StackNodes = new ConcurrentStack<IList<XElement>>();
+            Nodes = nodes;
         }
         public static IEnumerable<Tree<TKeyValue>> Iterate(Tree<TKeyValue> head)
         {
@@ -381,7 +405,7 @@ namespace ParallelResourcer
 
             return list;
         }
-        public static Tree<TKeyValue> CreateParellelNTree(TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
+        public Tree<TKeyValue> CreateParellelNTree(TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
                                             Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations,
                                             Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormXsubTree)
         {
@@ -442,7 +466,7 @@ namespace ParallelResourcer
         {
             var relations = GetRelations(rootValue, outerdictionary);
 
-            Tree<TKeyValue> nTree = new Tree<TKeyValue>();
+            Tree<TKeyValue> nTree = new Tree<TKeyValue>(Nodes);
             nTree.Key = rootValue;
             nTree.Data = rootValue;
 
@@ -521,18 +545,18 @@ namespace ParallelResourcer
         /// Every subtree has a root which has one child (injection).
         /// </summary>
         /// <param name="countParents"></param>
-        public static void CreateOneSubTree(int countParents)
+        public void CreateOneSubTree(int countParents)
         {
             IList<XElement> stackItem;
             IList<string> duplicateCandidates = new List<string>();
 
-            Tree<string>.StackNodes.TryPop(out stackItem);
+            StackNodes.TryPop(out stackItem);
             duplicateCandidates.Add(stackItem.Elements().First().Attribute("Text").Value);
 
             for (int i = 0; i < (countParents - 1); i++)
             {
                 IList<XElement> nextStackItem;
-                Tree<string>.StackNodes.TryPop(out nextStackItem);
+                StackNodes.TryPop(out nextStackItem);
 
                 bool isLeaf = nextStackItem.Elements().Count() == 0;
                 if (!isLeaf)
@@ -558,7 +582,7 @@ namespace ParallelResourcer
                     duplicate.Attribute("CssClass").Value = "found";//ForeColor="#FF8000" 
                 }
             }
-            Tree<string>.StackNodes.Push(stackItem);
+            StackNodes.Push(stackItem);
         }
 
         /// <summary>
@@ -568,7 +592,7 @@ namespace ParallelResourcer
         /// <param name="rootValue"> parent R rootValue </param>
         /// <param name="parents">Collection of parents in any relation current tree depth</param>
         /// <param name="parent" > parent R rootValue </param>
-        public static void TransFormXSubTreeBottomUp(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
+        public void TransFormXSubTreeBottomUp(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
         {
             IList<XElement> listSubtreeParents;
             IList<XElement> newListxElt = new List<XElement>();
@@ -598,7 +622,7 @@ namespace ParallelResourcer
         /// <param name="rootValue">rootValue R parent  </param>
         /// <param name="parents">Collection of parents in any relation current tree depth</param>
         /// <param name="parent" > rootValue R parent </param>
-        public static void TransFormXSubTreeTopDown(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
+        public void TransFormXSubTreeTopDown(TKeyValue rootValue, TKeyValue parent, IList<TKeyValue> parents)
         {
             IList<XElement> listSubtreeParents = new List<XElement>();
             IList<XElement> newListxElt = new List<XElement>();
