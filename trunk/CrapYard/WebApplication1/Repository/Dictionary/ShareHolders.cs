@@ -8,9 +8,8 @@ using ParallelResourcer;
 using System.Collections.Concurrent;
 using System.Xml.Linq;
 using System.ComponentModel;
-using Dictionary.BusinessObjects;
 
-namespace Repository
+namespace Dictionary.BusinessObjects
 {
     /// <summary>
     /// Focusses on shareholders and their relations. The data is cached.

@@ -1,6 +1,7 @@
 ﻿using Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Dictionary.BusinessObjects;
 
 namespace TestRepo
 {

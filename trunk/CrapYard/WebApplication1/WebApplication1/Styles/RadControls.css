@@ -49,3 +49,15 @@ span.label
 {
     vertical-align:middle;
 }
+
+.classDiv
+{
+    float: left;
+    width: 150px;
+}
+.clear
+{
+    width: 100%;
+    clear: both;
+    height: 110px;
+}

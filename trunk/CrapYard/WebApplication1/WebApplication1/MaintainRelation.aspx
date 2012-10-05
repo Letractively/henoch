@@ -433,7 +433,17 @@
 
 
 
-            <div style="background: url(Img/bg.gif) no-repeat; padding: 115px 0px 0px 15px;">
+            <div style="background: url(Img/bg.gif) no-repeat; padding: 50px 0px 0px 15px;" >
+                <div>
+                    <telerik:RadButton ID="btnToggle" runat="server" ToggleType="CheckBox" ButtonType="LinkButton"
+                        Skin="Black">
+                        <ToggleStates>
+                            <telerik:RadButtonToggleState Text="Relatie Afhankelijkheid" PrimaryIconCssClass="rbToggleCheckboxChecked" />
+                            <telerik:RadButtonToggleState Text="Relatie Overview" PrimaryIconCssClass="rbToggleCheckbox" />
+                        </ToggleStates>
+                    </telerik:RadButton>
+                </div>
+
                 <div style="width: 180px; float: left;">
                     <span class="label">Corporate Structure 1</span>
                     <telerik:RadComboBox ID="RadComboBox1" runat="server" 
@@ -518,7 +528,7 @@
         <asp:ObjectDataSource 
             ID="ObjectDataSource1" 
             runat="server" 
-            TypeName="Repository.ShareHolders"
+            TypeName="Dictionary.BusinessObjects.ShareHolders"
             SelectMethod="GetCompanies">
             
         </asp:ObjectDataSource>
