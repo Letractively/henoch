@@ -394,17 +394,7 @@ namespace Dictionary.BusinessObjects
             XElement xTree;
             try
             {
-                IList<XElement> outerTrack = new List<XElement>() 
-                {  
-                    new XElement("Node",
-                            new XAttribute("Text","TrackRoot" + Guid.NewGuid().ToString()),
-                            new XAttribute("Expanded", "True"),
-                            new XAttribute("CssClass", "defaultNode"),
-                            new XElement("Node",
-                                new XAttribute("Text", root),
-                                new XAttribute("CssClass", "defaultNode"),
-                                new XAttribute("Expanded", "True")))
-                };
+                IList<XElement> outerTrack = new Tree<string>().CreateXMLOuterTrack(root);
 
                 Tree<string> tree = GetRelations(root);
 
@@ -464,6 +454,7 @@ namespace Dictionary.BusinessObjects
             }
             return xTree;
         }
+
 
         private string ParseSearchString(string companyPOV)
         {

@@ -327,8 +327,8 @@ namespace Dictionary.System
             }
             catch (Exception ex)
             {
-                
-                throw;
+
+                list = new List<TKeyValue>() { childNode };
             }
 
             return list;
@@ -358,39 +358,26 @@ namespace Dictionary.System
 
             return parent;
         }
-        public IList<TKeyValue> GetRoots(TKeyValue virtualRoot, TKeyValue node, 
+
+        public IList<string> GetRoots(TKeyValue virtualRoot, TKeyValue node, 
                 IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             //TKeyValue parent = node;
-            ConcurrentDictionary<TKeyValue, TKeyValue> candidates = new ConcurrentDictionary<TKeyValue, TKeyValue>();
-            //IDictionary<TKeyValue, IList<TKeyValue>> copyDictionary = new Dictionary<TKeyValue, IList<TKeyValue>>();
+            IDictionary<TKeyValue, IList<TKeyValue>> copyDictionary = new Dictionary<TKeyValue, IList<TKeyValue>>();
 
-            //foreach (var item in dictionary)
-            //{
-            //    copyDictionary.Add(item.Key, item.Value);
-            //}
-            var parents = GetParents(node, dictionary);
-            if (parents != null && parents.Count() > 1)
+            foreach (var item in dictionary)
             {
+                copyDictionary.Add(item.Key, item.Value);
+            }
+            //copyDictionary.Remove(virtualRoot);
+            IList<XElement> outerTrack = CreateXMLOuterTrack(node);
 
-                foreach (TKeyValue parent in parents)
-                {
-                    if (!parent.Equals(virtualRoot))
-                    {
-                        TKeyValue candidateRoot = GetRoot(virtualRoot, parent, dictionary);
-                        candidates.TryAdd(candidateRoot, candidateRoot);
-                    }
-                }
-            }
-            else
-            { 
-                if (parents != null && parents.Count() ==1 && !parents[0].Equals(virtualRoot))
-                    candidates.TryAdd(parents[0], parents[0]);
-                else
-                    candidates.TryAdd(node, node);
-            }
-            
-            return candidates.Select( c => c.Key).Distinct().ToList();
+            Tree<TKeyValue> ancestors = new Tree<TKeyValue>().CreateNTree(outerTrack, node, copyDictionary, Tree<TKeyValue>.GetParents,
+                                                        new Tree<TKeyValue>().TransFormXSubTreeBottomUp,
+                                                        Tree<TKeyValue>.CreateXmlElementsBottomUp); ;
+            var list = ancestors.StackNodes.ToList()[0].First().Elements().Select( e => e.Attribute("Text").Value);
+
+            return list.Distinct().ToList<string>();
         }
 
         public static IList<TKeyValue> GetChildren(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
@@ -414,6 +401,22 @@ namespace Dictionary.System
                 list = new List<TKeyValue>();
 
             return list;
+        }
+
+        public IList<XElement> CreateXMLOuterTrack(TKeyValue root)
+        {
+            IList<XElement> outerTrack = new List<XElement>() 
+                {  
+                    new XElement("Node",
+                            new XAttribute("Text","TrackRoot" + Guid.NewGuid().ToString()),
+                            new XAttribute("Expanded", "True"),
+                            new XAttribute("CssClass", "defaultNode"),
+                            new XElement("Node",
+                                new XAttribute("Text", root),
+                                new XAttribute("CssClass", "defaultNode"),
+                                new XAttribute("Expanded", "True")))
+                };
+            return outerTrack;
         }
         public Tree<TKeyValue> CreateParellelNTree(TKeyValue rootValue, IDictionary<TKeyValue, IList<TKeyValue>> outerdictionary,
                                             Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations,

@@ -614,29 +614,40 @@
             </div>
 
         </telerik:RadAjaxPanel>
-
-
-                        <div id="msg">
-                        <div class="timeRemain">
-                            <span class="timeSeconds"><span id="mainLbl"> </span></span>seconds
-                         </div>
-                    <telerik:RadNotification ID="RadNotification1" runat="server" Style="width: 180px;float: right;" 
-                        OnCallbackUpdate="OnCallbackUpdate" OnClientShowing="OnClientShowing"
-                        OnClientHidden="OnClientHidden" LoadContentOn="PageLoad" AutoCloseDelay="60000"
-                        Title="Continue Your Session" TitleIcon="" Skin="Default" EnableRoundedCorners="true"
-                        ShowCloseButton="false">
-                        <ContentTemplate>
-                            <div class="infoIcon">
-                                <img src="Img/infoIcon.jpg" alt="info icon" /></div>
-                            <div class="notificationContent">
-                                Time remaining:&nbsp; <span id="timeLbl">60</span>
-                                <telerik:RadButton Skin="Default" ID="continueSession" runat="server" Text="Ok"
-                                    Style="margin-top: 10px;" AutoPostBack="false" OnClientClicked="ContinueSession">
-                                </telerik:RadButton>
-                            </div>
-                        </ContentTemplate>
-                    </telerik:RadNotification>
+    <div id="msg">
+        <div class="timeRemain">
+            <span class="timeSeconds"><span id="mainLbl"></span></span>seconds
+        </div>
+        <telerik:RadNotification ID="RadNotification1" runat="server" Style="width: 300px;
+            float: right;" OnCallbackUpdate="OnCallbackUpdate" OnClientShowing="OnClientShowing"
+            OnClientHidden="OnClientHidden" AutoCloseDelay="5000" TitleIcon="" EnableRoundedCorners="True"
+            ShowCloseButton="False">
+            <ContentTemplate>
+                <div class="infoIcon">
+                    <img src="Img/infoIcon.jpg" alt="info icon" /></div>
+                <div class="notificationContent">
+                    Time remaining:&nbsp; <span id="timeLbl">60</span>
+                    <telerik:RadButton Skin="Default" ID="continueSession" runat="server" Text="Ok" Style="margin-top: 10px;"
+                        AutoPostBack="false" OnClientClicked="ContinueSession">
+                    </telerik:RadButton>
                 </div>
+            </ContentTemplate>
+        </telerik:RadNotification>
+        <telerik:RadNotification runat="server" ID="RadNotification2"
+            ContentIcon="~/Img/clockSession.jpg" 
+            Width="250px" Height="100px" Animation="Slide" EnableRoundedCorners="True" 
+            EnableShadow="True" Skin="Outlook" AutoCloseDelay="10000" 
+            Position="Center">
+            <ContentTemplate>
+                <div class="infoIcon">
+                    <img src="Img/infoIcon.jpg" alt="info icon" />
+                </div>
+                <telerik:RadButton Skin="Outlook" ID="RadButton3" runat="server" Text="Ok" Style="margin-top: 10px;"
+                    AutoPostBack="false" OnClientClicked="ContinueSession">
+                </telerik:RadButton>
+            </ContentTemplate>
+        </telerik:RadNotification>
+        </div>
         <asp:ObjectDataSource 
             ID="ObjectDataSource1" 
             runat="server" 

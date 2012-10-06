@@ -283,7 +283,12 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
             if (!IsPostBack)
             {
 
-
+                ////set the expire timeout for the session 
+                //Session.Timeout = 2;
+                ////configure the notification to automatically show 1 min before session expiration
+                //RadNotification1.ShowInterval = (Session.Timeout - 1) * 1000;
+                ////set the redirect url as a value for an easier and faster extraction in on the client
+                ////RadNotification1.Value = Page.ResolveClientUrl("Notification.aspx");
             }
         }
         protected void Page_PreRenderComplete(object sender, EventArgs e)
@@ -328,14 +333,15 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
             try
             {
                 BuildTreeView1();
+                //throw new ApplicationException();
             }
             catch (Exception ex)
             {
-                //set the expire timeout for the session 
-                Session.Timeout = 2;
-                //configure the notification to automatically show 1 min before session expiration
-                RadNotification1.ShowInterval = (Session.Timeout - 1) * 1000;
-                //set the redirect url as a value for an easier and faster extraction in on the client
+                ////set the expire timeout for the session 
+                //Session.Timeout = 2;
+                ////configure the notification to automatically show 1 min before session expiration
+                //RadNotification1.ShowInterval = (Session.Timeout - 1) * 1000;
+                ////set the redirect url as a value for an easier and faster extraction in on the client
                 //RadNotification1.Value = Page.ResolveClientUrl("Notification.aspx");
             }
         }
@@ -358,15 +364,19 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
             try
             {
                 BuildTreeView2();
+                throw new ApplicationException();
             }
             catch (Exception ex)
             {
-                //set the expire timeout for the session 
-                Session.Timeout = 2;
-                //configure the notification to automatically show 1 min before session expiration
-                RadNotification1.ShowInterval = (Session.Timeout - 1) * 1000;
-                //set the redirect url as a value for an easier and faster extraction in on the client
-                RadNotification1.Value = Page.ResolveClientUrl("Notification.aspx");
+                RadNotification2.Text = ex.Message;
+                RadNotification2.VisibleOnPageLoad = true;
+                RadNotification2.ShowInterval = 1000;
+                ////set the expire timeout for the session 
+                //Session.Timeout = 2;
+                ////configure the notification to automatically show 1 min before session expiration
+                //RadNotification1.ShowInterval = (Session.Timeout - 1) * 1000;
+                ////set the redirect url as a value for an easier and faster extraction in on the client
+                //RadNotification1.Value = Page.ResolveClientUrl("Notification.aspx");
             }
         }
 
