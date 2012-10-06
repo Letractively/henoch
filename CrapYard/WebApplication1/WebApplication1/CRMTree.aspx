@@ -34,15 +34,12 @@
                 </UpdatedControls>
             </telerik:AjaxSetting>--%>
             <telerik:AjaxSetting AjaxControlID="RadTextBox1">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="RadGrid1" />
-                </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="RadGrid1">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="RadGrid1" />
                     <telerik:AjaxUpdatedControl ControlID="RadTreeView1" />
                     <telerik:AjaxUpdatedControl ControlID="RadTreeView2" />
+                    <telerik:AjaxUpdatedControl ControlID="RadGrid1" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
@@ -80,12 +77,12 @@
                         GridLines="None" 
                         onitemdatabound="RadGrid1_ItemDataBound" 
                         onselectedindexchanged="RadGrid1_SelectedIndexChanged" Skin="Black" 
-                        Width="215px" DataSourceID="ObjectDataSource2">
+                        Width="215px" DataSourceID="ZoekSqlDataSource">
                         <ClientSettings EnablePostBackOnRowClick="True">
                             <Selecting AllowRowSelect="True" CellSelectionMode="None" />
                         </ClientSettings>
                         <MasterTableView AllowSorting="False" AutoGenerateColumns="False" 
-                            DataKeyNames="DataKeyValue" DataSourceID="ObjectDataSource2">
+                            DataKeyNames="custname" DataSourceID="ZoekSqlDataSource">
                             <CommandItemSettings ExportToPdfText="Export to PDF" />
                             <RowIndicatorColumn FilterControlAltText="Filter RowIndicator column" 
                                 Visible="True">
@@ -94,33 +91,25 @@
                                 Visible="True">
                             </ExpandCollapseColumn>
                             <Columns>
-                                <telerik:GridBoundColumn DataField="Tablename" 
-                                    FilterControlAltText="Filter Tablename column" HeaderText="Tablename" 
-                                    SortExpression="Tablename" UniqueName="Tablename">
+                                <telerik:GridBoundColumn DataField="prio" 
+                                    FilterControlAltText="Filter prio column" HeaderText="prio" 
+                                    SortExpression="prio" UniqueName="prio">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="Id" DataType="System.Int32" 
-                                    FilterControlAltText="Filter Id column" HeaderText="Id" SortExpression="Id" 
-                                    UniqueName="Id">
+                                <telerik:GridBoundColumn DataField="custname" 
+                                    FilterControlAltText="Filter custname column" HeaderText="custname" 
+                                    SortExpression="custname" UniqueName="custname">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="DataKeyValue" 
-                                    FilterControlAltText="Filter DataKeyValue column" HeaderText="DataKeyValue" 
-                                    SortExpression="DataKeyValue" UniqueName="DataKeyValue">
+                                <telerik:GridBoundColumn DataField="Voornaam" 
+                                    FilterControlAltText="Filter Voornaam column" HeaderText="Voornaam" 
+                                    SortExpression="Voornaam" UniqueName="Voornaam">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="DataKeyName" 
-                                    FilterControlAltText="Filter DataKeyName column" HeaderText="DataKeyName" 
-                                    SortExpression="DataKeyName" UniqueName="DataKeyName">
+                                <telerik:GridBoundColumn DataField="tussenvoegsel" 
+                                    FilterControlAltText="Filter tussenvoegsel column" HeaderText="tussenvoegsel" 
+                                    SortExpression="tussenvoegsel" UniqueName="tussenvoegsel">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="SelectedIndex" DataType="System.Int32" 
-                                    FilterControlAltText="Filter SelectedIndex column" HeaderText="SelectedIndex" 
-                                    SortExpression="SelectedIndex" UniqueName="SelectedIndex">
-                                </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="Master" 
-                                    FilterControlAltText="Filter Master column" HeaderText="Master" 
-                                    SortExpression="Master" UniqueName="Master">
-                                </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="MasterId" DataType="System.Int32" 
-                                    FilterControlAltText="Filter MasterId column" HeaderText="MasterId" 
-                                    SortExpression="MasterId" UniqueName="MasterId">
+                                <telerik:GridBoundColumn DataField="AchterNaam" 
+                                    FilterControlAltText="Filter AchterNaam column" HeaderText="AchterNaam" 
+                                    SortExpression="AchterNaam" UniqueName="AchterNaam">
                                 </telerik:GridBoundColumn>
                             </Columns>
                             <EditFormSettings>
