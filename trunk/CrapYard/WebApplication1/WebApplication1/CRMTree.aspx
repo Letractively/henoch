@@ -21,6 +21,35 @@
             <asp:ScriptReference Path="~/Scripts/Util.js" />
         </Scripts>
     </telerik:RadScriptManager>
+
+        <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server">
+        <ClientEvents OnRequestStart="OnRequestStart" OnResponseEnd="OnResponseEnd" />
+        <AjaxSettings>
+<%--            <telerik:AjaxSetting AjaxControlID="RadAjaxManager1">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="RadGrid1" />
+                    <telerik:AjaxUpdatedControl ControlID="RadTextBox1"/>
+                    <telerik:AjaxUpdatedControl ControlID="RadTreeView1"/>
+                    <telerik:AjaxUpdatedControl ControlID="RadTreeView2"/>
+                </UpdatedControls>
+            </telerik:AjaxSetting>--%>
+            <telerik:AjaxSetting AjaxControlID="RadTextBox1">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="RadGrid1" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="RadGrid1">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="RadGrid1" />
+                    <telerik:AjaxUpdatedControl ControlID="RadTreeView1" />
+                    <telerik:AjaxUpdatedControl ControlID="RadTreeView2" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
+    <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+        <script src="Scripts/Util.js" type="text/javascript"></script>
+    </telerik:RadCodeBlock>
     <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" >
 
         </telerik:RadAjaxLoadingPanel>
@@ -32,11 +61,13 @@
             <tr>
                 <td style="margin-left: 40px">        
                     <telerik:RadTextBox ID="RadTextBox1" Runat="server" 
-                        EnableSingleInputRendering="True" LabelWidth="64px" Text="zoekwoord" style="top: 0px; left: 0px" 
+                        EnableSingleInputRendering="True" LabelWidth="64px" Text="zoekwoord" 
+                        style="top: 0px; left: 0px" AutoPostBack="True" Skin="Black" 
             >
         </telerik:RadTextBox ></td>
                 <td>
-                                    <telerik:RadButton ID="RadButton1" runat="server" Text="Zoek" style="top: 0px; left: 0px" 
+                                    <telerik:RadButton ID="RadButton1" runat="server" Text="Zoek" 
+                                        style="top: 0px; left: 0px" Skin="Black" 
             >
         </telerik:RadButton></td>
                 <td>
@@ -46,15 +77,15 @@
                 <td>
                     <telerik:RadGrid ID="RadGrid1" runat="server" AllowPaging="True" 
                         AllowSorting="True" CellSpacing="0" 
-                        GridLines="None" ondatabound="RadGrid1_DataBound" 
+                        GridLines="None" 
                         onitemdatabound="RadGrid1_ItemDataBound" 
                         onselectedindexchanged="RadGrid1_SelectedIndexChanged" Skin="Black" 
-                        Width="215px" DataSourceID="ZoekSqlDataSource">
+                        Width="215px" DataSourceID="ObjectDataSource2">
                         <ClientSettings EnablePostBackOnRowClick="True">
                             <Selecting AllowRowSelect="True" CellSelectionMode="None" />
                         </ClientSettings>
                         <MasterTableView AllowSorting="False" AutoGenerateColumns="False" 
-                            DataKeyNames="custname" DataSourceID="ZoekSqlDataSource">
+                            DataKeyNames="DataKeyValue" DataSourceID="ObjectDataSource2">
                             <CommandItemSettings ExportToPdfText="Export to PDF" />
                             <RowIndicatorColumn FilterControlAltText="Filter RowIndicator column" 
                                 Visible="True">
@@ -63,25 +94,33 @@
                                 Visible="True">
                             </ExpandCollapseColumn>
                             <Columns>
-                                <telerik:GridBoundColumn DataField="prio" 
-                                    FilterControlAltText="Filter prio column" HeaderText="prio" 
-                                    SortExpression="prio" UniqueName="prio">
+                                <telerik:GridBoundColumn DataField="Tablename" 
+                                    FilterControlAltText="Filter Tablename column" HeaderText="Tablename" 
+                                    SortExpression="Tablename" UniqueName="Tablename">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="custname" 
-                                    FilterControlAltText="Filter custname column" HeaderText="custname" 
-                                    SortExpression="custname" UniqueName="custname">
+                                <telerik:GridBoundColumn DataField="Id" DataType="System.Int32" 
+                                    FilterControlAltText="Filter Id column" HeaderText="Id" SortExpression="Id" 
+                                    UniqueName="Id">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="Voornaam" 
-                                    FilterControlAltText="Filter Voornaam column" HeaderText="Voornaam" 
-                                    SortExpression="Voornaam" UniqueName="Voornaam">
+                                <telerik:GridBoundColumn DataField="DataKeyValue" 
+                                    FilterControlAltText="Filter DataKeyValue column" HeaderText="DataKeyValue" 
+                                    SortExpression="DataKeyValue" UniqueName="DataKeyValue">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="tussenvoegsel" 
-                                    FilterControlAltText="Filter tussenvoegsel column" HeaderText="tussenvoegsel" 
-                                    SortExpression="tussenvoegsel" UniqueName="tussenvoegsel">
+                                <telerik:GridBoundColumn DataField="DataKeyName" 
+                                    FilterControlAltText="Filter DataKeyName column" HeaderText="DataKeyName" 
+                                    SortExpression="DataKeyName" UniqueName="DataKeyName">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn DataField="AchterNaam" 
-                                    FilterControlAltText="Filter AchterNaam column" HeaderText="AchterNaam" 
-                                    SortExpression="AchterNaam" UniqueName="AchterNaam">
+                                <telerik:GridBoundColumn DataField="SelectedIndex" DataType="System.Int32" 
+                                    FilterControlAltText="Filter SelectedIndex column" HeaderText="SelectedIndex" 
+                                    SortExpression="SelectedIndex" UniqueName="SelectedIndex">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="Master" 
+                                    FilterControlAltText="Filter Master column" HeaderText="Master" 
+                                    SortExpression="Master" UniqueName="Master">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn DataField="MasterId" DataType="System.Int32" 
+                                    FilterControlAltText="Filter MasterId column" HeaderText="MasterId" 
+                                    SortExpression="MasterId" UniqueName="MasterId">
                                 </telerik:GridBoundColumn>
                             </Columns>
                             <EditFormSettings>
@@ -191,9 +230,18 @@
                     PropertyName="Text" Type="String" />
             </SelectParameters>
         </asp:ObjectDataSource>
-        <asp:LinqDataSource ID="LinqDataSource1" runat="server" EntityTypeName="">
-        </asp:LinqDataSource>
+
+    <asp:ObjectDataSource 
+        ID="ObjectDataSource2" 
+        runat="server" 
+        TypeName="Dictionary.BusinessObjects.ShareHolders"
+        SelectMethod="GetCompanies">
+            
+    </asp:ObjectDataSource>
+
     </telerik:RadAjaxPanel>
+
+
 
     <div id="msg">
     </div>

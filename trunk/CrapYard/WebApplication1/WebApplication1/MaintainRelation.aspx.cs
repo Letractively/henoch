@@ -14,55 +14,8 @@ using Dictionary.BusinessObjects;
 
 namespace WebApplication1
 {
-    public partial class MaintainRelation : Page
+    public partial class MaintainRelation : PageBase
     {
-        #region Session properties
-        static bool _IsUpdated;
-        public string ZoekString
-        {
-            get
-            {
-                return (string.IsNullOrEmpty(Session["ZoekString"] as string) ? string.Empty : Session["ZoekString"].ToString());
-            }
-            set
-            {
-                Session["ZoekString"] = value;
-            }
-        }
-        public string ZoekString2
-        {
-            get
-            {
-                return (string.IsNullOrEmpty(Session["ZoekString2"] as string) ? string.Empty : Session["ZoekString2"].ToString());
-            }
-            set
-            {
-                Session["ZoekString2"] = value;
-            }
-        }
-        public string XMLTreeView1
-        {
-            get
-            {
-                return Session["XMLTreeView1"].ToString();
-            }
-            set
-            {
-                Session["XMLTreeView1"] = value;
-            }
-        }
-        public string XMLTreeView2
-        {
-            get
-            {
-                return Session["XMLTreeView2"].ToString();
-            }
-            set
-            {
-                Session["XMLTreeView2"] = value;
-            }
-        }
-        #endregion Seeion properties
 
         #region Treeview
         protected void RadTreeView2_NodeDrop(object sender, RadTreeNodeDragDropEventArgs e)
@@ -71,129 +24,13 @@ namespace WebApplication1
         }
         protected void RadTreeView1_NodeDrop(object sender, RadTreeNodeDragDropEventArgs e)
         {
-            RadTreeNode sourceNode = e.SourceDragNode;
-            RadTreeNode destNode = e.DestDragNode;
-            RadTreeViewDropPosition dropPosition = e.DropPosition;
-            if(!ShareHolders.ValidateAPriori(sourceNode.Text, destNode.Text))
-            {
-                return;
-            }
-
-            if (destNode != null) //drag&drop is performed between trees
-            {
-                bool betweenNodes = true;
-                if (betweenNodes) //dropped node will at the same level as a destination node
-                {
-                    if (sourceNode.TreeView.SelectedNodes.Count <= 1)
-                    {
-                        PerformDragAndDrop(dropPosition, sourceNode, destNode);
-                    }
-                    else if (sourceNode.TreeView.SelectedNodes.Count > 1)
-                    {
-                        foreach (RadTreeNode node in sourceNode.TreeView.SelectedNodes)
-                        {
-                            PerformDragAndDrop(dropPosition, node, destNode);
-                        }
-                    }
-                }
-                else //dropped node will be a sibling of the destination node
-                {
-                    if (sourceNode.TreeView.SelectedNodes.Count <= 1)
-                    {
-                        if (!sourceNode.IsAncestorOf(destNode))
-                        {
-                            sourceNode.Owner.Nodes.Remove(sourceNode);
-                            destNode.Nodes.Add(sourceNode);
-                        }
-                    }
-                    else if (sourceNode.TreeView.SelectedNodes.Count > 1)
-                    {
-                        foreach (RadTreeNode node in RadTreeView1.SelectedNodes)
-                        {
-                            if (!node.IsAncestorOf(destNode))
-                            {
-                                node.Owner.Nodes.Remove(node);
-                                destNode.Nodes.Add(node);
-                            }
-                        }
-                    }
-                }
-                destNode.Expanded = true;
-                sourceNode.TreeView.UnselectAllNodes();
-            }
+            NodeDrop(sender, e);
         }
 
-        private void PopulateGrid()
-        {
-            string[] values = { "One", "Two", "Three" };
-
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Text");
-            dt.Columns.Add("Value");
-            dt.Columns.Add("Category");
-            dt.Rows.Add(values);
-            dt.Rows.Add(values);
-            dt.Rows.Add(values);
-            Session["DataTable"] = dt;
-
-        }
-
-        private void AddRowToGrid(DataTable dt, RadTreeNode node)
-        {
-            string[] values = { node.Text, node.Value };
-            dt.Rows.Add(values);
-
-        }
-
-        private static void PerformDragAndDrop(RadTreeViewDropPosition dropPosition, RadTreeNode sourceNode,
+        private new static void PerformDragAndDrop(RadTreeViewDropPosition dropPosition, RadTreeNode sourceNode,
                                                RadTreeNode destNode)
         {
-            if (sourceNode.Equals(destNode) || sourceNode.IsAncestorOf(destNode))
-            {
-                return;
-            }
-            //Do not remove relation here.
-            //sourceNode.Owner.Nodes.Remove(sourceNode);
-
-            var shareHolders = new ShareHolders();
-            bool validation = false;
-            switch (dropPosition)
-            {
-                case RadTreeViewDropPosition.Over:                    
-
-                    validation = shareHolders.AddSubsidiary(destNode.Text, sourceNode.Text);    
-                    // child
-                    if (!sourceNode.IsAncestorOf(destNode) && validation==true)
-                    {
-                        destNode.Nodes.Add(sourceNode);
-                    }
-
-                    _IsUpdated = validation;
-                    break;
-
-                case RadTreeViewDropPosition.Above:
-
-                    validation = shareHolders.AddSubsidiary(destNode.ParentNode.Text, sourceNode.Text);    
-                    // sibling - above	
-                    if (validation == true)
-                    {
-                        destNode.InsertBefore(sourceNode);
-                    }
-                    _IsUpdated = validation;
-                    break;
-
-                case RadTreeViewDropPosition.Below:
-
-                    validation = shareHolders.AddSubsidiary(destNode.Text, sourceNode.Text);   
-                    // sibling - below
-                    if (validation == true)
-                    {
-                        destNode.InsertAfter(sourceNode);
-                    }
-
-                    _IsUpdated = validation;
-                    break;
-            }
+            PerformDragAndDrop(dropPosition, sourceNode, destNode);
         }
 
         #endregion Treeview
@@ -228,7 +65,7 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
                     {
                         new ShareHolders().RemoveSubsidiary(clickedNode.ParentNode.Text, clickedNode.Text);
                         clickedNode.Remove();
-                        _IsUpdated = true;
+                        IsUpdated = true;
                     }
                     break;
             }
@@ -294,12 +131,12 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
         protected void Page_PreRenderComplete(object sender, EventArgs e)
         {
 
-            if (IsPostBack && _IsUpdated)
+            if (IsPostBack && IsUpdated.HasValue && IsUpdated.Value)
             {
                 ///update treeviews
                 BuildTreeView1();
                 BuildTreeView2();
-                _IsUpdated = false;
+                IsUpdated = false;
             }
         }
         protected void RadTreeView1_Load(object sender, EventArgs e)
@@ -350,13 +187,10 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
         {
             ZoekString = RadComboBox1.SelectedValue;
             if(!btnToggle.Checked)
-                XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString, RelationView.Overview);
+               BuildTreeView(ZoekString,RadTreeView1, RelationView.Overview);
             else
-                XMLTreeView1 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString, RelationView.Dependencies);
-            RadTreeView1.LoadXml(XMLTreeView1);
-            var nodes = RadTreeView1.GetAllNodes();
-            if (nodes.Count() > 0 && nodes[0].Text.Equals(ZoekString))
-                nodes[0].BackColor = Color.Gold;
+               BuildTreeView(ZoekString, RadTreeView1, RelationView.Dependencies);
+
         }
 
         protected void RadButton2_Click(object sender, EventArgs e)
@@ -383,11 +217,7 @@ protected void RadTreeView1_ContextMenuItemClick(object sender, RadTreeViewConte
         private void BuildTreeView2()
         {
             ZoekString2 = RadComboBox2.SelectedValue;
-            XMLTreeView2 = new ShareHolders().CreateXMLOrganoTreeView(ZoekString2, RelationView.Overview);
-            RadTreeView2.LoadXml(XMLTreeView2);
-            var nodes2 = RadTreeView2.GetAllNodes();
-            if (nodes2.Count() > 0 && nodes2[0].Text.Equals(ZoekString2))
-                nodes2[0].BackColor = Color.Gold;
+            BuildTreeView(ZoekString2, RadTreeView2, RelationView.Overview);
         }
 
         protected void RadTreeView1_NodeClick(object sender, RadTreeNodeEventArgs e)
