@@ -396,7 +396,7 @@ namespace Dictionary.BusinessObjects
             {
                 IList<XElement> outerTrack = new Tree<string>().CreateXMLOuterTrack(root);
 
-                Tree<string> tree = GetRelations(root);
+                Tree<string> tree = null;
 
                 switch (view)
                 {
@@ -421,28 +421,7 @@ namespace Dictionary.BusinessObjects
                 tree.StackNodes.TryPop(out topDownTree);
 
                 xTree = topDownTree.First();
-                var foundList = (xTree.Descendants().Where(d => d.Attribute("Text").Value == companyPOV)).ToList();
-
-                for (int i = 0; i < foundList.Count; i++)
-                {
-                    XElement newNode = new XElement("Node",
-                            new XAttribute("Text", companyPOV),
-                            new XAttribute("CssClass", foundList[i].Attribute("CssClass").Value),
-                            new XAttribute("Expanded", foundList[i].Attribute("Expanded").Value),
-                            new XAttribute("BackColor", "Gold"));
-                    newNode.Add(foundList[i].Elements());
-                    foundList[i].ReplaceWith(newNode);
-                }
-
-                if (companyPOV.Equals(ShareHolders.VirtualRoot))
-                {
-                    //collapse its children, if the root is equals to virtualroot
-                    var children = xTree.Elements().ToList();
-                    foreach (var child in children)
-                    {
-                        child.Attribute("Expanded").Value = "False";
-                    }
-                }
+                //ColorFoundNodes(companyPOV, xTree);
 
                 tree.StackNodes.Push(topDownTree);
                 SetRelations(root, tree);
