@@ -13,7 +13,7 @@ namespace Dictionary.System
                                     Func<TKeyValue, IDictionary<TKeyValue, IList<TKeyValue>>, IList<TKeyValue>> GetRelations, 
                                     Action<TKeyValue, TKeyValue, IList<TKeyValue>> TransFormXsubTree, 
                                     Func<TKeyValue, IList<TKeyValue>, IList<XElement>> CreateXML);
-        IList<TKeyValue> GetRoots(TKeyValue virtualRoot, TKeyValue node, IDictionary<TKeyValue, 
+        IList<string> GetRoots(TKeyValue virtualRoot, TKeyValue node, IDictionary<TKeyValue, 
                                     IList<TKeyValue>> dictionary);
         TKeyValue Key { get; set; }
         ConcurrentDictionary<TKeyValue, TKeyValue> Nodes { get; }

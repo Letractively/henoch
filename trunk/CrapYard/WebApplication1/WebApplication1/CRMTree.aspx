@@ -30,7 +30,7 @@
 
             <table >
             <tr>
-                <td>        
+                <td style="margin-left: 40px">        
                     <telerik:RadTextBox ID="RadTextBox1" Runat="server" 
                         EnableSingleInputRendering="True" LabelWidth="64px" Text="zoekwoord" style="top: 0px; left: 0px" 
             >
