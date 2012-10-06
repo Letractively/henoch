@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <link href="Styles/RadControls.css" rel="stylesheet" type="text/css" />
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1">
             <Scripts>
                 <%--Needed for JavaScript IntelliSense in VS2010--%>
@@ -13,7 +13,7 @@
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js" />
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js" />
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js" />
-
+                 
             </Scripts>
         </telerik:RadScriptManager>
         <telerik:RadScriptBlock runat="Server" ID="RadScriptBlock1">
