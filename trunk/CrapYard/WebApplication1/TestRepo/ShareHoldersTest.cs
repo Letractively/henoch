@@ -173,6 +173,25 @@ namespace TestRepo
             Assert.AreEqual(5, xTree.Descendants().Count());
             Console.WriteLine(xml);
         }
+        [TestMethod]
+        public void GetCykelTest()
+        {
+            //create cykel
+            _ShareHolders.AddSubsidiary("S11", "root");
+            Assert.AreEqual(29, ShareHolders.Companies.Count());
+            string xml = _ShareHolders.CreateXMLOrganoTreeView("S211", RelationView.Overview);
+            XElement xTree = XElement.Parse(xml);
+            Assert.AreEqual(44, xTree.Descendants().Count());
+            Console.WriteLine(xml);
+
+            var outerTrack = new Tree<string>().CreateXMLOuterTrack("root");
+            var tree = new Tree<string>().CreateNTree(outerTrack, "S211", Companies, Tree<string>.GetParents,
+                                new Tree<string>().TransFormXSubTreeBottomUp,
+                                Tree<string>.CreateXmlElementsBottomUp);
+            var list = new Tree<string>().IsInCycle("S211", tree);
+            Assert.AreEqual(true, list);
+
+        }
         /// <summary>
         ///
         /// </summary>
@@ -187,6 +206,21 @@ namespace TestRepo
             Assert.AreEqual(44, xTree.Descendants().Count());
             Console.WriteLine(xml);
 
+        }
+        /// <summary>
+        ///
+        /// </summary>
+        [TestMethod]
+        public void Cykel2Test()
+        {
+            //create cykel
+            _ShareHolders.AddSubsidiary("Root2", "Root1");
+            _ShareHolders.AddSubsidiary("Root1", "Root2");
+            Assert.AreEqual(29, ShareHolders.Companies.Count());
+            string xml = _ShareHolders.CreateXMLOrganoTreeView("Root1", RelationView.Overview);
+            Console.WriteLine(xml);
+            XElement xTree = XElement.Parse(xml);
+            Assert.AreEqual("Root1", xTree.Elements("Node").First().Attribute("Text").Value);
         }
         /// <summary>
         /// Only for testing. A dictionary will be extended with xml

@@ -9,9 +9,11 @@ using System.Diagnostics;
 
 namespace Dictionary.System
 {
-    public class Tree<TKeyValue> : IEnumerable, ITree<TKeyValue>
+    public class Tree<TKeyValue> : IEnumerable, ITree<TKeyValue>, 
+        IEqualityComparer<Tree<TKeyValue>>, IComparer<Tree<TKeyValue>>,
+        IComparable<Tree<TKeyValue>>
     {
-
+        public int Index { get; private set; }
         // 1) Define a delegate type.
         public delegate void TreeHandler(string msgForCaller);
         // 2) Define a member variable of this delegate.
@@ -76,6 +78,7 @@ namespace Dictionary.System
             set
             {
                 _Key = value;
+                Index = Nodes.Count() + 1; 
                 //if (Nodes == null) Nodes = new LinkedList<TKeyValue>();
                 if (Nodes.TryAdd(_Key, _Key))
                     IsUnique = true;
@@ -299,6 +302,7 @@ namespace Dictionary.System
             }
 
         }
+
         public static void WalkClassic<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action)
         {
             if (root == null) return;
@@ -374,12 +378,29 @@ namespace Dictionary.System
 
             Tree<TKeyValue> ancestors = new Tree<TKeyValue>().CreateNTree(outerTrack, node, copyDictionary, Tree<TKeyValue>.GetParents,
                                                         new Tree<TKeyValue>().TransFormXSubTreeBottomUp,
-                                                        Tree<TKeyValue>.CreateXmlElementsBottomUp); ;
+                                                        Tree<TKeyValue>.CreateXmlElementsBottomUp); 
             var list = ancestors.StackNodes.ToList()[0].First().Elements().Select( e => e.Attribute("Text").Value);
 
             return list.Distinct().ToList<string>();
         }
 
+        public bool IsInCycle(TKeyValue node, Tree<TKeyValue> tree)
+        {
+            _NodeValue = node;
+            IList<TKeyValue> list = new List<TKeyValue>();
+            WalkNaryTree(tree, Validation);
+
+            return _Found;
+        }
+        TKeyValue _NodeValue;
+        bool _Found;
+        public void Validation (TKeyValue data)
+        {
+            if (data.Equals(_NodeValue))
+                _Found = true;
+            else
+                _Found = false;
+        }
         public static IList<TKeyValue> GetChildren(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
             #region return null for root values : null, empty
@@ -806,6 +827,43 @@ namespace Dictionary.System
         //        , TaskCreationOptions.AttachedToParent);
         //    if (waitAll) Task.WaitAll(t1, t2, t3);
         //}
+
+
+        public bool Equals(Tree<TKeyValue> x, Tree<TKeyValue> y)
+        {
+            if (x.Key.Equals(y.Key))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int GetHashCode(Tree<TKeyValue> obj)
+        {
+            int hCode = obj.Index;
+            return hCode.GetHashCode();
+        }
+
+
+
+        public int Compare(Tree<TKeyValue> x, Tree<TKeyValue> y)
+        {
+            return new CaseInsensitiveComparer().Compare( x.Key.ToString(), x.Key.ToString() );
+        }
+
+        public int CompareTo(Tree<TKeyValue> other)
+        {
+            if (other == null) return 1;
+
+            if (other != null)
+                return this.Key.ToString().CompareTo(other.Key.ToString());
+            else
+                throw new ArgumentException("Object is not a Tree");
+        }
+
     }
     /// <summary>
     /// Taskduration uses DateTime.
