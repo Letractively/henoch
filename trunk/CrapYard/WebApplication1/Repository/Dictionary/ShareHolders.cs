@@ -388,8 +388,9 @@ namespace Dictionary.BusinessObjects
                             break;
                         case RelationView.Dependencies:
                             xTree = CreateXMLCorporate(companyPOV, "n.a.", view);
-
-                            result.Add(xTree);
+                            //hide virtual root 
+                            var children = xTree.Elements();
+                            result.Add(children);
                             break;
                         default:
                             throw new NotImplementedException("Relation not defined yet.");
