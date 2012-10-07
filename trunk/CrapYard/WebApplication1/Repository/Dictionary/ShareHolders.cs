@@ -42,16 +42,25 @@ namespace Dictionary.BusinessObjects
         {
             InitializeCache();
 
-            CreateVirtualRoot();
+            AddOrUpdateVirtualRoot();
         }
-
-        private void CreateVirtualRoot()
+        /// <summary>
+        /// Introduce a Virtual Root (NOT to be shown in treeView) to identify a maximum cycle
+        /// </summary>
+        public void AddOrUpdateVirtualRoot()
         {
-            #region introduce Virtual Root (NOT to be showed in treeView) to prevent a maximum cycle
-            var roots = Companies.Where(c => GetShareHolders(c.Key).Count == 0).Select(c => c.Key);
-            if (Companies.Count() > 0 && Companies.Where(c => c.Key.Equals(VirtualRoot)).Count() == 0)
+            #region introduce Virtual Root (NOT to be shown in treeView) to identify a maximum cycle
+            IList<string> listVR = null;
+            Companies.TryRemove(VirtualRoot, out listVR);
+
+            var roots = Companies.Where(c => GetShareHolders(c.Key).Count == 0 ).Select(c => c.Key);
+            if (Companies.Count() > 0 && roots.Count() > 0)
             {
-                Companies.TryAdd(VirtualRoot, roots.ToList());
+                if (!Companies.TryAdd(VirtualRoot, roots.ToList()))
+                {
+                    var oldList = Companies[VirtualRoot];
+                    Companies.TryUpdate(VirtualRoot, roots.ToList(), oldList);
+                };
             }
             #endregion
         }
@@ -62,7 +71,7 @@ namespace Dictionary.BusinessObjects
             {
                 CreateTestData();
             }
-            CreateVirtualRoot();
+            AddOrUpdateVirtualRoot();
         }
 
         private void CreateTestData()
@@ -81,13 +90,13 @@ namespace Dictionary.BusinessObjects
             //}
 
             #region create test corporates
-            CreateTestCorporate();
-            CreateTestCorporate2();
-            CreateTestCorporate3();
+            CreateTestCorporate();// tree 1
+            CreateTestCorporate2();// tree 2
+            CreateTestCorporate3();// tree 3
             #endregion
 
-            var testTree = Tree<string>.CreateTestNaryTree();
-            CreateTestdictionary(testTree, Companies);
+            var testTree = Tree<string>.CreateTestNaryTree();// tree 4
+            AddOrUpdateDictionary(testTree, Companies);
 
         }
         [DataObjectMethodAttribute(DataObjectMethodType.Select, true)]
@@ -278,12 +287,12 @@ namespace Dictionary.BusinessObjects
         public void Refresh()
         {
             CreateTestData();
-            CreateVirtualRoot();
+            AddOrUpdateVirtualRoot();
 
             //TODO: make refresh
         }
 
-        private void CreateTestdictionary(Tree<string> outerTree,  ConcurrentDictionary<string,IList<string>> dictionary)
+        private void AddOrUpdateDictionary(Tree<string> outerTree,  ConcurrentDictionary<string,IList<string>> dictionary)
         {
             var nTree = outerTree.NTree;
             if (nTree != null)
@@ -299,7 +308,7 @@ namespace Dictionary.BusinessObjects
 
                 foreach (var tree in nTree)
                 {
-                    CreateTestdictionary(tree,  dictionary);
+                    AddOrUpdateDictionary(tree,  dictionary);
                 }
             }
             else
@@ -363,12 +372,19 @@ namespace Dictionary.BusinessObjects
                         case RelationView.Overview:
                             IList<string> roots = new Tree<string>().GetRoots(VirtualRoot, companyPOV, Companies);
 
-                            foreach (var root in roots)
+                            if (roots.Count == 0)
                             {
-                                xTree = CreateXMLCorporate(companyPOV, root, view);
-
+                                xTree = CreateXMLCorporate(companyPOV, companyPOV, view);
                                 result.Add(xTree);
                             }
+                            else
+                                foreach (var root in roots)
+                                {
+                                    xTree = CreateXMLCorporate(companyPOV, root, view);
+
+                                    result.Add(xTree);
+                                }
+
                             break;
                         case RelationView.Dependencies:
                             xTree = CreateXMLCorporate(companyPOV, "n.a.", view);
@@ -486,7 +502,7 @@ namespace Dictionary.BusinessObjects
                       </node>   
                     ");
             
-            InsertTestCorporateIntoDictionary(xml);
+            InsertCorporate(xml);
 
         }
         private void CreateTestCorporate2()
@@ -500,7 +516,7 @@ namespace Dictionary.BusinessObjects
                       </node>   
                     ");
 
-            InsertTestCorporateIntoDictionary(xml);
+            InsertCorporate(xml);
 
         }
         private void CreateTestCorporate3()
@@ -514,19 +530,20 @@ namespace Dictionary.BusinessObjects
                       </node>   
                     ");
 
-            InsertTestCorporateIntoDictionary(xml);
+            InsertCorporate(xml);
 
         }
         /// <summary>
         ///
         /// </summary>
         /// <param name="xml"></param>
-        private void InsertTestCorporateIntoDictionary(XElement xml)
+        public void InsertCorporate(XElement xml)
         {
-            var testTree = Tree<string>.CreateParseTree(xml, CreateXElts);
+            var corporateTree = Tree<string>.CreateParseTree(xml, CreateXElts);
             ConcurrentDictionary<string, IList<string>> testCompanies = new ConcurrentDictionary<string, IList<string>>();
-            CreateTestdictionary(testTree, Companies);
+            AddOrUpdateDictionary(corporateTree, Companies);
 
+            AddOrUpdateVirtualRoot();
         }
 
         private void CreateXElts(XElement newTestTree)

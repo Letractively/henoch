@@ -23,6 +23,7 @@ namespace TestRepo
     {
 
         private const string cShareHolder = "testcompanies";
+        static ShareHolders _ShareHolders;
         private TestContext testContextInstance;
         public static ConcurrentDictionary<string, IList<string>> Companies
         {
@@ -83,10 +84,32 @@ namespace TestRepo
         //You can use the following additional attributes as you write your tests:
         //
         //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
+        [ClassInitialize()]
+        public static void MyClassInitialize(TestContext testContext)
+        {
+            _ShareHolders = new ShareHolders();
+            _ShareHolders.InsertCorporate(CreateTestCorporate());
+            _ShareHolders.InsertCorporate(CreateTestCorporate2());
+
+            string xmlString = @"
+                                    
+                      <node Text='Root1'>
+                        
+                       
+                      </node>   
+                    ";
+
+            _ShareHolders.InsertCorporate(CreateTestCorporate3(xmlString));
+            string xmlString2 = @"
+                                    
+                      <node Text='Root2'>
+                        
+                       
+                      </node>   
+                    ";
+
+            _ShareHolders.InsertCorporate(CreateTestCorporate3(xmlString2));
+        }
         //
         //Use ClassCleanup to run code after all tests in a class have run
         //[ClassCleanup()]
@@ -115,23 +138,34 @@ namespace TestRepo
         [TestMethod]
         public void CheckShareHoldersTest()
         {
-            ShareHolders shareHolders = new ShareHolders(true);
-            
             Assert.AreEqual(29, ShareHolders.Companies.Count());
-            Assert.AreEqual(1, shareHolders.GetSubsidiaries("S211").Count);
-            Assert.AreEqual(4, shareHolders.GetSubsidiaries("VirtualRoot").Count);
+            Assert.AreEqual(1, _ShareHolders.GetSubsidiaries("S211").Count);
+            Assert.AreEqual(4, _ShareHolders.GetSubsidiaries("VirtualRoot").Count);
 
-            Assert.AreEqual(2,shareHolders.GetShareHolders("S211").Count);
-                       
-            var childWithMoreParents = ShareHolders.Companies.Where(subsidiary => shareHolders.GetShareHolders(subsidiary.Key).Count > 1);
+            Assert.AreEqual(2,_ShareHolders.GetShareHolders("S211").Count);
+
+            IList<string> childWithMoreParents = ShareHolders.Companies.
+                Where(subsidiary => _ShareHolders.GetShareHolders(subsidiary.Key).Count > 1).
+                Select( c => c.Key).ToList();
             Assert.AreEqual(4, childWithMoreParents.Count());
         }
+        [TestMethod]
+        public void OrganoTreeTest()
+        {
+            Assert.AreEqual(29, ShareHolders.Companies.Count());
+            string xml = _ShareHolders.CreateXMLOrganoTreeView("root", RelationView.Overview);
+            XElement xTree = XElement.Parse(xml);
+            Assert.AreEqual(21, xTree.Descendants().Count());
 
+            xml = _ShareHolders.CreateXMLOrganoTreeView("company does not exist", RelationView.Overview);
+            xTree = XElement.Parse(xml);
+            Assert.AreEqual(0, xTree.Descendants().Count());
+        }
         /// <summary>
         /// Only for testing. A dictionary will be extended with xml
         /// </summary>
         /// <param name="result"></param>
-        private void CreateTestCorporate()
+        private static XElement CreateTestCorporate()
         {
             //NOTE: 2 roots are possible, result.Add(newTesttree);
             XElement xml = XElement.Parse(@"
@@ -173,53 +207,57 @@ namespace TestRepo
                       </node>   
                     ");
 
-            InsertTestCorporateIntoDictionary(xml);
+            return xml;
 
         }
-        private void CreateTestCorporate2()
+        private static XElement CreateTestCorporate2()
         {
             //NOTE: 2 roots are possible, result.Add(newTesttree);
             XElement xml = XElement.Parse(@"
-                                    
-                      <node Text='Root1'>
-                        
-                       
-                      </node>   
+<Node CssClass='defaultNode' Text='root' Expanded='True'>
+    <Node CssClass='defaultNode' Text='S11' Expanded='True'>
+        <Node CssClass='found' Text='S211' Expanded='False'>
+            <Node CssClass='defaultNode' Text='S22' Expanded='True' />
+        </Node>
+        <Node CssClass='found' Text='S221' Expanded='False'>
+            <Node CssClass='defaultNode' Text='m1' Expanded='True' />
+            <Node CssClass='defaultNode' Text='S21' Expanded='True' />
+            <Node CssClass='defaultNode' Text='Sp' Expanded='True' />
+        </Node>
+    </Node>
+    <Node CssClass='defaultNode' Text='S211' Expanded='True'>
+        <Node CssClass='defaultNode' Text='S22' Expanded='True'>
+            <Node CssClass='found' Text='S41' Expanded='False'>
+                <Node CssClass='defaultNode' Text='S51' Expanded='True' />
+                <Node CssClass='defaultNode' Text='S52' Expanded='True' />
+            </Node>
+            <Node CssClass='defaultNode' Text='S42' Expanded='True' />
+        </Node>
+    </Node>
+    <Node CssClass='defaultNode' Text='S221' Expanded='True'>
+        <Node CssClass='defaultNode' Text='m1' Expanded='True' />
+        <Node CssClass='defaultNode' Text='S21' Expanded='True' />
+        <Node CssClass='defaultNode' Text='Sp' Expanded='True' />
+    </Node>
+    <Node CssClass='defaultNode' Text='S41' Expanded='True'>
+        <Node CssClass='defaultNode' Text='S51' Expanded='True' />
+        <Node CssClass='defaultNode' Text='S52' Expanded='True' />
+    </Node>
+</Node>
                     ");
 
-            InsertTestCorporateIntoDictionary(xml);
+            return xml;
 
         }
-        private void CreateTestCorporate3()
+        private static XElement CreateTestCorporate3(string xmlString)
         {
             //NOTE: 2 roots are possible, result.Add(newTesttree);
-            XElement xml = XElement.Parse(@"
-                                    
-                      <node Text='Root2'>
-                        
-                       
-                      </node>   
-                    ");
+            XElement xml = XElement.Parse(xmlString);
 
-            InsertTestCorporateIntoDictionary(xml);
-
-        }
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="xml"></param>
-        private void InsertTestCorporateIntoDictionary(XElement xml)
-        {
-            var testTree = Tree<string>.CreateParseTree(xml, CreateXElts);
-            ConcurrentDictionary<string, IList<string>> testCompanies = new ConcurrentDictionary<string, IList<string>>();
-            CreateTestdictionary(testTree, Companies);
+            return xml;
 
         }
 
-        private void CreateXElts(XElement newTestTree)
-        {
-            //dummy;
-        }
         private void CreateTestdictionary(Tree<string> outerTree, ConcurrentDictionary<string, IList<string>> dictionary)
         {
             IList<Tree<string>> nTree = outerTree.NTree;
