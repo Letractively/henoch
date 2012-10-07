@@ -150,7 +150,7 @@ namespace TestRepo
             Assert.AreEqual(4, childWithMoreParents.Count());
         }
         [TestMethod]
-        public void OrganoTreeTest()
+        public void OrganoTreeOverviewTest()
         {
             Assert.AreEqual(29, ShareHolders.Companies.Count());
             string xml = _ShareHolders.CreateXMLOrganoTreeView("root", RelationView.Overview);
@@ -160,6 +160,18 @@ namespace TestRepo
             xml = _ShareHolders.CreateXMLOrganoTreeView("company does not exist", RelationView.Overview);
             xTree = XElement.Parse(xml);
             Assert.AreEqual(0, xTree.Descendants().Count());
+        }
+        /// <summary>
+        /// Hide Virtual root
+        /// </summary>
+        [TestMethod]
+        public void OrganoTreeDependenciesTest()
+        {
+            Assert.AreEqual(29, ShareHolders.Companies.Count());
+            string xml = _ShareHolders.CreateXMLOrganoTreeView("S211", RelationView.Dependencies);
+            XElement xTree = XElement.Parse(xml);
+            Assert.AreEqual(5, xTree.Descendants().Count());
+
         }
         /// <summary>
         /// Only for testing. A dictionary will be extended with xml
