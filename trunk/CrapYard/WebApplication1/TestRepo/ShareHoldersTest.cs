@@ -174,6 +174,21 @@ namespace TestRepo
 
         }
         /// <summary>
+        ///
+        /// </summary>
+        [TestMethod]
+        public void CykelTest()
+        {
+            //create cykel
+            _ShareHolders.AddSubsidiary("S11", "root");
+            Assert.AreEqual(29, ShareHolders.Companies.Count());
+            string xml = _ShareHolders.CreateXMLOrganoTreeView("S211", RelationView.Overview);
+            XElement xTree = XElement.Parse(xml);
+            Assert.AreEqual(44, xTree.Descendants().Count());
+            Console.WriteLine(xml);
+
+        }
+        /// <summary>
         /// Only for testing. A dictionary will be extended with xml
         /// </summary>
         /// <param name="result"></param>
