@@ -171,7 +171,7 @@ namespace TestRepo
             string xml = _ShareHolders.CreateXMLOrganoTreeView("S211", RelationView.Dependencies);
             XElement xTree = XElement.Parse(xml);
             Assert.AreEqual(5, xTree.Descendants().Count());
-
+            Console.WriteLine(xml);
         }
         /// <summary>
         ///
