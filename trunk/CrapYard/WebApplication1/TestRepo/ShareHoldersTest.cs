@@ -86,6 +86,19 @@ namespace TestRepo
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)
         {
+
+        }
+        //
+        //Use ClassCleanup to run code after all tests in a class have run
+        //[ClassCleanup()]
+        //public static void MyClassCleanup()
+        //{
+        //}
+        //
+        //Use TestInitialize to run code before running each test
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
             _ShareHolders = new ShareHolders();
             _ShareHolders.InsertCorporate(CreateTestCorporate());
             _ShareHolders.InsertCorporate(CreateTestCorporate2());
@@ -109,18 +122,6 @@ namespace TestRepo
 
             _ShareHolders.InsertCorporate(CreateTestCorporate3(xmlString2));
         }
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
         //
         //Use TestCleanup to run code after each test has run
         //[TestCleanup()]
@@ -184,30 +185,32 @@ namespace TestRepo
             XElement xTree = XElement.Parse(xml);
             Assert.AreEqual(22, xTree.Descendants().Count());
             Console.WriteLine(xml);
-
-            var tree = ShareHolders.GetRelations("S11");
+           
             bool isInCycle = new Tree<string>().IsInCycle("S211", ShareHolders.ShareHolderLabel);
             Assert.AreEqual(false, isInCycle, "S211 should be in cycle (0).");
 
-            _ShareHolders.CreateXMLOrganoTreeView("S11", RelationView.Overview);
-            tree = ShareHolders.GetRelations("S11");
+            _ShareHolders.CreateXMLOrganoTreeView("S11", RelationView.Overview);            
             isInCycle = new Tree<string>().IsInCycle("S11", ShareHolders.ShareHolderLabel);
             Assert.AreEqual(true, isInCycle, "S11 should be in cycle (0).");
 
-            tree = ShareHolders.GetRelations("root");
             isInCycle = new Tree<string>().IsInCycle("root", ShareHolders.ShareHolderLabel);
             Assert.AreEqual(true, isInCycle, "root should be in cycle (0).");
 
             //undo cycle
             _ShareHolders.RemoveSubsidiary("S11", "root");
-            xTree = _ShareHolders.CreateXMLCorporate("S211", "root", RelationView.Overview);
-            
-            tree = ShareHolders.GetRelations("root");
+            xTree = _ShareHolders.CreateXMLCorporate("S211", "root", RelationView.Overview);            
 
             isInCycle = new Tree<string>().IsInCycle("S11", ShareHolders.ShareHolderLabel);
             Assert.AreEqual(false, isInCycle, "S11 should not be in cycle.");
             isInCycle = new Tree<string>().IsInCycle("root", ShareHolders.ShareHolderLabel);
             Assert.AreEqual(false, isInCycle, "root should not be in cycle.");
+
+            //create cykel
+            _ShareHolders.AddSubsidiary("S11", "root");
+            isInCycle = new Tree<string>().IsInCycle("S11", ShareHolders.ShareHolderLabel);
+            Assert.AreEqual(true, isInCycle, "S11 should not be in cycle.");
+            isInCycle = new Tree<string>().IsInCycle("root", ShareHolders.ShareHolderLabel);
+            Assert.AreEqual(true, isInCycle, "root should not be in cycle.");
         }
         /// <summary>
         ///
