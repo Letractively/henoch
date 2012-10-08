@@ -6,10 +6,11 @@ using Dictionary.BusinessObjects;
 using System.Collections.Concurrent;
 using Dictionary.System;
 
-using Caching;
+
 using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Dictionary.System.Caching;
 
 namespace TestRepo
 {
@@ -21,8 +22,6 @@ namespace TestRepo
     [TestClass()]
     public class ShareHoldersTest
     {
-
-        private const string cShareHolder = "testcompanies";
         static ShareHolders _ShareHolders;
         private TestContext testContextInstance;
         public static ConcurrentDictionary<string, IList<string>> Companies
@@ -38,7 +37,7 @@ namespace TestRepo
                 var myRepository = MyCache<Object>.CacheManager;
                 if (myRepository != null)
                 {
-                    myRepository.Add(cShareHolder, value);
+                    myRepository.Add(ShareHolders.ShareHolderLabel, value);
                 }
             }
         }
@@ -53,12 +52,12 @@ namespace TestRepo
             var myRepository = MyCache<Object>.CacheManager;
             if (myRepository != null)
             {
-                dictionary = myRepository.GetData(cShareHolder) as ConcurrentDictionary<string, IList<string>>;
+                dictionary = myRepository.GetData(ShareHolders.ShareHolderLabel) as ConcurrentDictionary<string, IList<string>>;
                 if (dictionary == null)
                 {
                     //Initialize
                     dictionary = new ConcurrentDictionary<string, IList<string>>();
-                    myRepository.Add(cShareHolder, dictionary);
+                    myRepository.Add(ShareHolders.ShareHolderLabel, dictionary);
                 }
             }
             return dictionary;
@@ -140,7 +139,9 @@ namespace TestRepo
         {
             Assert.AreEqual(29, ShareHolders.Companies.Count());
             Assert.AreEqual(1, _ShareHolders.GetSubsidiaries("S211").Count);
-            Assert.AreEqual(4, _ShareHolders.GetSubsidiaries("VirtualRoot").Count);
+            var children = ShareHolders.Companies["VirtualRoot"];
+            Assert.AreEqual(children.Count, _ShareHolders.GetSubsidiaries("VirtualRoot").Count,
+                string.Format("VR should have (0) children.", children.Count));
 
             Assert.AreEqual(2,_ShareHolders.GetShareHolders("S211").Count);
 
@@ -179,18 +180,34 @@ namespace TestRepo
             //create cykel
             _ShareHolders.AddSubsidiary("S11", "root");
             Assert.AreEqual(29, ShareHolders.Companies.Count());
-            string xml = _ShareHolders.CreateXMLOrganoTreeView("S211", RelationView.Overview);
+            string xml = _ShareHolders.CreateXMLOrganoTreeView("root", RelationView.Overview);
             XElement xTree = XElement.Parse(xml);
-            Assert.AreEqual(44, xTree.Descendants().Count());
+            Assert.AreEqual(22, xTree.Descendants().Count());
             Console.WriteLine(xml);
 
-            var outerTrack = new Tree<string>().CreateXMLOuterTrack("root");
-            var tree = new Tree<string>().CreateNTree(outerTrack, "S211", Companies, Tree<string>.GetParents,
-                                new Tree<string>().TransFormXSubTreeBottomUp,
-                                Tree<string>.CreateXmlElementsBottomUp);
-            var list = new Tree<string>().IsInCycle("S211", tree);
-            Assert.AreEqual(true, list);
+            var tree = ShareHolders.GetRelations("S11");
+            bool isInCycle = new Tree<string>().IsInCycle("S211", ShareHolders.ShareHolderLabel);
+            Assert.AreEqual(false, isInCycle, "S211 should be in cycle (0).");
 
+            _ShareHolders.CreateXMLOrganoTreeView("S11", RelationView.Overview);
+            tree = ShareHolders.GetRelations("S11");
+            isInCycle = new Tree<string>().IsInCycle("S11", ShareHolders.ShareHolderLabel);
+            Assert.AreEqual(true, isInCycle, "S11 should be in cycle (0).");
+
+            tree = ShareHolders.GetRelations("root");
+            isInCycle = new Tree<string>().IsInCycle("root", ShareHolders.ShareHolderLabel);
+            Assert.AreEqual(true, isInCycle, "root should be in cycle (0).");
+
+            //undo cycle
+            _ShareHolders.RemoveSubsidiary("S11", "root");
+            xTree = _ShareHolders.CreateXMLCorporate("S211", "root", RelationView.Overview);
+            
+            tree = ShareHolders.GetRelations("root");
+
+            isInCycle = new Tree<string>().IsInCycle("S11", ShareHolders.ShareHolderLabel);
+            Assert.AreEqual(false, isInCycle, "S11 should not be in cycle.");
+            isInCycle = new Tree<string>().IsInCycle("root", ShareHolders.ShareHolderLabel);
+            Assert.AreEqual(false, isInCycle, "root should not be in cycle.");
         }
         /// <summary>
         ///
