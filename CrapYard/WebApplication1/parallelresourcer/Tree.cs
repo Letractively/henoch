@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Diagnostics;
+using Dictionary.System.Caching;
 
 namespace Dictionary.System
 {
@@ -210,7 +211,7 @@ namespace Dictionary.System
             {
                 var t0 = Task.Factory.StartNew(() => action(root.Data, null)
                         , TaskCreationOptions.AttachedToParent);
-                if (waitAll) Task.WaitAll(t0);
+                if (waitAll) Task.WaitAll(t0);                
                 return;
             }
 
@@ -302,7 +303,28 @@ namespace Dictionary.System
             }
 
         }
+        public static void WalkNaryTree(TKeyValue search, 
+                                    Tree<TKeyValue> root, Func<TKeyValue, Tree<TKeyValue>, bool> validation)
+        {
+            if (root == null)
+                return;
 
+            if (root.NTree == null)
+            {
+                validation(search, root);
+                return;
+            }
+            int countNodes = root.NTree.Count;            
+
+            for (int i = 0; i < countNodes; i++)
+            {
+                //travelsal of children.
+                WalkNaryTree(search, root.NTree[i], validation);
+                if (validation(search, root.NTree[i]))
+                    return;
+            }
+
+        }
         public static void WalkClassic<TKeyValue>(Tree<TKeyValue> root, Action<TKeyValue> action)
         {
             if (root == null) return;
@@ -383,23 +405,56 @@ namespace Dictionary.System
 
             return list.Distinct().ToList<string>();
         }
-
-        public bool IsInCycle(TKeyValue node, Tree<TKeyValue> tree)
+        /// <summary>
+        /// Checks the whole tree for duplicates.
+        /// </summary>
+        /// <param name="search">The key to search</param>
+        /// <param name="repositoryKey">The uid for the repository on which the tree depends.</param>
+        /// <returns></returns>
+        public bool IsInCycle(TKeyValue search, string repositoryKey)
         {
-            _NodeValue = node;
-            IList<TKeyValue> list = new List<TKeyValue>();
-            WalkNaryTree(tree, Validation);
+            var tree = GetTreeInstance(search, repositoryKey);
+            ///TODO: make parallel and halt on found.
+            WalkNaryTree(search, tree, Validation);
 
             return _Found;
         }
-        TKeyValue _NodeValue;
+
         bool _Found;
-        public void Validation (TKeyValue data)
+        public bool Validation(TKeyValue search, Tree<TKeyValue> subTree)
         {
-            if (data.Equals(_NodeValue))
+            if (subTree.Key.Equals(search))
+                Debug.Assert(true);
+
+            if (subTree.Key.Equals(search) && !subTree.IsUnique)
                 _Found = true;
             else
-                _Found = false;
+            {
+               if (!_Found) _Found = false;
+            }
+            return _Found;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key">The uid for the tree in the cache</param>
+        /// <param name="repositoryKey">The uid for the repository on which the tree depends.</param>
+        /// <returns></returns>
+        public static Tree<TKeyValue> GetTreeInstance(TKeyValue key, string repositoryKey)
+        {
+            Tree<TKeyValue> tree = null;
+            ConcurrentDictionary<TKeyValue, IList<TKeyValue>> repository = null;
+
+            var myRepository = MyCache<object>.CacheManager;
+            if (myRepository != null)
+            {
+                repository = myRepository.GetData(repositoryKey) as ConcurrentDictionary<TKeyValue, IList<TKeyValue>>;
+            }
+            //Try to create tree and store in cache.
+            tree = new Tree<TKeyValue>().CreateNTree(CreateXMLOuterTrack(key), key, repository, Tree<TKeyValue>.GetChildren,
+                    new Tree<TKeyValue>().TransFormXSubTreeTopDown,
+                    Tree<TKeyValue>.CreateXmlElementsTopDown);
+            return tree;
         }
         public static IList<TKeyValue> GetChildren(TKeyValue node, IDictionary<TKeyValue, IList<TKeyValue>> dictionary)
         {
@@ -424,7 +479,7 @@ namespace Dictionary.System
             return list;
         }
 
-        public IList<XElement> CreateXMLOuterTrack(TKeyValue root)
+        public static IList<XElement> CreateXMLOuterTrack(TKeyValue root)
         {
             IList<XElement> outerTrack = new List<XElement>() 
                 {  
@@ -505,6 +560,7 @@ namespace Dictionary.System
                 var relations = GetRelations(rootValue, outerdictionary);
                 nTree.Key = rootValue;
                 nTree.Data = rootValue;
+                Console.WriteLine("CreateNTree curroot -->" + rootValue);
 
                 int parentCount = relations.Count;
 
@@ -534,6 +590,13 @@ namespace Dictionary.System
                         }
                         else
                         {
+                            Tree<TKeyValue> duplicateNode = new Tree<TKeyValue>(Nodes);
+                            duplicateNode.Key = relation;
+                            duplicateNode.Data = relation;
+                            duplicateNode.IsUnique = false;
+                            nTree.NTree.Add(duplicateNode);
+                            Console.WriteLine("CreateNTree duplicate -->" + relation);
+
                             var parentXNode = new XElement("Node",
                                     new XAttribute("Text", relation.ToString()),
                                     new XAttribute("CssClass", "defaultNode"),

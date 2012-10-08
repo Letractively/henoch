@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 		WebApplication1.vsmdi = WebApplication1.vsmdi
 		WebApplication11.vsmdi = WebApplication11.vsmdi
+		WebApplication12.vsmdi = WebApplication12.vsmdi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelResourcer", "parallelresourcer\ParallelResourcer.csproj", "{EEA5E80B-D5B6-41B9-AB48-E82A3273C3CE}"
@@ -23,6 +24,9 @@ Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = WebApplication12.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

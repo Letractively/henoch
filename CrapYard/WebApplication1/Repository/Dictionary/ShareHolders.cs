@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Caching;
 using Microsoft.Practices.EnterpriseLibrary.Caching;
 using ParallelResourcer;
 using System.Collections.Concurrent;
 using System.Xml.Linq;
 using System.ComponentModel;
 using Dictionary.System;
+using Dictionary.System.Caching;
 
 namespace Dictionary.BusinessObjects
 {
@@ -24,7 +24,13 @@ namespace Dictionary.BusinessObjects
     [DataObjectAttribute]
     public class ShareHolders
     {
-        private const string cShareHolder ="shareholders";
+        public static string ShareHolderLabel
+        {
+            get
+            {
+                return "shareholders";
+            }
+        }
         public static string VirtualRoot 
         { get
             {
@@ -131,7 +137,7 @@ namespace Dictionary.BusinessObjects
                 var myRepository = MyCache<Object>.CacheManager;
                 if (myRepository != null)
                 {
-                    myRepository.Add(cShareHolder, value);
+                    myRepository.Add(ShareHolderLabel, value);
                 }
             }
         }
@@ -172,12 +178,12 @@ namespace Dictionary.BusinessObjects
             var myRepository = MyCache<Object>.CacheManager;
             if (myRepository != null)
             {
-                dictionary = myRepository.GetData(cShareHolder) as ConcurrentDictionary<string, IList<string>>;
+                dictionary = myRepository.GetData(ShareHolderLabel) as ConcurrentDictionary<string, IList<string>>;
                 if (dictionary == null)
                 {
                     //Initialize
                     dictionary = new ConcurrentDictionary<string, IList<string>>();
-                    myRepository.Add(cShareHolder, dictionary);
+                    myRepository.Add(ShareHolderLabel, dictionary);
                 }
             }
             return dictionary;
@@ -371,6 +377,7 @@ namespace Dictionary.BusinessObjects
                     {
                         case RelationView.Overview:
                             IList<string> roots = new Tree<string>().GetRoots(VirtualRoot, companyPOV, Companies);
+                            Console.WriteLine("GetRoots done.");
 
                             if (roots.Count == 0)
                             {
@@ -405,13 +412,19 @@ namespace Dictionary.BusinessObjects
             }
             return result.ToString();
         }
-
-        private XElement CreateXMLCorporate(string companyPOV, string root,RelationView view)
+        /// <summary>
+        /// Creates the corporate Tree and stores it in the cache.
+        /// </summary>
+        /// <param name="companyPOV"></param>
+        /// <param name="root"></param>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        public XElement CreateXMLCorporate(string companyPOV, string root,RelationView view)
         {
             XElement xTree;
             try
             {
-                IList<XElement> outerTrack = new Tree<string>().CreateXMLOuterTrack(root);
+                IList<XElement> outerTrack = Tree<string>.CreateXMLOuterTrack(root);//root
 
                 Tree<string> tree = null;
 
