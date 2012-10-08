@@ -379,19 +379,31 @@ namespace Dictionary.BusinessObjects
                             IList<string> roots = new Tree<string>().GetRoots(VirtualRoot, companyPOV, Companies);
                             Console.WriteLine("GetRoots done.");
 
-                            if (roots.Count == 0)
+                            switch (roots.Count)
                             {
-                                xTree = CreateXMLCorporate(companyPOV, companyPOV, view);
-                                result.Add(xTree);
-                            }
-                            else
-                                foreach (var root in roots)
-                                {
-                                    xTree = CreateXMLCorporate(companyPOV, root, view);
+                                case 0:
+                                    xTree = CreateXMLCorporate(companyPOV, companyPOV, view);
+                                    result.Add(xTree);
+                                    break;
+                                case 1:
+                                    //check for cycle
+                                    bool isInCycle = new Tree<string>().IsInCycle(companyPOV, ShareHolders.ShareHolderLabel);
+                                    if(isInCycle)
+                                        xTree = CreateXMLCorporate(companyPOV, companyPOV, view);
+                                    else
+                                        xTree = CreateXMLCorporate(companyPOV, roots[0], view);
 
                                     result.Add(xTree);
-                                }
+                                    break;
+                                default:
+                                    foreach (var root in roots)
+                                    {
+                                        xTree = CreateXMLCorporate(companyPOV, root, view);
 
+                                        result.Add(xTree);
+                                    }
+                                    break;
+                            }
                             break;
                         case RelationView.Dependencies:
                             xTree = CreateXMLCorporate(companyPOV, "n.a.", view);

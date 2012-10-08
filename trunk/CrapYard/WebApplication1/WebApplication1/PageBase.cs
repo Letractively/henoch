@@ -191,27 +191,54 @@ namespace WebApplication1
         public static void ColorFoundNodes(string found, ref XElement xTree)
         {
             var foundList = (xTree.Descendants().Where(d => d.Attribute("Text").Value == found)).ToList();
+            var foundIsRoot = xTree.Elements().Where ( a => a.Attribute("Text").Value.Equals(found));
+            
+            XElement foundIsRootAlso = null;
+            if (default(object) != foundIsRoot.FirstOrDefault())
+                foundIsRootAlso = foundIsRoot.First();
+
+            int indexRoot = 0;
 
             for (int i = 0; i < foundList.Count; i++)
             {
-                XElement newNode = new XElement("Node",
-                        new XAttribute("Text", found),
-                        new XAttribute("CssClass", foundList[i].Attribute("CssClass").Value),
-                        new XAttribute("Expanded", foundList[i].Attribute("Expanded").Value),
-                        new XAttribute("BackColor", "Gold"));
-                newNode.Add(foundList[i].Elements());
-                foundList[i].ReplaceWith(newNode);
+                if (foundIsRootAlso ==null || !foundIsRootAlso.Equals(foundList[i]))
+                {
+                    XElement elt = foundList[i];
+                    IEnumerable<XElement> elts = foundList[i].Elements();
+                    XElement newNode = CreateNewNode(found, elt, elts);
+                    foundList[i].ReplaceWith(newNode);
+                }
+                else
+                    indexRoot = i;
             }
+            if (foundIsRootAlso != null)
+            {
+                XElement newNode = CreateNewNode(found, foundList[indexRoot], foundList[indexRoot].Elements());
+                foundList[indexRoot].ReplaceWith(newNode);
+            };
 
             if (found.Equals(ShareHolders.VirtualRoot))
             {
                 //collapse its children, if the root is equals to virtualroot
-                var children = xTree.Elements().ToList();
+                var vr = xTree.Elements().Where( a => a.Attribute("Text").Value.Equals(ShareHolders.VirtualRoot))
+                    .ToList();
+                var children = vr.Elements();
                 foreach (var child in children)
                 {
                     child.Attribute("Expanded").Value = "False";
                 }
             }
+        }
+
+        private static XElement CreateNewNode(string found, XElement elt, IEnumerable<XElement> elts)
+        {
+            XElement newNode = new XElement("Node",
+                new XAttribute("Text", found),
+                new XAttribute("CssClass", elt.Attribute("CssClass").Value),
+                new XAttribute("Expanded", elt.Attribute("Expanded").Value),
+                new XAttribute("BackColor", "Gold"));
+            newNode.Add(elts);
+            return newNode;
         }
 
     }
