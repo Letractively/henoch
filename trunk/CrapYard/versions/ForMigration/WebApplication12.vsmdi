@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestList name="Failures" id="5ac56369-e200-4c36-9207-bfcc6f40bc7c" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
+    <Description>Does not succeed at first run , but on several runs. Warning : Dependencies between tests!</Description>
+    <TestLinks>
+      <TestLink id="06a232f6-eb9b-dda5-2839-7036890c1431" name="Cykel2Test" storage="testrepo\bin\debug\testrepo.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="d80de80d-40df-08c4-102a-d22dc7cab716" name="OrganoTreeDependenciesTest" storage="testrepo\bin\debug\testrepo.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="f22700dd-1ed1-2ca1-ef8e-40ebb94d94cf" name="GetCykelTest" storage="testrepo\bin\debug\testrepo.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="c5f1ae55-2ea0-2854-647b-26557bb88a04" name="CykelTest" storage="testrepo\bin\debug\testrepo.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="5d51f9b4-615b-bab5-ac52-aa410c569ab8" name="CheckShareHoldersTest" storage="testrepo\bin\debug\testrepo.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="b599b4e5-273b-e136-cde8-46225a82df62" name="OrganoTreeOverviewTest" storage="testrepo\bin\debug\testrepo.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    </TestLinks>
+  </TestList>
+  <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
+    <RunConfiguration id="2f756ebe-42cf-452c-a473-7b9825f79a32" name="Trace and Test Impact" storage="traceandtestimpact.testsettings" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestList>
+</TestLists>

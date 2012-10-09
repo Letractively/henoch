@@ -1,0 +1,35 @@
+﻿<node Text='Stern Groep N.V.'>
+
+    <node Text='Stern Beheer B.V.'>
+
+        <node Text='SternDealers N.V.'>
+            <node Text='Stern 1 B.V.'>
+                <node Text='Stern Auto B.V.'>
+                </node>
+            </node>
+            <node Text='Stern 2 B.V.'>
+            </node>
+            <node Text='Stern 3 B.V.'>
+                <node Text='Ardea Auto B.V.'>
+                    <node Text='Ardea Rotterdam-Noord'>
+                    </node>
+                </node>
+            </node>
+            <node Text='Stern 4 B.V.'>
+                <node Text='Arend Auto'>
+                </node>
+                <node Text='S42'>
+                </node>
+            </node>
+        </node>
+
+        <node Text='SternUniverseel'>
+            <node Text='Stern Occassions'>
+                <node Text='Sternplaza B.V.'>
+                </node>
+            </node>
+        </node>
+
+    </node>
+
+</node>
