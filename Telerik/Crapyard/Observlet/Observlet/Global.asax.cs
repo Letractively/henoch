@@ -47,11 +47,18 @@ namespace Observlet
             HttpSessionState session = HttpContext.Current.Session; 
             applicationSessions = Application["MTA-Sessions"] as Dictionary<string, MySession>;
 
-            if (session != null && applicationSessions!=null)
-                applicationSessions.Add(
-                    new KeyValuePair<string, MySession>(session.SessionID, 
-                    new MySession(){SessionId = session.SessionID, TaskQIsEmtpty = true}));
+            try
+            {
+                if (session != null && applicationSessions != null)
+                    applicationSessions.Add(
+                        new KeyValuePair<string, MySession>(session.SessionID,
+                        new MySession() { SessionId = session.SessionID, TaskQIsEmtpty = true }));
 
+            }
+            finally
+            {
+
+            }
             //update applicationSessions
             Application["MTA-Sessions"] = applicationSessions;
             Session["m_Locker"] = new object();

@@ -41,7 +41,7 @@
                   oncheckedchanged="RbQueue_CheckedChanged" Text="Queue" />
               </td>
               <td class="style2">
-                <iframe id="asyncviewer" src="AsyncViewer.aspx" frameborder="0" scrolling="no"></iframe>
+                <iframe id="asyncviewer" src="AsyncViewer2.aspx" frameborder="0" scrolling="no"></iframe>
                 &nbsp;</td>
               <td>
                 &nbsp;</td>

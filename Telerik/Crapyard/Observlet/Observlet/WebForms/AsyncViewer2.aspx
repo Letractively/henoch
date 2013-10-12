@@ -1,18 +1,15 @@
-﻿
-<%@ Page Language="C#" AutoEventWireup="True" Async="true" Codebehind="AsyncViewer.aspx.cs" Inherits="Observlet.WebForms.AsyncViewer" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Async="true" CodeBehind="AsyncViewer2.aspx.cs" Inherits="Observlet.WebForms.AsyncViewer2" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI, Version=2010.3.1215.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4" %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-      
 </head>
 
 <body>
-     <form  runat="server">
+     <form id="Form1"  runat="server">
      <asp:ScriptManager ID="ScriptManager1" runat="server">
          <Scripts>
             <asp:ScriptReference Path="~/Scripts/jquery-1.4.4.min.js"/>
@@ -88,5 +85,4 @@
     </form>
 
 </body> 
-
 </html>

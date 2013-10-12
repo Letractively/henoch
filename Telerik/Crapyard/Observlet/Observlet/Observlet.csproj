@@ -11,12 +11,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Observlet</RootNamespace>
     <AssemblyName>Observlet</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,6 +58,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
@@ -91,7 +93,8 @@
     <EmbeddedResource Include="Scripts\jquery-1.4.4.min.js" />
     <EmbeddedResource Include="Scripts\jqUtil.js" />
     <Content Include="WebForms\APL.aspx" />
-    <Content Include="WebForms\AsyncViewer.aspx" />
+    <None Include="WebForms\AsyncViewer.aspx" />
+    <Content Include="WebForms\AsyncViewer2.aspx" />
     <Content Include="WebForms\FireAndForget.aspx" />
     <Content Include="WebForms\NoViewState.aspx" />
     <Content Include="WebForms\PersistExpandedState20.aspx" />
@@ -172,12 +175,16 @@
     <Compile Include="WebForms\AsyncTracer.aspx.designer.cs">
       <DependentUpon>AsyncTracer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebForms\AsyncViewer.aspx.cs">
+    <None Include="WebForms\AsyncViewer.aspx.cs">
       <DependentUpon>AsyncViewer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </None>
+    <Compile Include="WebForms\AsyncViewer2.aspx.cs">
+      <DependentUpon>AsyncViewer2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebForms\AsyncViewer.aspx.designer.cs">
-      <DependentUpon>AsyncViewer.aspx</DependentUpon>
+    <Compile Include="WebForms\AsyncViewer2.aspx.designer.cs">
+      <DependentUpon>AsyncViewer2.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForms\FireAndForget.aspx.cs">
       <DependentUpon>FireAndForget.aspx</DependentUpon>

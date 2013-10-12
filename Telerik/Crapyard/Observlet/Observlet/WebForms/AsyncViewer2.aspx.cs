@@ -6,7 +6,7 @@ using DataResource;
 
 namespace Observlet.WebForms
 {
-    public partial class AsyncViewer : Observlet.WebForms.AsyncHandler
+    public partial class AsyncViewer2 : Observlet.WebForms.AsyncHandler
     {
         private string _Datasource;
 
