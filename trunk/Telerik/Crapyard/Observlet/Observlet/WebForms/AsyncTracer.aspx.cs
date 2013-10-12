@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -166,7 +167,7 @@ namespace Observlet.WebForms
         private void UpdateTaskQReadyStatus(MySession mySession, bool isEmpty)
         {
             Application.Lock();
-            IDictionary<string, MySession> applicationSessions = Application["MTA-Sessions"] as Dictionary<string, MySession>;
+            ConcurrentDictionary<string, MySession> applicationSessions = Application["MTA-Sessions"] as ConcurrentDictionary<string, MySession>;
             if (applicationSessions != null)
                 applicationSessions[mySession.SessionId].TaskQIsEmtpty = isEmpty;//there are 30 tasks to do OR not...
             Application["MTA-Sessions"] = applicationSessions;
@@ -176,7 +177,7 @@ namespace Observlet.WebForms
         private MySession GetMySession(string sessionId)
         {
             Application.Lock();
-            IDictionary<string, MySession> applicationSessions = Application["MTA-Sessions"] as Dictionary<string, MySession>;
+            ConcurrentDictionary<string, MySession> applicationSessions = Application["MTA-Sessions"] as ConcurrentDictionary<string, MySession>;
             MySession mySession = null;
             if (applicationSessions != null)
                 applicationSessions.TryGetValue(sessionId, out mySession);
@@ -200,7 +201,7 @@ namespace Observlet.WebForms
         private void UpdateMySession(MySession mySession)
         {
             Application.Lock();
-            IDictionary<string, MySession> applicationSessions = Application["MTA-Sessions"] as Dictionary<string, MySession>;
+            ConcurrentDictionary<string, MySession> applicationSessions = Application["MTA-Sessions"] as ConcurrentDictionary<string, MySession>;
             if (applicationSessions != null)
             {
                 applicationSessions[mySession.SessionId] = mySession;
