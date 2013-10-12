@@ -13,6 +13,7 @@
     <RootNamespace>Retained</RootNamespace>
     <AssemblyName>Retained</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,6 +85,7 @@
     </Compile>
     <Compile Include="NoViewState.aspx.cs">
       <DependentUpon>NoViewState.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="NoViewState.aspx.designer.cs">
       <DependentUpon>NoViewState.aspx</DependentUpon>

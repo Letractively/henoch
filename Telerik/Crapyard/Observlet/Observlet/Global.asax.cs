@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,7 +19,7 @@ namespace Observlet
 
             /// Represents a multi-threaded (cross-process) approach of the application.
             /// 
-            Application["MTA-Sessions"] = new Dictionary<string, MySession>();
+            Application["MTA-Sessions"] = new ConcurrentDictionary<string, MySession>();
 
             // Create a trace listener for Web forms.
             WebPageTraceListener gbTraceListener = new WebPageTraceListener();
@@ -43,16 +44,15 @@ namespace Observlet
             Application.Lock();
             
             // Code that runs when a new session is started
-            IDictionary<string, MySession> applicationSessions = new Dictionary<string, MySession>();
-            HttpSessionState session = HttpContext.Current.Session; 
-            applicationSessions = Application["MTA-Sessions"] as Dictionary<string, MySession>;
+            ConcurrentDictionary<string, MySession> applicationSessions = new ConcurrentDictionary<string, MySession>();
+            HttpSessionState session = HttpContext.Current.Session;
+            applicationSessions = Application["MTA-Sessions"] as ConcurrentDictionary<string, MySession>;
 
             try
             {
                 if (session != null && applicationSessions != null)
-                    applicationSessions.Add(
-                        new KeyValuePair<string, MySession>(session.SessionID,
-                        new MySession() { SessionId = session.SessionID, TaskQIsEmtpty = true }));
+                    applicationSessions.TryAdd(session.SessionID,
+                        new MySession() { SessionId = session.SessionID, TaskQIsEmtpty = true });
 
             }
             finally
