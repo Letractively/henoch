@@ -1,0 +1,1 @@
+This is meant to be a pet project for webdevelopment using AJAX an clientside technology of Telerik.
